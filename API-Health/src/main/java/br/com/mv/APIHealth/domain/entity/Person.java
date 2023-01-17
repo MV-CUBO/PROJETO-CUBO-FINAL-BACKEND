@@ -7,10 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.tomcat.jni.Address;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -30,7 +27,9 @@ public class Person {
     private LocalDate dateOfBirth;
     private String phone;
     private String email;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
+    @Enumerated(EnumType.STRING)
     private MaritalStatus maritalStatus;
     private LocalDateTime createdAt;
     private LocalDateTime updateAT;
