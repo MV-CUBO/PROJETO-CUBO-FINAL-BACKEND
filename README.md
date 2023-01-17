@@ -1,6 +1,6 @@
 # PROJETO FINAL - JAVA SPRING BOOT
 
-Aplicação usando o framework Java Spring Boot, MySQL, GIt, Postman e nodeJS
+Aplicação usando o framework Java Spring Boot, Postgres, GIt e Angular.
 
 ## 🚀 Começando
 
@@ -15,8 +15,8 @@ De que coisas você precisa para instalar o software e como instalá-lo?
 ```
 - JDK (Java Development Kit) 11 ou superior.
 - Visual Studio Code como IDE (com extensão java)
-- MySQL Server e MySQL Workbench
-- Postman
+- PostgreSQL
+
 
 ```
 
@@ -43,20 +43,14 @@ Siga as etapas:
 - **[VSC](https://code.visualstudio.com/download)** 
 
 ```
-3°- Verifique se você possui o MySQL server e MySQL workbench 
+3°- Verifique se você possui o PostgreSQL 
 ```
 ```
 3.1° - Caso não tenha clique no link a baixo. 
 ```
-- **[MySQL](https://dev.mysql.com/downloads/#:~:text=MySQL%20Installer%20for%20Windows)** 
+- **[PostgreSQL](https://www.postgresql.org/download/)** 
 
-```
-4°- Verifique se você possui o Postman 
-```
-```
-4.1° - Caso não tenha clique no link a baixo.
-```
-- **[Postman](https://www.postman.com/downloads/)**
+
 
 
 
@@ -76,17 +70,12 @@ Para conseguir implantar o projeto siga as seguintes recomendações:
 2.1° - Baixe as extensões do spring boot e java, caso não tenha.
 ```
 ```
-3° - Abra o MySQL e crie o banco "NOME DO BANCO". PS: Lembre de trocar em properties as senhas de connecção do banco para evitar conflitos.
+3° - Abra o PostgreSQL e crie o banco "NOME DO BANCO". PS: Lembre de trocar em properties as senhas de conexão do banco para evitar conflitos.
 ```
 ```
-4° - Procure o arquivo "ObrasApplication" e inicie o programa no play.
+4° - Procure o arquivo "NOME DO APP" e inicie o programa no play.
 ```
-```
-5° - Caso deseje usa o postman abra-o e importe as collections na pasta dentro de testes.
-```
-```
-6° - Abra a funcionalidade no postman que deseja testar e envie a solicitação.
-```
+
 
 
 Para conferir os endpoints e como aplicar confira o [DOCUMENTAÇÃO SWAGGER](http://localhost:8080/swagger-ui/index.html#/) da api. 
@@ -100,7 +89,15 @@ Nós usamos [GIT](https://git-scm.com/downloads) para controle de versão no [GI
 
 Mencione todos aqueles que ajudaram a levantar o projeto desde o seu início 
 
-* **José Milton de Oliveira Neto** - *SM/PO/Dev. Backend* - [Noltim](https://github.com/Noltim)
+* **José Milton de Oliveira Neto** - *Dev. Backend* - [Noltim](https://github.com/Noltim)
+* **Angelo Guilhermino da S. Júnior** - *Dev. Frontend* - [0Guilhermino](https://github.com/0Guilhermino)
+* **Laryssa Mirelly Nascimento Ribeiro** - *Dev. Frontend* - [laryribeir0](https://github.com/laryribeir0)
+* **Liedson Alves Severiano** - *Dev. Frontend* - [Liedsonft](https://github.com/Liedsonft)
+* **Luiz Carvalhedo** - *Dev. Backend* - [luizjsp](https://github.com/luizjsp)
+* **Matheus Lopes da Silva** - *Dev. Backend* - [MathLopes1](https://github.com/MathLopes1)
+* **Rafael Tomás Souza dos Santos** - *Dev. Frontend* - [RafaelTomas](https://github.com/RafaelTomas)
+* **Thiago Cavalcante** - *Dev. Backend* - [thiagoocms](https://github.com/thiagoocms)
+* **Ticiano de Albuquerque** - *Dev. Backend* - [TicianoFilho](https://github.com/TicianoFilho)
 
 
 
@@ -112,3 +109,5 @@ Você também pode ver a lista de todos os [colaboradores](https://github.com/MV
 
 * Conte a outras pessoas sobre este projeto 📢; 
 * Convide alguém da equipe para uma cerveja 🍺; 
+
+
