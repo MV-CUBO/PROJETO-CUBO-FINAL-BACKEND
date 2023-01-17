@@ -1,4 +1,4 @@
-# PROJETO FINAL - JAVA SPRING BOOT
+# PROJETO FINAL - JAVA SPRING BOOT - Angular
 
 Aplicação usando o framework Java Spring Boot, Postgres, GIt e Angular.
 
