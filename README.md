@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 # PROJETO FINAL - JAVA SPRING BOOT - ANGULAR
-=======
+
 
 
 Aplicação usando o framework Java Spring Boot, Postgres, GIt e Angular.
