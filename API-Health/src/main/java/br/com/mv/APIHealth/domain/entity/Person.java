@@ -5,8 +5,7 @@ import br.com.mv.APIHealth.domain.enums.MaritalStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.jni.Address;
-import org.hibernate.validator.constraints.br.CPF;
+
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -24,6 +23,9 @@ public class Person {
     private UUID id;
     private String name;
     private String cpf;
+
+    @OneToOne
+    @JoinColumn(name = "address_id")
     private Address address;
     private LocalDate dateOfBirth;
     private String phone;
