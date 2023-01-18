@@ -21,19 +21,28 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
     private String name;
+
     private String cpf;
 
     @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
+
     private LocalDate dateOfBirth;
+
     private String phone;
+
     private String email;
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
     @Enumerated(EnumType.STRING)
     private MaritalStatus maritalStatus;
+
     private LocalDateTime createdAt;
+
     private LocalDateTime updateAT;
 }
