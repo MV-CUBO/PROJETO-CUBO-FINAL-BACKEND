@@ -21,8 +21,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PersonDTO {
     private UUID id;
-
-    @NotEmpty
+    @NotEmpty(message = "{required.name.field}")
     private String name;
     @NotEmpty
     @CPF
