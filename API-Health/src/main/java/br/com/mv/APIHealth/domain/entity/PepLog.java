@@ -15,32 +15,12 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pep{
+public class PepLog {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
-    private String pepNumber;
-
-    private UUID patientId;
-
-    private UUID doctorId;
-
-    private String status;
-
-    private String prescription;
-
-    private String boodType;
-
-    private String allergies;
-
+    private UUID pepId;
+    private String action;
     private LocalDateTime createdAt;
 
-    private LocalDateTime updateAt;
-
-    
-
-    public void updatePep(LocalDateTime date){
-        this.updateAt = date;
-    }
 }
