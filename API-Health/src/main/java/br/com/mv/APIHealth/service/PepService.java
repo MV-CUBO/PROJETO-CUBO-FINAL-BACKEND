@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface PepService {
     public PepDTO create(PepDTO pepDTO);
-    public PepDTO getPatientById(UUID id);
+    public PepDTO getPepById(UUID id);
     public PepDTO updateById(UUID id, PepDTO pepDTO);
     public List<PepDTO> getAll();
     public void deleteById(UUID id);
