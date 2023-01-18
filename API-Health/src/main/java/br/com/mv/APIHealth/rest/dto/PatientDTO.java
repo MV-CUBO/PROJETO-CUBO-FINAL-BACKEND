@@ -1,18 +1,13 @@
-package br.com.mv.APIHealth.domain.entity;
+package br.com.mv.APIHealth.rest.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "tb_patient")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Patient extends Person  {
+@NoArgsConstructor
+public class PatientDTO extends PersonDTO{
     private String insuranceCompany;
 
     private String healthInsurenceCard;
