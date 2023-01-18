@@ -19,6 +19,10 @@ public class Doctor extends Person {
     @Enumerated(EnumType.STRING)
     private Specialty specialty;
 
+    @ManyToOne
+    @JoinColumn(name = "pepId" )
+    private Pep pep;
+
 
 
 
