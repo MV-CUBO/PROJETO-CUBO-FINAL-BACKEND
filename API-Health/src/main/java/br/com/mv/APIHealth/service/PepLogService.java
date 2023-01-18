@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface PepLogService {
     public PepLogDTO create(PepLogDTO pepDTO);
-    public PepLogDTO getPatientById(UUID id);
+    public PepLogDTO getPepById(UUID id);
     public PepLogDTO updateById(UUID id, PepLogDTO pepLogDTO);
     public List<PepLogDTO> getAll();
     public void deleteById(UUID id);
