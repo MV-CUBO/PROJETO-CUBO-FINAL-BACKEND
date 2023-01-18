@@ -1,4 +1,4 @@
-package br.com.mv.APIHealth.domain.entity.pep;
+package br.com.mv.APIHealth.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

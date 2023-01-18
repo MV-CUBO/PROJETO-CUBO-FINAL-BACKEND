@@ -14,7 +14,10 @@ import javax.persistence.Table;
 @AllArgsConstructor
 public class Patient extends Person  {
     private String insuranceCompany;
+
     private String healthInsurenceCard;
+
     private String observation;
+
     private String status;
 }
