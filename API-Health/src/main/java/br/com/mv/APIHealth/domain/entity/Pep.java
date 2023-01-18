@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@Table(name = "tb_pep")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,9 +36,8 @@ public class Pep{
 
     private LocalDateTime updateAt;
 
+
     
 
-    public void updatePep(LocalDateTime date){
-        this.updateAt = date;
-    }
+
 }
