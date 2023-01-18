@@ -6,9 +6,10 @@ import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.UserDTO;
 import br.com.mv.APIHealth.service.UserService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-
+@Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
