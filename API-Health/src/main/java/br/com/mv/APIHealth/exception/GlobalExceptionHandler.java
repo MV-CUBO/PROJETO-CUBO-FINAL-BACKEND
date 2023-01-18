@@ -20,6 +20,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                       WebRequest webRequest) {
         ErrorDetailsDTO errorDetails = new ErrorDetailsDTO(LocalDateTime.now(), exception.getMessage(),
                 webRequest.getDescription(false));
-        return new ResponseEntity<>(errorDetails, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorDetails, new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 }
