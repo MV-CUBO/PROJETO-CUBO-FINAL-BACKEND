@@ -33,7 +33,7 @@ public class NurseServiceImpl implements NurseService {
         return nurseDTO;
     }
     @Override
-    public NurseDTO getPatientById(UUID id) {
+    public NurseDTO getNurseById(UUID id) {
             Nurse nurse =  nurseRepository.findById(id).orElseThrow(
                     () -> new ResourceNotFoundException("Nurse not found.")
             );
@@ -63,7 +63,7 @@ public class NurseServiceImpl implements NurseService {
     }
 
     @Override
-    public void deleteById(UUID id) {
+    public void delete(UUID id) {
         nurseRepository.findById(id)
                 .map(nurse ->
                 {
