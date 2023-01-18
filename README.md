@@ -91,8 +91,9 @@ Nós usamos [GIT](https://git-scm.com/downloads) para controle de versão no [GI
 
 Mencione todos aqueles que ajudaram a levantar o projeto desde o seu início 
 
-* **José Milton de Oliveira Neto** - *Dev. Backend* - [Noltim](https://github.com/Noltim)
+
 * **Angelo Guilhermino da S. Júnior** - *Dev. Frontend* - [0Guilhermino](https://github.com/0Guilhermino)
+* **José Milton de Oliveira Neto** - *Dev. Backend* - [Noltim](https://github.com/Noltim)
 * **Laryssa Mirelly Nascimento Ribeiro** - *Dev. Frontend* - [laryribeir0](https://github.com/laryribeir0)
 * **Liedson Alves Severiano** - *Dev. Frontend* - [Liedsonft](https://github.com/Liedsonft)
 * **Luiz Carvalhedo** - *Dev. Backend* - [luizjsp](https://github.com/luizjsp)
