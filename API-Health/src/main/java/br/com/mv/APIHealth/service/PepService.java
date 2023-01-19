@@ -13,5 +13,5 @@ public interface PepService {
     public PepDTO updateById(UUID id, PepDTO pepDTO);
     public List<PepDTO> getAll();
     public void deleteById(UUID id);
-    public void updatePep(LocalDateTime date);
+    public void updateDatePep(LocalDateTime date);
 }
