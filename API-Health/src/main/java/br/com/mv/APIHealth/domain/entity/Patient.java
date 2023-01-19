@@ -1,5 +1,6 @@
 package br.com.mv.APIHealth.domain.entity;
 
+import br.com.mv.APIHealth.domain.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ public class Patient extends Person  {
 
     private String observation;
 
-    private String status;
+    private EStatus status;
 
     @OneToOne
     @JoinColumn(name = "pep_id", referencedColumnName = "id")
