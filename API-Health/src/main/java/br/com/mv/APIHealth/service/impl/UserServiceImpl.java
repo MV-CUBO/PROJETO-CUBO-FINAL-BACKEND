@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO create(UserDTO userDto) {
         User user = new User();
+        userDto.setId(null);
         BeanUtils.copyProperties(userDto, user);
         User newUser = userRepository.save(user);
 
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserById(UUID id) {
         User user =  userRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Usuário não encontrado.")
+                () -> new ResourceNotFoundException("User not found.")
         );
 
         UserDTO dto = new UserDTO();
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO update(UUID id, UserDTO userDto) {
         User user = userRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Usuário não encontrado.")
+                () -> new ResourceNotFoundException("User not found.")
         );
 
         userDto.setId(user.getId());
@@ -56,6 +57,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(UUID id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public UserDTO getUserByUsername(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new ResourceNotFoundException("User not found.")
+        );
+        UserDTO userDto = new UserDTO();
+        BeanUtils.copyProperties(user, userDto);
+        return userDto;
     }
 
 }
