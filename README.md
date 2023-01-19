@@ -89,8 +89,6 @@ Nós usamos [GIT](https://git-scm.com/downloads) para controle de versão no [GI
 
 ## ✒️ Autores
 
-Mencione todos aqueles que ajudaram a levantar o projeto desde o seu início 
-
 
 * **Angelo Guilhermino da S. Júnior** - *Dev. Frontend* - [0Guilhermino](https://github.com/0Guilhermino)
 * **José Milton de Oliveira Neto** - *Dev. Backend* - [Noltim](https://github.com/Noltim)
