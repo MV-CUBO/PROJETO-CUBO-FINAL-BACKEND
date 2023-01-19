@@ -1,6 +1,7 @@
 package br.com.mv.APIHealth.rest.controller;
 
 import br.com.mv.APIHealth.rest.dto.PatientDTO;
+import br.com.mv.APIHealth.rest.dto.UpdatePatientDTO;
 import br.com.mv.APIHealth.service.PatientService;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +43,7 @@ public class PatientController {
 
     @PutMapping("{id}")
     @ResponseStatus(NO_CONTENT)
-    public PatientDTO updateById(@PathVariable(name = "id") UUID id, @RequestBody @Valid PatientDTO patientDTO) {
+    public UpdatePatientDTO updateById(@PathVariable(name = "id") UUID id, @RequestBody @Valid UpdatePatientDTO patientDTO) {
         return this.patientService.updateById(id, patientDTO);
     }
 
