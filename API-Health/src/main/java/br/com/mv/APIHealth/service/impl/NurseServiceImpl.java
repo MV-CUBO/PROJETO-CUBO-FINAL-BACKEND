@@ -1,6 +1,7 @@
 package br.com.mv.APIHealth.service.impl;
 
 
+import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.entity.Nurse;
 import br.com.mv.APIHealth.domain.repository.NurseRepository;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +28,13 @@ public class NurseServiceImpl implements NurseService {
     @Override
     public NurseDTO create(NurseDTO nurseDTO) {
         Nurse nurse = new Nurse();
+        Address address = new Address(); // criar metodo para set dos itens para salvar banco
+
+        nurseDTO.setCreatedAt(LocalDateTime.now());
+        nurseDTO.setUpdateAT(LocalDateTime.now());
+
+
+
         BeanUtils.copyProperties(nurseDTO, nurse);
         Nurse newNurse = nurseRepository.save(nurse);
 
@@ -55,6 +64,8 @@ public class NurseServiceImpl implements NurseService {
         );
 
         nurseDTO.setId(nurse.getId());
+        nurseDTO.setCreatedAt(nurse.getCreatedAt());
+        nurseDTO.setUpdateAT(LocalDateTime.now());
         BeanUtils.copyProperties(nurseDTO, nurse);
         Nurse updatedNurse = nurseRepository.save(nurse);
 
