@@ -1,12 +1,12 @@
 package br.com.mv.APIHealth.service.impl;
 
 import br.com.mv.APIHealth.domain.entity.Patient;
+import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.PatientRepository;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.PatientDTO;
 import br.com.mv.APIHealth.service.PatientService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,11 +16,22 @@ import java.util.UUID;
 @Service
 public class PatientServiceImpl implements PatientService {
 
-    @Autowired
     private PatientRepository patientRepository;
+
+    public PatientServiceImpl(PatientRepository patientRepository) {
+        this.patientRepository = patientRepository;
+    }
+
+
     @Override
     public PatientDTO create(PatientDTO patientDTO) {
+        patientDTO.setCreatedAt(LocalDateTime.now());
+        patientDTO.setUpdateAT(LocalDateTime.now());
+
+        patientDTO.setStatus(EStatus.ACTIVATE);
+
         Patient patient = new Patient();
+
         BeanUtils.copyProperties(patientDTO, patient);
 
         Patient newPatient = this.patientRepository.save(patient);
