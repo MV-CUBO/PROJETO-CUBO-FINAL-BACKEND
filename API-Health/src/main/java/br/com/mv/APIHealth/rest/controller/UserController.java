@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/User")
+@RequestMapping("/api/users")
 public class UserController {
 
     private final UserService userService;
@@ -17,9 +17,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO getUserById(@PathVariable(name = "id")UUID id) {
+    public UserDTO getUserById(@PathVariable(name = "id") UUID id) {
         return userService.getUserById(id);
     }
 
