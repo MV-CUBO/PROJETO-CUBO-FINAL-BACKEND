@@ -1,11 +1,13 @@
 package br.com.mv.APIHealth.service.impl;
 
+import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.entity.Patient;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.PatientRepository;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.PatientDTO;
 import br.com.mv.APIHealth.rest.dto.UpdatePatientDTO;
+import br.com.mv.APIHealth.service.AddressService;
 import br.com.mv.APIHealth.service.PatientService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -19,13 +21,30 @@ public class PatientServiceImpl implements PatientService {
 
     private PatientRepository patientRepository;
 
-    public PatientServiceImpl(PatientRepository patientRepository) {
-        this.patientRepository = patientRepository;
-    }
+    private AddressService addressService;
 
+    public PatientServiceImpl(PatientRepository patientRepository, AddressService addressService) {
+        this.patientRepository = patientRepository;
+        this.addressService = addressService;
+    }
 
     @Override
     public PatientDTO create(PatientDTO patientDTO) {
+        Address address = new Address(
+                null,
+                patientDTO.getAddress().getZipCode(),
+                patientDTO.getAddress().getStreet(),
+                patientDTO.getAddress().getNumber(),
+                patientDTO.getAddress().getDistrict(),
+                patientDTO.getAddress().getCity(),
+                patientDTO.getAddress().getState(),
+                patientDTO.getAddress().getComplements()
+        );
+
+        Address newAddress = this.addressService.create(address);
+
+        patientDTO.setAddress(newAddress);
+
         patientDTO.setCreatedAt(LocalDateTime.now());
         patientDTO.setUpdateAT(LocalDateTime.now());
 

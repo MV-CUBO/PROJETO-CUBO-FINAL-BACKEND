@@ -16,6 +16,7 @@ import java.util.UUID;
 @Entity
 public class Address {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
