@@ -28,7 +28,7 @@ public class Pep{
 
     private String prescription;
 
-    private String boodType;
+    private String bloodType;
 
     private String allergies;
 

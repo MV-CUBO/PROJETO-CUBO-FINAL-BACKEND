@@ -8,8 +8,8 @@ import java.util.UUID;
 
 public interface NurseService {
     public NurseDTO create(NurseDTO nurseDTO);
-    public NurseDTO getPatientById(UUID id);
+    public NurseDTO getNurseById(UUID id);
     public List<Nurse> getAll();
     public NurseDTO update(UUID id, NurseDTO nurseDTO);
-    public void deleteById(UUID id);
+    public void delete(UUID id);
 }
