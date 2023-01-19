@@ -1,12 +1,13 @@
 package br.com.mv.APIHealth.service.impl;
 
 import br.com.mv.APIHealth.domain.entity.Patient;
+import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.PatientRepository;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.PatientDTO;
+import br.com.mv.APIHealth.rest.dto.UpdatePatientDTO;
 import br.com.mv.APIHealth.service.PatientService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,11 +17,22 @@ import java.util.UUID;
 @Service
 public class PatientServiceImpl implements PatientService {
 
-    @Autowired
     private PatientRepository patientRepository;
+
+    public PatientServiceImpl(PatientRepository patientRepository) {
+        this.patientRepository = patientRepository;
+    }
+
+
     @Override
     public PatientDTO create(PatientDTO patientDTO) {
+        patientDTO.setCreatedAt(LocalDateTime.now());
+        patientDTO.setUpdateAT(LocalDateTime.now());
+
+        patientDTO.setStatus(EStatus.ACTIVATE);
+
         Patient patient = new Patient();
+
         BeanUtils.copyProperties(patientDTO, patient);
 
         Patient newPatient = this.patientRepository.save(patient);
@@ -32,7 +44,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDTO getPatientById(UUID id) {
-        Patient patient = this.validateExistPatient(id);
+        Patient patient = this.patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
 
         PatientDTO patientDTO = new PatientDTO();
         BeanUtils.copyProperties(patient, patientDTO);
@@ -41,14 +53,16 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public PatientDTO updateById(UUID id, PatientDTO patientDTO) {
-        Patient patient =  this.validateExistPatient(id);
+    public UpdatePatientDTO updateById(UUID id, UpdatePatientDTO patientDTO) {
+        Patient patient = this.patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
 
         this.validateForUpdatePatient(patientDTO, patient);
 
         patientDTO.setId(patientDTO.getId());
 
-        BeanUtils.copyProperties(patientDTO, patient);
+        BeanUtils.copyProperties(patient, patientDTO);
+
+
         Patient patientUpdated = this.patientRepository.save(patient);
 
         BeanUtils.copyProperties(patientUpdated, patientDTO);
@@ -62,18 +76,12 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void deleteById(UUID id) {
-        this.validateExistPatient(id);
+        this.patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
 
         this.patientRepository.deleteById(id);
     }
 
-    private Patient validateExistPatient (UUID patientId) {
-        Patient patient = this.patientRepository.findById(patientId).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
-
-        return patient;
-    }
-
-    private void validateForUpdatePatient(PatientDTO patientDTO, Patient patient) {
+    private void validateForUpdatePatient(UpdatePatientDTO patientDTO, Patient patient) {
         if(patientDTO.getName() != null) {
             patient.setName(patientDTO.getName());
         }
