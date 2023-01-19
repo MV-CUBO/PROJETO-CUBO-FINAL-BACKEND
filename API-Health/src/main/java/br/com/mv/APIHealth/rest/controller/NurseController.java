@@ -6,7 +6,6 @@ import br.com.mv.APIHealth.service.NurseService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,31 +25,31 @@ public class NurseController {
     @GetMapping("{id}")
     @ResponseStatus(OK)
     public NurseDTO getNurseById(@PathVariable(name = "id") UUID id) {
-        return nurseService.getNurseById(id);
+        return this.nurseService.getNurseById(id);
     }
 
     //modificar para DTO de informações e tratar os dados por ele
     @GetMapping
     @ResponseStatus(OK)
     public List<Nurse> getAll(){
-        return nurseService.getAll();
+        return this.nurseService.getAll();
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
     public NurseDTO saveNurse(@RequestBody @Valid NurseDTO nurseDTO) {
-        return nurseService.create(nurseDTO);
+        return this.nurseService.create(nurseDTO);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(NO_CONTENT)
     public NurseDTO updateNurse(@PathVariable(name = "id") UUID id, @RequestBody @Valid NurseDTO nurseDTO) {
-          return nurseService.update(id, nurseDTO);
+          return this.nurseService.update(id, nurseDTO);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(NO_CONTENT)
     public void deleteNurse(@PathVariable(name = "id") UUID id) {
-        nurseService.delete(id);
+        this.nurseService.delete(id);
     }
 }
