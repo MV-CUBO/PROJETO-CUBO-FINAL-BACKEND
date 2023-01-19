@@ -12,6 +12,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -26,9 +27,8 @@ public class PersonDTO {
     @NotEmpty
     @CPF
     private String cpf;
-    @NotEmpty
-    private Address address;
-    @NotEmpty
+
+    @Past
     private LocalDate dateOfBirth;
     @NotEmpty
     private String phone;
@@ -42,4 +42,6 @@ public class PersonDTO {
     private LocalDateTime createdAt;
 
     private LocalDateTime updateAT;
+
+    private Address address;
 }
