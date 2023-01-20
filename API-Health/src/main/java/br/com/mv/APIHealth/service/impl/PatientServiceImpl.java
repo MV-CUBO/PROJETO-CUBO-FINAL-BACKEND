@@ -2,10 +2,12 @@ package br.com.mv.APIHealth.service.impl;
 
 import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.entity.Patient;
+import br.com.mv.APIHealth.domain.entity.Pep;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.PatientRepository;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.PatientDTO;
+import br.com.mv.APIHealth.rest.dto.PepDTO;
 import br.com.mv.APIHealth.rest.dto.UpdatePatientDTO;
 import br.com.mv.APIHealth.service.AddressService;
 import br.com.mv.APIHealth.service.PatientService;
@@ -13,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -72,7 +75,19 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<PatientDTO> getAll() {
-         return null;
+        List<Patient> patients= this.patientRepository.findAll();
+
+        List<PatientDTO> patientsDTO = new ArrayList();
+
+        patients.forEach(patient -> {
+            PatientDTO patientDTO = new PatientDTO();
+
+            BeanUtils.copyProperties(patient, patientDTO);
+
+            patientsDTO.add(patientDTO);
+        });
+
+        return patientsDTO;
     }
 
     @Override
