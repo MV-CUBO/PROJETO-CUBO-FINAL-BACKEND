@@ -12,6 +12,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class PepLogDTO {
     private UUID pepId;
+
     private String action;
+
     private LocalDateTime createdAt;
 }
