@@ -30,25 +30,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDTO create(PatientDTO patientDTO) {
-        Address address = new Address(
-                null,
-                patientDTO.getAddress().getZipCode(),
-                patientDTO.getAddress().getStreet(),
-                patientDTO.getAddress().getNumber(),
-                patientDTO.getAddress().getDistrict(),
-                patientDTO.getAddress().getCity(),
-                patientDTO.getAddress().getState(),
-                patientDTO.getAddress().getComplements()
-        );
-
-        Address newAddress = this.addressService.create(address);
-
-        patientDTO.setAddress(newAddress);
-
-        patientDTO.setCreatedAt(LocalDateTime.now());
-        patientDTO.setUpdateAT(LocalDateTime.now());
-
-        patientDTO.setStatus(EStatus.ACTIVATE);
+        this.validationForCreatePatient(patientDTO);
 
         Patient patient = new Patient();
 
@@ -98,6 +80,30 @@ public class PatientServiceImpl implements PatientService {
         this.patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
 
         this.patientRepository.deleteById(id);
+    }
+
+    private PatientDTO validationForCreatePatient(PatientDTO patientDTO) {
+        Address address = new Address(
+                null,
+                patientDTO.getAddress().getZipCode(),
+                patientDTO.getAddress().getStreet(),
+                patientDTO.getAddress().getNumber(),
+                patientDTO.getAddress().getDistrict(),
+                patientDTO.getAddress().getCity(),
+                patientDTO.getAddress().getState(),
+                patientDTO.getAddress().getComplements()
+        );
+
+        Address newAddress = this.addressService.create(address);
+
+        patientDTO.setAddress(newAddress);
+
+        patientDTO.setCreatedAt(LocalDateTime.now());
+        patientDTO.setUpdateAT(LocalDateTime.now());
+
+        patientDTO.setStatus(EStatus.ACTIVATE);
+
+        return patientDTO;
     }
 
     private void validateForUpdatePatient(UpdatePatientDTO patientDTO, Patient patient) {
