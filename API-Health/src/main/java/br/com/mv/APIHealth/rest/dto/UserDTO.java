@@ -6,15 +6,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
+
     private UUID id;
-    @NotBlank
+
+    @NotEmpty(message = "{required.username.field}")
     private String username;
+
     @JsonIgnore
+    @NotEmpty(message = "{required.username.field}")
     private String password;
 }
