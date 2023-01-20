@@ -1,5 +1,6 @@
 package br.com.mv.APIHealth.rest.dto;
 
+import br.com.mv.APIHealth.domain.entity.Pep;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,4 +17,6 @@ public class PatientDTO extends PersonDTO{
     private String observation;
 
     private EStatus status;
+
+    private Pep pep;
 }
