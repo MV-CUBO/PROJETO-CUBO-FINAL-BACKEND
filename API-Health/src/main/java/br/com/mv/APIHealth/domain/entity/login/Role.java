@@ -24,5 +24,5 @@ public class Role {
     private UUID id;
 
     @Column(nullable = false, unique = true)
-    private String descricao;
+    private String description;
 }
