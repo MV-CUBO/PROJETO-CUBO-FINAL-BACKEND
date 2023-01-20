@@ -48,7 +48,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDTO getPatientById(UUID id) {
-        Patient patient = this.patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
+        Patient patient = this.validatePatientExists(id);
 
         PatientDTO patientDTO = new PatientDTO();
         BeanUtils.copyProperties(patient, patientDTO);
@@ -58,7 +58,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public UpdatePatientDTO updateById(UUID id, UpdatePatientDTO patientDTO) {
-        Patient patient = this.patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
+        Patient patient = this.validatePatientExists(id);
 
         this.validateForUpdatePatient(patientDTO, patient);
 
@@ -92,7 +92,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void deleteById(UUID id) {
-        this.patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
+        this.validatePatientExists(id);
 
         this.patientRepository.deleteById(id);
     }
@@ -119,6 +119,11 @@ public class PatientServiceImpl implements PatientService {
         patientDTO.setStatus(EStatus.ACTIVATE);
 
         return patientDTO;
+    }
+
+    private Patient validatePatientExists (UUID id) {
+        Patient patient = this.patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
+        return patient;
     }
 
     private void validateForUpdatePatient(UpdatePatientDTO patientDTO, Patient patient) {
