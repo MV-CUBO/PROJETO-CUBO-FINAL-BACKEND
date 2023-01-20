@@ -19,7 +19,6 @@ public class UserDTO {
     @NotEmpty(message = "{required.username.field}")
     private String username;
 
-    @JsonIgnore
     @NotEmpty(message = "{required.username.field}")
     private String password;
 }
