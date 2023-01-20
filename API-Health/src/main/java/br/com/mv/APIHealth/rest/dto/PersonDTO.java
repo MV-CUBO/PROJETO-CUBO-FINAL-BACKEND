@@ -30,12 +30,16 @@ public class PersonDTO {
 
     @Past
     private LocalDate dateOfBirth;
+
     @NotEmpty
     private String phone;
+
     @NotEmpty
     private String email;
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
     @Enumerated(EnumType.STRING)
     private MaritalStatus maritalStatus;
 
