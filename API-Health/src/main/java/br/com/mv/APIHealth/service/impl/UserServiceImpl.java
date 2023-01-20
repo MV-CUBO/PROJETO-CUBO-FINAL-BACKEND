@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         userDto.setId(null);
         BeanUtils.copyProperties(userDto, user);
-        User newUser = userRepository.save(user);
+        User newUser = userRepository.save(user); // TODO password must be encoded.
 
         BeanUtils.copyProperties(newUser, userDto);
         return userDto;
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         );
 
         userDto.setId(user.getId());
-        BeanUtils.copyProperties(userDto, user);
+        this.updateNonNullableFields(userDto, user);
         User updatedUser = userRepository.save(user);
 
         BeanUtils.copyProperties(updatedUser, userDto);
@@ -69,4 +69,12 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
+    private void updateNonNullableFields(UserDTO originUserDto, User targetUser) {
+        if (originUserDto.getUsername() != null) {
+            targetUser.setUsername(originUserDto.getUsername());
+        }
+        if (originUserDto.getPassword() != null) {
+            targetUser.setPassword(originUserDto.getPassword());
+        }
+    }
 }

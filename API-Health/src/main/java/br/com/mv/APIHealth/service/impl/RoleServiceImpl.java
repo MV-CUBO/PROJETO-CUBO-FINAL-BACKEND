@@ -61,8 +61,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDTO getByDescription(String description) {
-        return = roleRepository.getByDescription(description).orElseThrow(
+        Role role = roleRepository.getByDescription(description).orElseThrow(
                 () -> new ResourceNotFoundException("Role not found.")
         );
+
+        RoleDTO roleDto = new RoleDTO();
+        BeanUtils.copyProperties(role, roleDto);
+        return roleDto;
     }
 }

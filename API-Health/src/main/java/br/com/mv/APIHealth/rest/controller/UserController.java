@@ -29,7 +29,7 @@ public class UserController {
         return userService.create(userDto);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO updateUser(@PathVariable(name = "id") UUID id, @RequestBody UserDTO userDto) {
         return userService.update(id, userDto);
