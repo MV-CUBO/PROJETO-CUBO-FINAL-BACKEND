@@ -16,4 +16,5 @@ public interface RoleService {
     public void delete(UUID id);
 
     public RoleDTO getByDescription(String description);
+
 }
