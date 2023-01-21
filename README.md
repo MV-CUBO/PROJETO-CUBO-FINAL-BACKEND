@@ -87,15 +87,15 @@ We've used [GIT](https://git-scm.com/downloads) for source code version control 
 ## ✒️ Developers
 
 
-* **Angelo Guilhermino da S. Júnior** - *Dev. Frontend* - [0Guilhermino](https://github.com/0Guilhermino)
-* **José Milton de Oliveira Neto** - *Dev. Backend* - [Noltim](https://github.com/Noltim)
-* **Laryssa Mirelly Nascimento Ribeiro** - *Dev. Frontend* - [laryribeir0](https://github.com/laryribeir0)
-* **Liedson Alves Severiano** - *Dev. Frontend* - [Liedsonft](https://github.com/Liedsonft)
-* **Luiz Carvalhedo** - *Dev. Backend* - [luizjsp](https://github.com/luizjsp)
-* **Matheus Lopes da Silva** - *Dev. Backend* - [MathLopes1](https://github.com/MathLopes1)
-* **Rafael Tomás Souza dos Santos** - *Dev. Frontend* - [RafaelTomas](https://github.com/RafaelTomas)
-* **Thiago Cavalcante** - *Dev. Backend* - [thiagoocms](https://github.com/thiagoocms)
-* **Ticiano de Albuquerque** - *Dev. Backend* - [TicianoFilho](https://github.com/TicianoFilho)
+* **Angelo Guilhermino da S. Júnior** - *Frontend Dev.* - [0Guilhermino](https://github.com/0Guilhermino)
+* **José Milton de Oliveira Neto** - *Backend Dev.* - [Noltim](https://github.com/Noltim)
+* **Laryssa Mirelly Nascimento Ribeiro** - *Frontend Dev.* - [laryribeir0](https://github.com/laryribeir0)
+* **Liedson Alves Severiano** - *Frontend Dev.* - [Liedsonft](https://github.com/Liedsonft)
+* **Luiz Carvalhedo** - *Backend Dev.* - [luizjsp](https://github.com/luizjsp)
+* **Matheus Lopes da Silva** - *Backend Dev.* - [MathLopes1](https://github.com/MathLopes1)
+* **Rafael Tomás Souza dos Santos** - *Frontend Dev.* - [RafaelTomas](https://github.com/RafaelTomas)
+* **Thiago Cavalcante** - *Backend Dev.* - [thiagoocms](https://github.com/thiagoocms)
+* **Ticiano Filho** - *Backend Dev.* - [TicianoFilho](https://github.com/TicianoFilho)
 
 
 
