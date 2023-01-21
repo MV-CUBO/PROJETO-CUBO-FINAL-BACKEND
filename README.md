@@ -7,7 +7,7 @@ This application was developed by using the folowing technologies: Java, Spring 
 
 The folowing instructions will make you have copy of this application running on you machine for develpment proposals. 
 
-Check [deployment] to learn how to deploy this project.
+Check "Local Deployment" to learn how to deploy this project.
 
 ### 📋 Requirements
 
@@ -22,12 +22,11 @@ Here is what you need to be installed to run the application and how to do it:
 
 ### 🔧 Installation
 
-These are some step-by-step guidelines to get required items to be installed in your machine to properly run this project.
+These are some step-by-step guidelines to get required items to be installed in your machine to properly run this project:
 
-Siga as etapas: 
 
 ```
-1 - Check if you have JDK 11 or greater already installed
+1 - Check if you already have JDK 11 or greater installed
 ```
 ```
 1.1 - If you don't, follow the steps in the next link:
@@ -56,7 +55,7 @@ Siga as etapas:
 
 ## 📦 Local Deployment
 
-Here is what you have to do to get the application to be installed in your localhost. PS: In this example we're using Visual Studio Code as IDE.
+Here is what you have to do to get the application to be installed on your localhost. PS: In this example we're using Visual Studio Code as IDE.
 
 ```
 1 - make a git clone of this application
@@ -78,7 +77,7 @@ Here is what you have to do to get the application to be installed in your local
 
 
 
-In order to learn about each application endpoints, please check out the api documentation in [DOCUMENTAÇÃO SWAGGER](http://localhost:8080/swagger-ui/index.html#/) da api. 
+In order to learn about each application endpoints, please check out the api documentation in [SWAGGER DOCUMENTATION](http://localhost:8080/swagger-ui/index.html#/) da api. 
 
 
 ## 📌 Version 
