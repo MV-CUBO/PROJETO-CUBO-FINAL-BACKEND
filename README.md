@@ -13,7 +13,7 @@ Check [deployment] to learn how to deploy this project.
 
 Here is what you need to be installed to run the application and how to do it:
 ```
-JDK (Java Development kit) 11 or greater
+- JDK (Java Development kit) 11 or greater
 - IDE to run Java (Eg: IntelliJ IDEA, Eclipse, Visual Studio Code)
 - PostgreSQL
 - Postman
@@ -61,7 +61,7 @@ Here is what you have to do to get the application to be installed in your local
 ```
 1 - make a git clone of this application
 ```
-- *[Projeto](https://github.com/MV-CUBO/PROJETO-CUBO-FINAL-BACKEND)*
+- *[Project](https://github.com/MV-CUBO/PROJETO-CUBO-FINAL-BACKEND)*
 
 ```
 2 - Open the downloaded folder which contains VSCode IDE.
@@ -98,15 +98,5 @@ We've used [GIT](https://git-scm.com/downloads) for source code version control 
 * **Thiago Cavalcante** - *Dev. Backend* - [thiagoocms](https://github.com/thiagoocms)
 * **Ticiano de Albuquerque** - *Dev. Backend* - [TicianoFilho](https://github.com/TicianoFilho)
 
-
-
-
-Você também pode ver a lista de todos os [colaboradores](https://github.com/MV-CUBO/PROJETO-CUBO-FINAL-BACKEND/graphs/contributors) que participaram deste projeto. 
-
-
-## 🎁 Expressões de gratidão 
-
-* Conte a outras pessoas sobre este projeto 📢; 
-* Convide alguém da equipe para uma cerveja 🍺; 
 
 
