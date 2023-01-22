@@ -108,8 +108,8 @@ public class PepServiceImpl implements PepService {
         if(pepDTO.getAllergies() != null){
             pep.setAllergies(pepDTO.getAllergies());
         }
-        if(pepDTO.getBoodType() != null){
-            pep.setBloodType(pepDTO.getBoodType());
+        if(pepDTO.getBloodType() != null){
+            pep.setBloodType(pepDTO.getBloodType());
         }
         if(pepDTO.getDoctorId() != null){
             pep.setDoctorId(pepDTO.getDoctorId());

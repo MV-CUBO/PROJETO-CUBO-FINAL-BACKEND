@@ -28,7 +28,7 @@ public class PepDTO {
     private String prescription;
 
     @NotEmpty
-    private String boodType;
+    private String bloodType;
 
     @NotEmpty
     private String allergies;
