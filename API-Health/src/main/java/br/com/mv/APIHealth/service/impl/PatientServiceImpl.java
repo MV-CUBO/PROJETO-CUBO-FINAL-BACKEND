@@ -112,7 +112,7 @@ public class PatientServiceImpl implements PatientService {
 
     private Patient validatePatientExists (UUID id) {
         Patient patient = this.patientRepository
-                    .findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
+                    .findById(id).orElseThrow(() -> new ResourceNotFoundException("Patient not found."));
 
         return patient;
     }
@@ -148,7 +148,7 @@ public class PatientServiceImpl implements PatientService {
                 addressDto.getCity() == null ||
                 addressDto.getState() == null
         ) {
-            throw new BadRequestException("Todos os campos do endereço devem ser preenchidos!");
+            throw new BadRequestException("All address fields must be filled in!");
         }
 
         Address address =  new Address(
@@ -168,6 +168,6 @@ public class PatientServiceImpl implements PatientService {
     private void validatePatientExistByCpf(String cpf) {
         Boolean patientIsPresent = this.patientRepository.findByCpf(cpf).isPresent();
 
-        if(patientIsPresent) throw new BadRequestException("CPF já cadastrado na base!");
+        if(patientIsPresent) throw new BadRequestException("CPF already registered in the database!");
     }
 }
