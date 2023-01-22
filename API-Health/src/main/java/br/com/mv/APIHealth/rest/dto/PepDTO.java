@@ -14,18 +14,25 @@ public class PepDTO {
 
     @NotEmpty
     private String pepNumber;
+
     @NotEmpty
     private UUID patientId;
+
     @NotEmpty
     private UUID doctorId;
+
     @NotEmpty
     private String status;
+
     @NotEmpty
     private String prescription;
+
     @NotEmpty
-    private String boodType;
+    private String bloodType;
+
     @NotEmpty
     private String allergies;
+
     @NotEmpty
     private LocalDateTime createdAt;
 

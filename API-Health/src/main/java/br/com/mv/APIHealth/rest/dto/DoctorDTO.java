@@ -16,11 +16,11 @@ import java.util.UUID;
 public class DoctorDTO {
 
     private UUID id;
+
     @NotBlank(message = "{required.crm.field}")
     //@Pattern(regexp = "\\d{4,6}") --limitar a quantidade de caracteres
     private String crm;
+
     @NotNull
     private Specialty specialty;
-
-
 }
