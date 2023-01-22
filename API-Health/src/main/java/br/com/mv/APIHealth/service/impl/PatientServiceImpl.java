@@ -33,7 +33,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDTO create(PatientDTO patientDTO) {
-        this.validationForCreatePatient(patientDTO);
+        this.stepsForCreationPatient(patientDTO);
 
         Patient patient = new Patient();
 
@@ -97,7 +97,7 @@ public class PatientServiceImpl implements PatientService {
         this.patientRepository.deleteById(id);
     }
 
-    private PatientDTO validationForCreatePatient(PatientDTO patientDTO) {
+    private PatientDTO stepsForCreationPatient(PatientDTO patientDTO) {
         Address address = new Address(
                 null,
                 patientDTO.getAddress().getZipCode(),
