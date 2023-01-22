@@ -126,41 +126,23 @@ public class PatientServiceImpl implements PatientService {
     }
 
     private void validateForUpdatePatient(UpdatePatientDTO patientDTO, Patient patient) {
-        if(patientDTO.getName() != null) {
-            patient.setName(patientDTO.getName());
-        }
+        patient.setName(patientDTO.getName() != null ? patientDTO.getName() : patient.getName());
 
-        if(patientDTO.getPhone() != null) {
-            patient.setPhone(patientDTO.getPhone());
-        }
+        patient.setPhone(patientDTO.getPhone() != null ? patientDTO.getPhone() : patient.getPhone());
 
-        if(patientDTO.getStatus() != null) {
-            patient.setName(patientDTO.getName());
-        }
+        patient.setStatus(patientDTO.getStatus() != null ? patientDTO.getStatus() : patient.getStatus());
 
-        if(patientDTO.getObservation() != null) {
-            patient.setObservation(patientDTO.getObservation());
-        }
+        patient.setObservation(patientDTO.getObservation() != null ? patientDTO.getObservation() : patient.getObservation());
 
-        if(patientDTO.getMaritalStatus() != null) {
-            patient.setMaritalStatus(patientDTO.getMaritalStatus());
-        }
+        patient.setMaritalStatus(patientDTO.getMaritalStatus() != null ? patientDTO.getMaritalStatus() : patient.getMaritalStatus());
 
-        if(patientDTO.getGender() != null) {
-            patient.setGender(patientDTO.getGender());
-        }
+        patient.setGender(patientDTO.getGender() != null ? patientDTO.getGender() : patient.getGender());
 
-        if(patientDTO.getEmail() != null) {
-            patient.setEmail(patientDTO.getEmail());
-        }
+        patient.setEmail(patientDTO.getEmail() != null ? patientDTO.getEmail() : patient.getEmail());
 
-        if(patientDTO.getInsuranceCompany() != null) {
-            patient.setEmail(patientDTO.getEmail());
-        }
+        patient.setInsuranceCompany(patientDTO.getInsuranceCompany() != null ? patientDTO.getInsuranceCompany() : patient.getInsuranceCompany());
 
-        if(patientDTO.getDateOfBirth() != null) {
-            patient.setDateOfBirth(patientDTO.getDateOfBirth());
-        }
+        patient.setDateOfBirth(patientDTO.getDateOfBirth() != null ? patientDTO.getDateOfBirth() : patient.getDateOfBirth());
 
         patient.setUpdateAT(LocalDateTime.now());
     }
