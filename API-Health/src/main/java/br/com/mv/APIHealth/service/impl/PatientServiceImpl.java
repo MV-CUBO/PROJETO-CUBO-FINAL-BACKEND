@@ -2,12 +2,11 @@ package br.com.mv.APIHealth.service.impl;
 
 import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.entity.Patient;
-import br.com.mv.APIHealth.domain.entity.Pep;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.PatientRepository;
+import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.PatientDTO;
-import br.com.mv.APIHealth.rest.dto.PepDTO;
 import br.com.mv.APIHealth.rest.dto.UpdatePatientDTO;
 import br.com.mv.APIHealth.service.AddressService;
 import br.com.mv.APIHealth.service.PatientService;
@@ -33,7 +32,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDTO create(PatientDTO patientDTO) {
-        this.validationForCreatePatient(patientDTO);
+        this.stepsForCreationPatient(patientDTO);
 
         Patient patient = new Patient();
 
@@ -66,7 +65,6 @@ public class PatientServiceImpl implements PatientService {
 
         BeanUtils.copyProperties(patient, patientDTO);
 
-
         Patient patientUpdated = this.patientRepository.save(patient);
 
         BeanUtils.copyProperties(patientUpdated, patientDTO);
@@ -97,19 +95,8 @@ public class PatientServiceImpl implements PatientService {
         this.patientRepository.deleteById(id);
     }
 
-    private PatientDTO validationForCreatePatient(PatientDTO patientDTO) {
-        Address address = new Address(
-                null,
-                patientDTO.getAddress().getZipCode(),
-                patientDTO.getAddress().getStreet(),
-                patientDTO.getAddress().getNumber(),
-                patientDTO.getAddress().getDistrict(),
-                patientDTO.getAddress().getCity(),
-                patientDTO.getAddress().getState(),
-                patientDTO.getAddress().getComplements()
-        );
-
-        Address newAddress = this.addressService.create(address);
+    private PatientDTO stepsForCreationPatient(PatientDTO patientDTO) {
+        Address newAddress = this.createAddressForPatient(patientDTO.getAddress());
 
         patientDTO.setAddress(newAddress);
 
@@ -122,47 +109,57 @@ public class PatientServiceImpl implements PatientService {
     }
 
     private Patient validatePatientExists (UUID id) {
-        Patient patient = this.patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
+        Patient patient = this.patientRepository
+                    .findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
+
         return patient;
     }
 
     private void validateForUpdatePatient(UpdatePatientDTO patientDTO, Patient patient) {
-        if(patientDTO.getName() != null) {
-            patient.setName(patientDTO.getName());
-        }
+        patient.setName(patientDTO.getName() != null ? patientDTO.getName() : patient.getName());
 
-        if(patientDTO.getPhone() != null) {
-            patient.setPhone(patientDTO.getPhone());
-        }
+        patient.setPhone(patientDTO.getPhone() != null ? patientDTO.getPhone() : patient.getPhone());
 
-        if(patientDTO.getStatus() != null) {
-            patient.setName(patientDTO.getName());
-        }
+        patient.setStatus(patientDTO.getStatus() != null ? patientDTO.getStatus() : patient.getStatus());
 
-        if(patientDTO.getObservation() != null) {
-            patient.setObservation(patientDTO.getObservation());
-        }
+        patient.setObservation(patientDTO.getObservation() != null ? patientDTO.getObservation() : patient.getObservation());
 
-        if(patientDTO.getMaritalStatus() != null) {
-            patient.setMaritalStatus(patientDTO.getMaritalStatus());
-        }
+        patient.setMaritalStatus(patientDTO.getMaritalStatus() != null ? patientDTO.getMaritalStatus() : patient.getMaritalStatus());
 
-        if(patientDTO.getGender() != null) {
-            patient.setGender(patientDTO.getGender());
-        }
+        patient.setGender(patientDTO.getGender() != null ? patientDTO.getGender() : patient.getGender());
 
-        if(patientDTO.getEmail() != null) {
-            patient.setEmail(patientDTO.getEmail());
-        }
+        patient.setEmail(patientDTO.getEmail() != null ? patientDTO.getEmail() : patient.getEmail());
 
-        if(patientDTO.getInsuranceCompany() != null) {
-            patient.setEmail(patientDTO.getEmail());
-        }
+        patient.setInsuranceCompany(patientDTO.getInsuranceCompany() != null ? patientDTO.getInsuranceCompany() : patient.getInsuranceCompany());
 
-        if(patientDTO.getDateOfBirth() != null) {
-            patient.setDateOfBirth(patientDTO.getDateOfBirth());
-        }
+        patient.setDateOfBirth(patientDTO.getDateOfBirth() != null ? patientDTO.getDateOfBirth() : patient.getDateOfBirth());
 
         patient.setUpdateAT(LocalDateTime.now());
+    }
+
+    private Address createAddressForPatient (Address addressDto) {
+        if (
+                addressDto.getZipCode() == null ||
+                addressDto.getStreet() == null ||
+                addressDto.getNumber() == null ||
+                addressDto.getDistrict() == null ||
+                addressDto.getCity() == null ||
+                addressDto.getState() == null
+        ) {
+            throw new BadRequestException("Todos os campos do endereço devem ser preenchidos!");
+        }
+
+        Address address =  new Address(
+                null,
+               addressDto.getZipCode(),
+               addressDto.getStreet(),
+               addressDto.getNumber(),
+               addressDto.getDistrict(),
+               addressDto.getCity(),
+               addressDto.getState(),
+               addressDto.getComplements()
+        );
+
+        return this.addressService.create(address);
     }
 }
