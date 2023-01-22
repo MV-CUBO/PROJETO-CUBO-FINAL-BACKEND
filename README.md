@@ -7,13 +7,13 @@ This application was developed by using the folowing technologies: Java, Spring 
 
 The folowing instructions will make you have copy of this application running on you machine for develpment proposals. 
 
-Check [deployment] to learn how to deploy this project.
+Check "Local Deployment" to learn how to deploy this project.
 
 ### 📋 Requirements
 
 Here is what you need to be installed to run the application and how to do it:
 ```
-JDK (Java Development kit) 11 or greater
+- JDK (Java Development kit) 11 or greater
 - IDE to run Java (Eg: IntelliJ IDEA, Eclipse, Visual Studio Code)
 - PostgreSQL
 - Postman
@@ -22,12 +22,11 @@ JDK (Java Development kit) 11 or greater
 
 ### 🔧 Installation
 
-These are some step-by-step guidelines to get required items to be installed in your machine to properly run this project.
+These are some step-by-step guidelines to get required items to be installed in your machine to properly run this project:
 
-Siga as etapas: 
 
 ```
-1 - Check if you have JDK 11 or greater already installed
+1 - Check if you already have JDK 11 or greater installed
 ```
 ```
 1.1 - If you don't, follow the steps in the next link:
@@ -56,12 +55,12 @@ Siga as etapas:
 
 ## 📦 Local Deployment
 
-Here is what you have to do to get the application to be installed in your localhost. PS: In this example we're using Visual Studio Code as IDE.
+Here is what you have to do to get the application to be installed on your localhost. PS: In this example we're using Visual Studio Code as IDE.
 
 ```
 1 - make a git clone of this application
 ```
-- *[Projeto](https://github.com/MV-CUBO/PROJETO-CUBO-FINAL-BACKEND)*
+- *[Project](https://github.com/MV-CUBO/PROJETO-CUBO-FINAL-BACKEND)*
 
 ```
 2 - Open the downloaded folder which contains VSCode IDE.
@@ -78,7 +77,7 @@ Here is what you have to do to get the application to be installed in your local
 
 
 
-In order to learn about each application endpoints, please check out the api documentation in [DOCUMENTAÇÃO SWAGGER](http://localhost:8080/swagger-ui/index.html#/) da api. 
+In order to learn about each application endpoints, please check out the api documentation in [SWAGGER DOCUMENTATION](http://localhost:8080/swagger-ui/index.html#/) da api. 
 
 
 ## 📌 Version 
@@ -88,25 +87,15 @@ We've used [GIT](https://git-scm.com/downloads) for source code version control 
 ## ✒️ Developers
 
 
-* **Angelo Guilhermino da S. Júnior** - *Dev. Frontend* - [0Guilhermino](https://github.com/0Guilhermino)
-* **José Milton de Oliveira Neto** - *Dev. Backend* - [Noltim](https://github.com/Noltim)
-* **Laryssa Mirelly Nascimento Ribeiro** - *Dev. Frontend* - [laryribeir0](https://github.com/laryribeir0)
-* **Liedson Alves Severiano** - *Dev. Frontend* - [Liedsonft](https://github.com/Liedsonft)
-* **Luiz Carvalhedo** - *Dev. Backend* - [luizjsp](https://github.com/luizjsp)
-* **Matheus Lopes da Silva** - *Dev. Backend* - [MathLopes1](https://github.com/MathLopes1)
-* **Rafael Tomás Souza dos Santos** - *Dev. Frontend* - [RafaelTomas](https://github.com/RafaelTomas)
-* **Thiago Cavalcante** - *Dev. Backend* - [thiagoocms](https://github.com/thiagoocms)
-* **Ticiano de Albuquerque** - *Dev. Backend* - [TicianoFilho](https://github.com/TicianoFilho)
+* **Angelo Guilhermino da S. Júnior** - *Frontend Dev.* - [0Guilhermino](https://github.com/0Guilhermino)
+* **José Milton de Oliveira Neto** - *Backend Dev.* - [Noltim](https://github.com/Noltim)
+* **Laryssa Mirelly Nascimento Ribeiro** - *Frontend Dev.* - [laryribeir0](https://github.com/laryribeir0)
+* **Liedson Alves Severiano** - *Frontend Dev.* - [Liedsonft](https://github.com/Liedsonft)
+* **Luiz Carvalhedo** - *Backend Dev.* - [luizjsp](https://github.com/luizjsp)
+* **Matheus Lopes da Silva** - *Backend Dev.* - [MathLopes1](https://github.com/MathLopes1)
+* **Rafael Tomás Souza dos Santos** - *Frontend Dev.* - [RafaelTomas](https://github.com/RafaelTomas)
+* **Thiago Cavalcante** - *Backend Dev.* - [thiagoocms](https://github.com/thiagoocms)
+* **Ticiano Filho** - *Backend Dev.* - [TicianoFilho](https://github.com/TicianoFilho)
 
-
-
-
-Você também pode ver a lista de todos os [colaboradores](https://github.com/MV-CUBO/PROJETO-CUBO-FINAL-BACKEND/graphs/contributors) que participaram deste projeto. 
-
-
-## 🎁 Expressões de gratidão 
-
-* Conte a outras pessoas sobre este projeto 📢; 
-* Convide alguém da equipe para uma cerveja 🍺; 
 
 
