@@ -4,6 +4,7 @@ import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.entity.Patient;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.PatientRepository;
+import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.PatientDTO;
 import br.com.mv.APIHealth.rest.dto.UpdatePatientDTO;
@@ -95,18 +96,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     private PatientDTO stepsForCreationPatient(PatientDTO patientDTO) {
-        Address address = new Address(
-                null,
-                patientDTO.getAddress().getZipCode(),
-                patientDTO.getAddress().getStreet(),
-                patientDTO.getAddress().getNumber(),
-                patientDTO.getAddress().getDistrict(),
-                patientDTO.getAddress().getCity(),
-                patientDTO.getAddress().getState(),
-                patientDTO.getAddress().getComplements()
-        );
-
-        Address newAddress = this.addressService.create(address);
+        Address newAddress = this.createAddressForPatient(patientDTO.getAddress());
 
         patientDTO.setAddress(newAddress);
 
@@ -145,5 +135,31 @@ public class PatientServiceImpl implements PatientService {
         patient.setDateOfBirth(patientDTO.getDateOfBirth() != null ? patientDTO.getDateOfBirth() : patient.getDateOfBirth());
 
         patient.setUpdateAT(LocalDateTime.now());
+    }
+
+    private Address createAddressForPatient (Address addressDto) {
+        if (
+                addressDto.getZipCode() == null ||
+                addressDto.getStreet() == null ||
+                addressDto.getNumber() == null ||
+                addressDto.getDistrict() == null ||
+                addressDto.getCity() == null ||
+                addressDto.getState() == null
+        ) {
+            throw new BadRequestException("Todos os campos do endereço devem ser preenchidos!");
+        }
+
+        Address address =  new Address(
+                null,
+               addressDto.getZipCode(),
+               addressDto.getStreet(),
+               addressDto.getNumber(),
+               addressDto.getDistrict(),
+               addressDto.getCity(),
+               addressDto.getState(),
+               addressDto.getComplements()
+        );
+
+        return this.addressService.create(address);
     }
 }
