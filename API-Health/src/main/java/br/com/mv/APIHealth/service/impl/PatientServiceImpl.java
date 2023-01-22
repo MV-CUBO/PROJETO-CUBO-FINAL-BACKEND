@@ -2,12 +2,10 @@ package br.com.mv.APIHealth.service.impl;
 
 import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.entity.Patient;
-import br.com.mv.APIHealth.domain.entity.Pep;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.PatientRepository;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.PatientDTO;
-import br.com.mv.APIHealth.rest.dto.PepDTO;
 import br.com.mv.APIHealth.rest.dto.UpdatePatientDTO;
 import br.com.mv.APIHealth.service.AddressService;
 import br.com.mv.APIHealth.service.PatientService;
@@ -66,7 +64,6 @@ public class PatientServiceImpl implements PatientService {
 
         BeanUtils.copyProperties(patient, patientDTO);
 
-
         Patient patientUpdated = this.patientRepository.save(patient);
 
         BeanUtils.copyProperties(patientUpdated, patientDTO);
@@ -122,7 +119,9 @@ public class PatientServiceImpl implements PatientService {
     }
 
     private Patient validatePatientExists (UUID id) {
-        Patient patient = this.patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
+        Patient patient = this.patientRepository
+                    .findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
+
         return patient;
     }
 
