@@ -32,6 +32,8 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDTO create(PatientDTO patientDTO) {
+        this.validatePatientExistByCpf(patientDTO.getCpf());
+
         this.stepsForCreationPatient(patientDTO);
 
         Patient patient = new Patient();
@@ -161,5 +163,11 @@ public class PatientServiceImpl implements PatientService {
         );
 
         return this.addressService.create(address);
+    }
+
+    private void validatePatientExistByCpf(String cpf) {
+        Boolean patientIsPresent = this.patientRepository.findByCpf(cpf).isPresent();
+
+        if(patientIsPresent) throw new BadRequestException("CPF já cadastrado na base!");
     }
 }
