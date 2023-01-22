@@ -112,7 +112,7 @@ public class PatientServiceImpl implements PatientService {
 
     private Patient validatePatientExists (UUID id) {
         Patient patient = this.patientRepository
-                    .findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado."));
+                    .findById(id).orElseThrow(() -> new ResourceNotFoundException("Patient not found."));
 
         return patient;
     }
@@ -140,34 +140,36 @@ public class PatientServiceImpl implements PatientService {
     }
 
     private Address createAddressForPatient (Address addressDto) {
-        if (
-                addressDto.getZipCode() == null ||
-                addressDto.getStreet() == null ||
-                addressDto.getNumber() == null ||
-                addressDto.getDistrict() == null ||
-                addressDto.getCity() == null ||
-                addressDto.getState() == null
-        ) {
-            throw new BadRequestException("Todos os campos do endereço devem ser preenchidos!");
+        if(addressDto != null) {
+            if (
+                    addressDto.getZipCode() == null ||
+                            addressDto.getStreet() == null ||
+                            addressDto.getNumber() == null ||
+                            addressDto.getDistrict() == null ||
+                            addressDto.getCity() == null ||
+                            addressDto.getState() == null
+            ) {
+                throw new BadRequestException("All address fields must be filled in!");
+            } else {
+                addressDto =  new Address(
+                        null,
+                        addressDto.getZipCode(),
+                        addressDto.getStreet(),
+                        addressDto.getNumber(),
+                        addressDto.getDistrict(),
+                        addressDto.getCity(),
+                        addressDto.getState(),
+                        addressDto.getComplements()
+                );
+            }
         }
 
-        Address address =  new Address(
-                null,
-               addressDto.getZipCode(),
-               addressDto.getStreet(),
-               addressDto.getNumber(),
-               addressDto.getDistrict(),
-               addressDto.getCity(),
-               addressDto.getState(),
-               addressDto.getComplements()
-        );
-
-        return this.addressService.create(address);
+        return this.addressService.create(addressDto);
     }
 
     private void validatePatientExistByCpf(String cpf) {
         Boolean patientIsPresent = this.patientRepository.findByCpf(cpf).isPresent();
 
-        if(patientIsPresent) throw new BadRequestException("CPF já cadastrado na base!");
+        if(patientIsPresent) throw new BadRequestException("CPF already registered in the database!");
     }
 }
