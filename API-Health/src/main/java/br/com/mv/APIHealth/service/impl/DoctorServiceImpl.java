@@ -2,9 +2,14 @@ package br.com.mv.APIHealth.service.impl;
 
 import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.entity.Doctor;
+import br.com.mv.APIHealth.domain.entity.Nurse;
+import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.DoctorRepository;
+import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.DoctorDTO;
+import br.com.mv.APIHealth.rest.dto.NurseDTO;
+import br.com.mv.APIHealth.service.AddressService;
 import br.com.mv.APIHealth.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -23,14 +28,20 @@ public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
 
+    private final AddressService addressService;
+
+    private final String MESSAGE = "Provide the patient's address.";
+
     @Override
     public DoctorDTO create(DoctorDTO doctorDTO) {
-        doctorDTO.setCreatedAt(LocalDateTime.now());
-        doctorDTO.setUpdateAT(LocalDateTime.now());
-        Address address = new Address(); //implementação para criar endereço
+        this.validateDoctorExistByCpf(doctorDTO.getCpf());
+
+        this.stepsForCreationDoctor(doctorDTO);
 
         Doctor doctor = new Doctor();
+
         BeanUtils.copyProperties(doctorDTO, doctor);
+
         Doctor newDoctor = doctorRepository.save(doctor);
 
         BeanUtils.copyProperties(newDoctor, doctorDTO);
@@ -79,4 +90,36 @@ public class DoctorServiceImpl implements DoctorService {
                 })
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Doctor not found."));
     }
+
+    private DoctorDTO stepsForCreationDoctor(DoctorDTO doctorDTO) {
+        Address newAddress = this.createAddressForDoctor(doctorDTO.getAddress());
+
+        doctorDTO.setAddress(newAddress);
+
+        doctorDTO.setCreatedAt(LocalDateTime.now());
+        doctorDTO.setUpdateAT(LocalDateTime.now());
+
+        doctorDTO.setStatus(EStatus.ACTIVATE);
+
+        return doctorDTO;
+    }
+
+    private void validateDoctorExistByCpf(String cpf) {
+        Boolean doctorIsPresent = this.doctorRepository.findByCpf(cpf).isPresent();
+
+        if (doctorIsPresent) throw new BadRequestException("CPF already registered in the database!");
+    }
+
+    private Address createAddressForDoctor(Address addressDto) {
+        if (addressDto != null) {
+            if (addressDto.getZipCode() == null || addressDto.getStreet() == null || addressDto.getNumber() == null || addressDto.getDistrict() == null || addressDto.getCity() == null || addressDto.getState() == null) {
+                throw new BadRequestException("All address fields must be filled in!");
+            } else {
+                addressDto = new Address(null, addressDto.getZipCode(), addressDto.getStreet(), addressDto.getNumber(), addressDto.getDistrict(), addressDto.getCity(), addressDto.getState(), addressDto.getComplements());
+            }
+        }
+
+        return this.addressService.create(addressDto, MESSAGE);
+    }
+
 }
