@@ -29,6 +29,12 @@ public class PepController {
         return this.pepService.getAll();
     }
 
+    @GetMapping("{id}")
+    @ResponseStatus(OK)
+    public PepDTO getPepById(@PathVariable(name = "id") UUID id){
+        return this.pepService.getPepById(id);
+    }
+
     @PostMapping
     @ResponseStatus(CREATED)
     public PepDTO savePep(@RequestBody @Valid PepDTO pepDTO) {
