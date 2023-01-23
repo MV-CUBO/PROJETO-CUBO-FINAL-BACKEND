@@ -12,9 +12,23 @@ import java.util.UUID;
 @NoArgsConstructor
 public class PepDTO {
 
-    @NotEmpty
+
     private String pepNumber;
 
+<<<<<<< HEAD
+    private UUID patientId;
+
+    private UUID doctorId;
+
+    private String status;
+
+    private String prescription;
+
+    private String bloodType;
+
+    private String allergies;
+
+=======
     @NotEmpty
     private UUID patientId;
 
@@ -34,6 +48,7 @@ public class PepDTO {
     private String allergies;
 
     @NotEmpty
+>>>>>>> ae33022393805115badc0ec3d805896c8ee80608
     private LocalDateTime createdAt;
 
     private LocalDateTime updateAt;

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PepLogService {
-    public PepLogDTO create(PepLogDTO pepDTO);
+    public PepLogDTO create(PepLogDTO pepLogDTO);
     public PepLogDTO getPepById(UUID id);
     public PepLogDTO updateById(UUID id, PepLogDTO pepLogDTO);
     public List<PepLogDTO> getAll();

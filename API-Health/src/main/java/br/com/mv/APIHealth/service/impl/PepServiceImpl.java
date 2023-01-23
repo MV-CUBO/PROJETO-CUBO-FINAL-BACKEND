@@ -8,10 +8,11 @@ import br.com.mv.APIHealth.domain.repository.PepRepository;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 
 import br.com.mv.APIHealth.rest.dto.PepDTO;
+import br.com.mv.APIHealth.rest.dto.PepLogDTO;
 import br.com.mv.APIHealth.service.PepService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,7 +25,7 @@ public class PepServiceImpl implements PepService {
 
 
     private final PepRepository pepRepository;
-    private final PepLogRepository pepLogRepository;
+    private final PepLogServiceImpl pepLogService;
 
     @Override
     public PepDTO create(PepDTO pepDTO) {
@@ -33,11 +34,11 @@ public class PepServiceImpl implements PepService {
         BeanUtils.copyProperties(pepDTO,pep);
         pep.setCreatedAt(LocalDateTime.now());
         Pep newPep = this.pepRepository.save(pep);
-        PepLog pepLog = new PepLog();
-        pepLog.setPepId(pep.getId());
-        pepLog.setAction("pep was created");
-        pepLog.setCreatedAt(LocalDateTime.now());
-        this.pepLogRepository.save(pepLog);
+        PepLogDTO pepLogDTO = new PepLogDTO();
+        pepLogDTO.setPepId(pep.getId());
+        pepLogDTO.setAction("pep was created");
+        pepLogDTO.setCreatedAt(LocalDateTime.now());
+        this.pepLogService.create(pepLogDTO);
         BeanUtils.copyProperties(newPep,pepDTO);
         return pepDTO;
     }
@@ -58,11 +59,11 @@ public class PepServiceImpl implements PepService {
         pep.setId(id);
         pep.setUpdateAt(LocalDateTime.now());
         Pep pepUpdated = this.pepRepository.save(pep);
-        PepLog pepLog = new PepLog();
-        pepLog.setPepId(pep.getId());
-        pepLog.setAction("pep was updated");
-        pepLog.setCreatedAt(LocalDateTime.now());
-        this.pepLogRepository.save(pepLog);
+        PepLogDTO pepLogDTO = new PepLogDTO();
+        pepLogDTO.setPepId(pep.getId());
+        pepLogDTO.setAction("pep was updated");
+        pepLogDTO.setCreatedAt(LocalDateTime.now());
+        this.pepLogService.create(pepLogDTO);
         BeanUtils.copyProperties(pepUpdated,pepDTO);
         return pepDTO;
     }
@@ -110,6 +111,12 @@ public class PepServiceImpl implements PepService {
         }
         if(pepDTO.getBloodType() != null){
             pep.setBloodType(pepDTO.getBloodType());
+<<<<<<< HEAD
+        }
+        if(pepDTO.getDoctorId() != null){
+            pep.setDoctorId(pepDTO.getDoctorId());
+=======
+>>>>>>> ae33022393805115badc0ec3d805896c8ee80608
         }
         //if(pepDTO.getDoctorId() != null){
         //    pep.setDoctorId(pepDTO.getDoctorId());
