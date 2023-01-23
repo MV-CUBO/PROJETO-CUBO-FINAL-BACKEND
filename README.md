@@ -77,7 +77,7 @@ Here is what you have to do to get the application to be installed on your local
 
 
 
-In order to learn about each application endpoints, please check out the api documentation in [SWAGGER DOCUMENTATION](http://localhost:8080/swagger-ui/index.html#/) da api. 
+In order to learn about each application endpoints, please check out the api documentation in [SWAGGER DOCUMENTATION](http://localhost:5000/swagger-ui/index.html#/) da api. 
 
 
 ## 📌 Version 
