@@ -30,12 +30,13 @@ public class NurseServiceImpl implements NurseService {
 
     private final NurseRepository nurseRepository;
     private final AddressService addressService;
+    private final String MESSAGE = "Provide the patient's address.";
 
     @Override
     public NurseDTO create(NurseDTO nurseDTO) {
         this.validateNurseExistByCpf(nurseDTO.getCpf());
 
-        this.stepsForCreationPatient(nurseDTO);
+        this.stepsForCreationNurse(nurseDTO);
 
         Nurse nurse = new Nurse();
 
@@ -101,8 +102,8 @@ public class NurseServiceImpl implements NurseService {
         }).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Nurse not found."));
     }
 
-    private NurseDTO stepsForCreationPatient(NurseDTO nurseDTO) {
-        Address newAddress = this.createAddressForPatient(nurseDTO.getAddress());
+    private NurseDTO stepsForCreationNurse(NurseDTO nurseDTO) {
+        Address newAddress = this.createAddressForNurse(nurseDTO.getAddress());
 
         nurseDTO.setAddress(newAddress);
 
@@ -126,7 +127,7 @@ public class NurseServiceImpl implements NurseService {
         if (nurseIsPresent) throw new BadRequestException("CPF already registered in the database!");
     }
 
-    private Address createAddressForPatient(Address addressDto) {
+    private Address createAddressForNurse(Address addressDto) {
         if (addressDto != null) {
             if (addressDto.getZipCode() == null || addressDto.getStreet() == null || addressDto.getNumber() == null || addressDto.getDistrict() == null || addressDto.getCity() == null || addressDto.getState() == null) {
                 throw new BadRequestException("All address fields must be filled in!");
@@ -135,7 +136,7 @@ public class NurseServiceImpl implements NurseService {
             }
         }
 
-        return this.addressService.create(addressDto);
+        return this.addressService.create(addressDto, MESSAGE);
     }
 
     private void validateForUpdateNurse(NurseDTO nurseDTO, Nurse nurse) {
