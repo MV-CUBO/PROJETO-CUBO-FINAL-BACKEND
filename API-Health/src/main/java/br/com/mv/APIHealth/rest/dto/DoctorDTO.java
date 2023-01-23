@@ -24,6 +24,4 @@ public class DoctorDTO extends PersonDTO {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Specialty specialty;
-
-
 }

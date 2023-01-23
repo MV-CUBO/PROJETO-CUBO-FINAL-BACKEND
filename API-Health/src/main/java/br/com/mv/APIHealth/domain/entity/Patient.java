@@ -18,6 +18,7 @@ public class Patient extends Person  {
     private String healthInsurenceCard;
 
     private String observation;
+
     @Enumerated(EnumType.STRING)
     private EStatus status;
 
