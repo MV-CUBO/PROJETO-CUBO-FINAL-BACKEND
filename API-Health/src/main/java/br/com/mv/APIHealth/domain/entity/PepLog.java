@@ -23,6 +23,7 @@ public class PepLog {
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID pepId;
 
     private String action;
