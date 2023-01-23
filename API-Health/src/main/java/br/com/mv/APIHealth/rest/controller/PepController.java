@@ -2,7 +2,11 @@ package br.com.mv.APIHealth.rest.controller;
 
 
 import br.com.mv.APIHealth.rest.dto.PepDTO;
+import br.com.mv.APIHealth.rest.dto.PepLogDTO;
+import br.com.mv.APIHealth.service.PepLogService;
 import br.com.mv.APIHealth.service.PepService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,9 +19,13 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/pep")
+
 public class PepController {
 
-    private final PepService pepService;
+    @Autowired
+    private  PepService pepService;
+    @Autowired
+    private  PepLogService pepLogService;
 
     public PepController(PepService pepService) {
         this.pepService = pepService;
@@ -34,6 +42,17 @@ public class PepController {
     public PepDTO getPepById(@PathVariable(name = "id") UUID id){
         return this.pepService.getPepById(id);
     }
+    @GetMapping("{id}/logs")
+    @ResponseStatus(OK)
+    public List<PepLogDTO> getAllByPepId(@PathVariable(name = "id") UUID id){
+        return this.pepLogService.getAllByPepId(id);
+    }
+    @GetMapping("/logs")
+    @ResponseStatus(OK)
+    public List<PepLogDTO> getAllLog(){
+        return this.pepLogService.getAll();
+    }
+
 
     @PostMapping
     @ResponseStatus(CREATED)

@@ -25,7 +25,7 @@ public class Pep{
 
     private String pepNumber;
 
-    //private UUID patientId;
+    private UUID patientId;
 
     //private UUID doctorId;
 

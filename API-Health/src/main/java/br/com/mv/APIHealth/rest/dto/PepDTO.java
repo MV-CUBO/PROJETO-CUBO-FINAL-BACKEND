@@ -1,6 +1,7 @@
 package br.com.mv.APIHealth.rest.dto;
 
 import br.com.mv.APIHealth.domain.entity.Doctor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public class PepDTO {
     @NotEmpty
     private UUID patientId;
 
+    @JsonIgnore
     @NotEmpty
     private Doctor doctor;
 
