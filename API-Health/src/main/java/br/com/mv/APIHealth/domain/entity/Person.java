@@ -2,6 +2,7 @@ package br.com.mv.APIHealth.domain.entity;
 
 import br.com.mv.APIHealth.domain.enums.Gender;
 import br.com.mv.APIHealth.domain.enums.MaritalStatus;
+import br.com.mv.APIHealth.domain.enums.Specialty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -50,4 +51,6 @@ public class Person {
     private LocalDateTime createdAt;
 
     private LocalDateTime updateAT;
+
+
 }

@@ -3,6 +3,7 @@ package br.com.mv.APIHealth.rest.dto;
 import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.enums.Gender;
 import br.com.mv.APIHealth.domain.enums.MaritalStatus;
+import br.com.mv.APIHealth.domain.enums.Specialty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -49,4 +50,6 @@ public class PersonDTO {
     private LocalDateTime updateAT;
 
     private Address address;
+
+
 }
