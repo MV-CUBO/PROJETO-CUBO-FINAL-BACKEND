@@ -79,7 +79,7 @@ public class NurseServiceImpl implements NurseService {
     @Override
     public NurseDTO update(UUID id, NurseDTO nurseDTO) {
 
-        Nurse nurse= this.validateNurseExists(id);
+        Nurse nurse = this.validateNurseExists(id);
 
         this.validateForUpdateNurse(nurseDTO, nurse);
 
@@ -116,11 +116,12 @@ public class NurseServiceImpl implements NurseService {
     }
 
     private Nurse validateNurseExists(UUID id) {
-        Nurse nurse = this.nurseRepository
-                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Patient not found."));
+        Nurse nurse = this.nurseRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Patient not found."));
 
         return nurse;
     }
+
     private void validateNurseExistByCpf(String cpf) {
         Boolean nurseIsPresent = this.nurseRepository.findByCpf(cpf).isPresent();
 
@@ -129,10 +130,22 @@ public class NurseServiceImpl implements NurseService {
 
     private Address createAddressForNurse(Address addressDto) {
         if (addressDto != null) {
-            if (addressDto.getZipCode() == null || addressDto.getStreet() == null || addressDto.getNumber() == null || addressDto.getDistrict() == null || addressDto.getCity() == null || addressDto.getState() == null) {
+            if (addressDto.getZipCode() == null
+                    || addressDto.getStreet() == null
+                    || addressDto.getNumber() == null
+                    || addressDto.getDistrict() == null
+                    || addressDto.getCity() == null
+                    || addressDto.getState() == null) {
                 throw new BadRequestException("All address fields must be filled in!");
             } else {
-                addressDto = new Address(null, addressDto.getZipCode(), addressDto.getStreet(), addressDto.getNumber(), addressDto.getDistrict(), addressDto.getCity(), addressDto.getState(), addressDto.getComplements());
+                addressDto = new Address(null,
+                        addressDto.getZipCode(),
+                        addressDto.getStreet(),
+                        addressDto.getNumber(),
+                        addressDto.getDistrict(),
+                        addressDto.getCity(),
+                        addressDto.getState(),
+                        addressDto.getComplements());
             }
         }
 

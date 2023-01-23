@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 @Data
@@ -13,14 +14,11 @@ import java.util.UUID;
 @NoArgsConstructor
 public class PepDTO {
 
+
+    private UUID id;
+
     @NotEmpty
     private String pepNumber;
-
-    @NotEmpty
-    private UUID patientId;
-
-    @NotEmpty
-    private Doctor doctor;
 
     @NotEmpty
     private String status;
