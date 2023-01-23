@@ -5,6 +5,7 @@ import br.com.mv.APIHealth.domain.repository.UserRepository;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.UserDTO;
 import br.com.mv.APIHealth.service.UserService;
+import br.com.mv.APIHealth.utils.Response;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 

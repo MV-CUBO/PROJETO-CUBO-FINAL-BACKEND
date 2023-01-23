@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 @Data
@@ -14,10 +15,14 @@ import java.util.UUID;
 @NoArgsConstructor
 public class PepDTO {
 
+
+    private UUID id;
+
     @NotEmpty
     private String pepNumber;
 
     @NotEmpty
+<<<<<<< HEAD
     private UUID patientId;
 
     @JsonIgnore
@@ -25,6 +30,8 @@ public class PepDTO {
     private Doctor doctor;
 
     @NotEmpty
+=======
+>>>>>>> 4410edb66066c2facfc915607953fdc555c66204
     private String status;
 
     @NotEmpty

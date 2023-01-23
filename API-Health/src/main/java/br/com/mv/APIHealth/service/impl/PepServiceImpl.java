@@ -33,6 +33,7 @@ public class PepServiceImpl implements PepService {
 
         BeanUtils.copyProperties(pepDTO,pep);
         pep.setCreatedAt(LocalDateTime.now());
+        pep.setUpdateAt(LocalDateTime.now());
         Pep newPep = this.pepRepository.save(pep);
         PepLogDTO pepLogDTO = new PepLogDTO();
         pepLogDTO.setPepId(pep.getId());
@@ -110,9 +111,7 @@ public class PepServiceImpl implements PepService {
         if(pepDTO.getBloodType() != null){
             pep.setBloodType(pepDTO.getBloodType());
         }
-        if(pepDTO.getDoctor() != null){
-            pep.setDoctor(pepDTO.getDoctor());
-        }
+
         if(pepDTO.getPrescription() != null){
             pep.setPrescription(pepDTO.getPrescription());
         }
