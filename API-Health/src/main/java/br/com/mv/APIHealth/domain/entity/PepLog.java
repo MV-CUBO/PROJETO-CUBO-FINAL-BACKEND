@@ -24,7 +24,9 @@ public class PepLog {
     private UUID id;
 
     @Type(type = "org.hibernate.type.UUIDCharType")
-    private UUID pepId;
+    @ManyToOne
+    @JoinColumn(name = "pep", referencedColumnName = "id")
+    private Pep pep;
 
     private String action;
 

@@ -8,6 +8,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -25,7 +26,7 @@ public class Pep{
 
     private String pepNumber;
 
-    //private UUID patientId;
+    private UUID patientId;
 
     //private UUID doctorId;
 
@@ -44,6 +45,9 @@ public class Pep{
     @ManyToOne
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     private Doctor doctor;
+
+    @OneToMany(mappedBy="pep")
+    private List<PepLog> pepLogs;
 
 
 

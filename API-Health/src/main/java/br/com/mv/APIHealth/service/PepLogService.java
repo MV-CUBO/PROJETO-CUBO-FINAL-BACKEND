@@ -12,4 +12,5 @@ public interface PepLogService {
     public PepLogDTO updateById(UUID id, PepLogDTO pepLogDTO);
     public List<PepLogDTO> getAll();
     public void deleteById(UUID id);
+    public List<PepLogDTO> getAllByPepId(UUID pepId);
 }
