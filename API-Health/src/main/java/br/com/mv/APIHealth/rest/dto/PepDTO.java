@@ -1,5 +1,6 @@
 package br.com.mv.APIHealth.rest.dto;
 
+import br.com.mv.APIHealth.domain.entity.Doctor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,28 +13,14 @@ import java.util.UUID;
 @NoArgsConstructor
 public class PepDTO {
 
-
+    @NotEmpty
     private String pepNumber;
 
-<<<<<<< HEAD
-    private UUID patientId;
-
-    private UUID doctorId;
-
-    private String status;
-
-    private String prescription;
-
-    private String bloodType;
-
-    private String allergies;
-
-=======
     @NotEmpty
     private UUID patientId;
 
     @NotEmpty
-    private UUID doctorId;
+    private Doctor doctor;
 
     @NotEmpty
     private String status;
@@ -47,8 +34,7 @@ public class PepDTO {
     @NotEmpty
     private String allergies;
 
-    @NotEmpty
->>>>>>> ae33022393805115badc0ec3d805896c8ee80608
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updateAt;

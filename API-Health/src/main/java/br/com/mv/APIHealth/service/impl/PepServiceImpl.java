@@ -94,9 +94,7 @@ public class PepServiceImpl implements PepService {
         return this.pepRepository.findById(pepId).orElseThrow(() -> new ResourceNotFoundException("Pep não encontrado."));
     }
     private void validateForUpdatePep(PepDTO pepDTO, Pep pep){
-       // if(pepDTO.getPatientId() != null){
-       //     pep.setPatientId(pepDTO.getPatientId());
-       // }
+
         if(pepDTO.getPepNumber() != null){
             pep.setPepNumber(pepDTO.getPepNumber());
         }
@@ -111,16 +109,10 @@ public class PepServiceImpl implements PepService {
         }
         if(pepDTO.getBloodType() != null){
             pep.setBloodType(pepDTO.getBloodType());
-<<<<<<< HEAD
         }
-        if(pepDTO.getDoctorId() != null){
-            pep.setDoctorId(pepDTO.getDoctorId());
-=======
->>>>>>> ae33022393805115badc0ec3d805896c8ee80608
+        if(pepDTO.getDoctor() != null){
+            pep.setDoctor(pepDTO.getDoctor());
         }
-        //if(pepDTO.getDoctorId() != null){
-        //    pep.setDoctorId(pepDTO.getDoctorId());
-        //}
         if(pepDTO.getPrescription() != null){
             pep.setPrescription(pepDTO.getPrescription());
         }
