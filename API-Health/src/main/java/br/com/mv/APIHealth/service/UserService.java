@@ -1,6 +1,7 @@
 package br.com.mv.APIHealth.service;
 
 import br.com.mv.APIHealth.rest.dto.UserDTO;
+import br.com.mv.APIHealth.utils.Response;
 
 import java.util.Optional;
 import java.util.UUID;

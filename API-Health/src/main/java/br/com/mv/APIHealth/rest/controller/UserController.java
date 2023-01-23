@@ -1,10 +1,15 @@
 package br.com.mv.APIHealth.rest.controller;
 
+import br.com.mv.APIHealth.domain.entity.login.User;
 import br.com.mv.APIHealth.rest.dto.UserDTO;
 import br.com.mv.APIHealth.service.UserService;
+import br.com.mv.APIHealth.utils.Response;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -24,15 +29,35 @@ public class UserController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO saveUser(@RequestBody UserDTO userDto) {
-        return userService.create(userDto);
+    public ResponseEntity<Response<UserDTO>> saveUser(@RequestBody @Valid UserDTO userDto,
+                                                      BindingResult result) {
+        Response<UserDTO> response = new Response<>();
+        if (result.hasErrors()) {
+            result.getAllErrors().forEach(err -> response.getErrors().add(err.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        UserDTO newUserDto = userService.create(userDto);
+        response.setData(newUserDto);
+        response.getErrors().add("No content.");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public UserDTO updateUser(@PathVariable(name = "id") UUID id, @RequestBody UserDTO userDto) {
-        return userService.update(id, userDto);
+    public ResponseEntity<Response<UserDTO>> updateUser(@PathVariable(name = "id") UUID id,
+                                                        @RequestBody @Valid UserDTO userDto,
+                                                        BindingResult result) {
+        Response<UserDTO> response = new Response<>();
+        if (result.hasErrors()) {
+            result.getAllErrors().forEach(err -> response.getErrors().add(err.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(response);
+        }
+        UserDTO updatedDto = userService.update(id, userDto);
+        response.setData(updatedDto);
+        response.getErrors().add("No content.");
+
+        return ResponseEntity.ok().body(response);
     }
 
     @DeleteMapping

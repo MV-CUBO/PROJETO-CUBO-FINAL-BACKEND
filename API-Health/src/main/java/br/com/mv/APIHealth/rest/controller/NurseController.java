@@ -2,7 +2,9 @@ package br.com.mv.APIHealth.rest.controller;
 
 import br.com.mv.APIHealth.rest.dto.NurseDTO;
 import br.com.mv.APIHealth.service.NurseService;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.Valid;
 import java.util.List;
