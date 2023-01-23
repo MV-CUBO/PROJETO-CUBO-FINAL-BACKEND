@@ -1,6 +1,7 @@
 package br.com.mv.APIHealth.rest.dto;
 
 import br.com.mv.APIHealth.domain.entity.Address;
+import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.enums.Gender;
 import br.com.mv.APIHealth.domain.enums.MaritalStatus;
 import br.com.mv.APIHealth.domain.enums.Specialty;
@@ -50,6 +51,9 @@ public class PersonDTO {
     private LocalDateTime updateAT;
 
     private Address address;
+
+    @Enumerated(EnumType.STRING)
+    private EStatus status;
 
 
 }
