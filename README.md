@@ -3,7 +3,7 @@
 
 This application was developed by using the folowing technologies: Java, Spring Boot, PostgreSQL, GIT, Angular and Postman.
 
-## 🚀 Starting
+## 🚀 Starting Off
 
 The folowing instructions will make you have copy of this application running on you machine for develpment proposals. 
 
@@ -42,10 +42,10 @@ These are some step-by-step guidelines to get required items to be installed in 
 - **[VSC](https://code.visualstudio.com/download)** 
 
 ```
-3 - check if you have PostgreSQL installed
+3 - Check if you have PostgreSQL installed
 ```
 ```
-3.1 - if you don't, check out the following link: 
+3.1 - If you don't, check out the following link: 
 ```
 - **[PostgreSQL](https://www.postgresql.org/download/)** 
 
@@ -58,7 +58,7 @@ These are some step-by-step guidelines to get required items to be installed in 
 Here is what you have to do to get the application to be installed on your localhost. PS: In this example we're using Visual Studio Code as IDE.
 
 ```
-1 - make a git clone of this application
+1 - Make a git clone of this application
 ```
 - *[Project](https://github.com/MV-CUBO/PROJETO-CUBO-FINAL-BACKEND)*
 
@@ -77,7 +77,7 @@ Here is what you have to do to get the application to be installed on your local
 
 
 
-In order to learn about each application endpoints, please check out the api documentation in [SWAGGER DOCUMENTATION](http://localhost:5000/swagger-ui/index.html#/) da api. 
+In order to learn about each application endpoints, please check out the api documentation in [SWAGGER DOCUMENTATION](http://localhost:5000/swagger-ui/index.html#/). 
 
 
 ## 📌 Version 
