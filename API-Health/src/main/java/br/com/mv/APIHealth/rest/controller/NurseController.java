@@ -1,6 +1,5 @@
 package br.com.mv.APIHealth.rest.controller;
 
-import br.com.mv.APIHealth.domain.entity.Nurse;
 import br.com.mv.APIHealth.rest.dto.NurseDTO;
 import br.com.mv.APIHealth.service.NurseService;
 import org.springframework.web.bind.annotation.*;
@@ -28,10 +27,10 @@ public class NurseController {
         return this.nurseService.getNurseById(id);
     }
 
-    //modificar para DTO de informações e tratar os dados por ele
+
     @GetMapping
     @ResponseStatus(OK)
-    public List<Nurse> getAll(){
+    public List<NurseDTO> getAll(){
         return this.nurseService.getAll();
     }
 

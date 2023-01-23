@@ -25,8 +25,8 @@ public class PersonDTO {
     @NotEmpty(message = "{required.name.field}")
     private String name;
 
-    @NotEmpty
-    @CPF
+    @NotEmpty(message = "vazio teste milton")
+    @CPF(message = "nao valido testando milton")
     private String cpf;
 
     @Past

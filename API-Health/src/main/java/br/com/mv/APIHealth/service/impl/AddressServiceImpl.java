@@ -20,7 +20,7 @@ public class AddressServiceImpl implements AddressService {
         try {
            address = this.addressRepository.save(address);
         } catch (Exception ex) {
-            throw new BadRequestException("Provide the patient's address");
+            throw new BadRequestException("The address field is empty.");
         }
         return address;
     }
