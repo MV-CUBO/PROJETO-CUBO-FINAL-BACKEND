@@ -1,13 +1,14 @@
 package br.com.mv.APIHealth.domain.entity;
 
+import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.enums.Gender;
 import br.com.mv.APIHealth.domain.enums.MaritalStatus;
+import br.com.mv.APIHealth.domain.enums.Specialty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -51,4 +52,9 @@ public class Person {
     private LocalDateTime createdAt;
 
     private LocalDateTime updateAT;
+
+    @Enumerated(EnumType.STRING)
+    private EStatus status;
+
+
 }

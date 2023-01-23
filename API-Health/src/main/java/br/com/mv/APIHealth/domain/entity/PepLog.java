@@ -22,8 +22,11 @@ public class PepLog {
     @Column(name = "id", updatable = false, nullable = false)
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
+
     private UUID pepId;
+
     private String action;
+
     private LocalDateTime createdAt;
 
 

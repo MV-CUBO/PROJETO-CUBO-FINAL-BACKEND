@@ -1,13 +1,11 @@
 package br.com.mv.APIHealth.domain.repository;
 
-import br.com.mv.APIHealth.domain.entity.Nurse;
+import br.com.mv.APIHealth.domain.entity.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface NurseRepository extends JpaRepository<Nurse, UUID> {
-    public Optional<Nurse> findByCpf(String cpf);
+public interface AddressRepository extends JpaRepository <Address, UUID> {
 }

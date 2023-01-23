@@ -1,54 +1,51 @@
-# PROJETO FINAL - JAVA SPRING BOOT - ANGULAR
+# COMPLETION PROJECT: JAVA - SPRING BOOT - ANGULAR
 
 
+This application was developed by using the folowing technologies: Java, Spring Boot, PostgreSQL, GIT, Angular and Postman.
 
-Aplicação usando o framework Java Spring Boot, Postgres, GIt e Angular.
+## 🚀 Starting
 
-## 🚀 Começando
+The folowing instructions will make you have copy of this application running on you machine for develpment proposals. 
 
-Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste. 
+Check "Local Deployment" to learn how to deploy this project.
 
-Consulte **[Implantação](#-implanta%C3%A7%C3%A3o)** para saber como implantar o projeto. 
+### 📋 Requirements
 
-### 📋 Pré-requisitos 
-
-De que coisas você precisa para instalar o software e como instalá-lo?
-
+Here is what you need to be installed to run the application and how to do it:
 ```
-- JDK (Java Development Kit) 11 ou superior.
-- Visual Studio Code como IDE (com extensão java)
+- JDK (Java Development kit) 11 or greater
+- IDE to run Java (Eg: IntelliJ IDEA, Eclipse, Visual Studio Code)
 - PostgreSQL
+- Postman
+
+```
+
+### 🔧 Installation
+
+These are some step-by-step guidelines to get required items to be installed in your machine to properly run this project:
 
 
 ```
-
-### 🔧 Instalação 
-
-Uma série de exemplos passo-a-passo que informam o que você deve executar para ter um ambiente de desenvolvimento em execução. 
-
-Siga as etapas: 
-
-```
-1°- Verifique se você possui o JDK 11 
+1 - Check if you already have JDK 11 or greater installed
 ```
 ```
-1.1° - Caso não tenha clique no link a baixo. 
+1.1 - If you don't, follow the steps in the next link:
 ```
-- **[JDK](https://www.oracle.com/br/java/technologies/javase/jdk11-archive-downloads.html)** 
+- **[JDK 11](https://www.oracle.com/br/java/technologies/javase/jdk11-archive-downloads.html)** 
 
 ```
-2°- Verifique se você possui o VSC 
+2 - Check if you have an IDE installed
 ```
 ```
-2.1° - Caso não tenha clique no link a baixo. 
+2.1 - If not, click the following link to download VSCode
 ```
 - **[VSC](https://code.visualstudio.com/download)** 
 
 ```
-3°- Verifique se você possui o PostgreSQL 
+3 - check if you have PostgreSQL installed
 ```
 ```
-3.1° - Caso não tenha clique no link a baixo. 
+3.1 - if you don't, check out the following link: 
 ```
 - **[PostgreSQL](https://www.postgresql.org/download/)** 
 
@@ -56,59 +53,49 @@ Siga as etapas:
 
 
 
-## 📦 Implantação
+## 📦 Local Deployment
 
-Para conseguir implantar o projeto siga as seguintes recomendações:
-
-```
-1° - Faça o clone do projeto 
-```
-- *[Projeto](https://github.com/MV-CUBO/PROJETO-CUBO-FINAL-BACKEND)*
+Here is what you have to do to get the application to be installed on your localhost. PS: In this example we're using Visual Studio Code as IDE.
 
 ```
-2° - Abra a pasta baixada no VS code
+1 - make a git clone of this application
+```
+- *[Project](https://github.com/MV-CUBO/PROJETO-CUBO-FINAL-BACKEND)*
+
+```
+2 - Open the downloaded folder which contains VSCode IDE.
 ```
 ```
-2.1° - Baixe as extensões do spring boot e java, caso não tenha.
+2.1 - Download each extensions for both Spring Boot and Java.
 ```
 ```
-3° - Abra o PostgreSQL e crie o banco "NOME DO BANCO". PS: Lembre de trocar em properties as senhas de conexão do banco para evitar conflitos.
+3 - Open PostgreSQL and create a new database called "apiHealthDb". PS: Change the connections settings in the application properties file to avoid conflicts.
 ```
 ```
-4° - Procure o arquivo "NOME DO APP" e inicie o programa no play.
+4 - Launch the project by clicking in ApiHealthApplication and choose Play.
 ```
 
 
 
-Para conferir os endpoints e como aplicar confira o [DOCUMENTAÇÃO SWAGGER](http://localhost:8080/swagger-ui/index.html#/) da api. 
+In order to learn about each application endpoints, please check out the api documentation in [SWAGGER DOCUMENTATION](http://localhost:5000/swagger-ui/index.html#/) da api. 
 
 
-## 📌 Versão 
+## 📌 Version 
 
-Nós usamos [GIT](https://git-scm.com/downloads) para controle de versão no [GITHUB](https://github.com/MV-CUBO/PROJETO-CUBO-FINAL-BACKEND). Para as versões disponíveis, observe as [tags neste repositório](https://github.com/MV-CUBO/PROJETO-CUBO-FINAL-BACKEND).  
+We've used [GIT](https://git-scm.com/downloads) for source code version control in [GITHUB](https://github.com/MV-CUBO/PROJETO-CUBO-FINAL-BACKEND). For released versions, please check out [tags in this repository](https://github.com/MV-CUBO/PROJETO-CUBO-FINAL-BACKEND).  
 
-## ✒️ Autores
-
-
-* **Angelo Guilhermino da S. Júnior** - *Dev. Frontend* - [0Guilhermino](https://github.com/0Guilhermino)
-* **José Milton de Oliveira Neto** - *Dev. Backend* - [Noltim](https://github.com/Noltim)
-* **Laryssa Mirelly Nascimento Ribeiro** - *Dev. Frontend* - [laryribeir0](https://github.com/laryribeir0)
-* **Liedson Alves Severiano** - *Dev. Frontend* - [Liedsonft](https://github.com/Liedsonft)
-* **Luiz Carvalhedo** - *Dev. Backend* - [luizjsp](https://github.com/luizjsp)
-* **Matheus Lopes da Silva** - *Dev. Backend* - [MathLopes1](https://github.com/MathLopes1)
-* **Rafael Tomás Souza dos Santos** - *Dev. Frontend* - [RafaelTomas](https://github.com/RafaelTomas)
-* **Thiago Cavalcante** - *Dev. Backend* - [thiagoocms](https://github.com/thiagoocms)
-* **Ticiano de Albuquerque** - *Dev. Backend* - [TicianoFilho](https://github.com/TicianoFilho)
+## ✒️ Developers
 
 
+* **Angelo Guilhermino da S. Júnior** - *Frontend Dev.* - [0Guilhermino](https://github.com/0Guilhermino)
+* **José Milton de Oliveira Neto** - *Backend Dev.* - [Noltim](https://github.com/Noltim)
+* **Laryssa Mirelly Nascimento Ribeiro** - *Frontend Dev.* - [laryribeir0](https://github.com/laryribeir0)
+* **Liedson Alves Severiano** - *Frontend Dev.* - [Liedsonft](https://github.com/Liedsonft)
+* **Luiz Carvalhedo** - *Backend Dev.* - [luizjsp](https://github.com/luizjsp)
+* **Matheus Lopes da Silva** - *Backend Dev.* - [MathLopes1](https://github.com/MathLopes1)
+* **Rafael Tomás Souza dos Santos** - *Frontend Dev.* - [RafaelTomas](https://github.com/RafaelTomas)
+* **Thiago Cavalcante** - *Backend Dev.* - [thiagoocms](https://github.com/thiagoocms)
+* **Ticiano Filho** - *Backend Dev.* - [TicianoFilho](https://github.com/TicianoFilho)
 
-
-Você também pode ver a lista de todos os [colaboradores](https://github.com/MV-CUBO/PROJETO-CUBO-FINAL-BACKEND/graphs/contributors) que participaram deste projeto. 
-
-
-## 🎁 Expressões de gratidão 
-
-* Conte a outras pessoas sobre este projeto 📢; 
-* Convide alguém da equipe para uma cerveja 🍺; 
 
 
