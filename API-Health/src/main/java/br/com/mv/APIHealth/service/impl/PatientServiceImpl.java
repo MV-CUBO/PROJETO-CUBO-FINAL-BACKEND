@@ -25,6 +25,8 @@ public class PatientServiceImpl implements PatientService {
 
     private AddressService addressService;
 
+    private final String MESSAGE = "Provide the patient's address.";
+
     public PatientServiceImpl(PatientRepository patientRepository, AddressService addressService) {
         this.patientRepository = patientRepository;
         this.addressService = addressService;
@@ -143,11 +145,11 @@ public class PatientServiceImpl implements PatientService {
         if(addressDto != null) {
             if (
                     addressDto.getZipCode() == null ||
-                            addressDto.getStreet() == null ||
-                            addressDto.getNumber() == null ||
-                            addressDto.getDistrict() == null ||
-                            addressDto.getCity() == null ||
-                            addressDto.getState() == null
+                    addressDto.getStreet() == null ||
+                    addressDto.getNumber() == null ||
+                    addressDto.getDistrict() == null ||
+                    addressDto.getCity() == null ||
+                    addressDto.getState() == null
             ) {
                 throw new BadRequestException("All address fields must be filled in!");
             } else {
@@ -164,7 +166,7 @@ public class PatientServiceImpl implements PatientService {
             }
         }
 
-        return this.addressService.create(addressDto);
+        return this.addressService.create(addressDto, MESSAGE);
     }
 
     private void validatePatientExistByCpf(String cpf) {
