@@ -1,6 +1,7 @@
 package br.com.mv.APIHealth.rest.dto;
 
 import br.com.mv.APIHealth.domain.entity.Doctor;
+import br.com.mv.APIHealth.domain.entity.PepLog;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 @Data
 @AllArgsConstructor
@@ -22,16 +24,12 @@ public class PepDTO {
     private String pepNumber;
 
     @NotEmpty
-<<<<<<< HEAD
     private UUID patientId;
 
     @JsonIgnore
-    @NotEmpty
     private Doctor doctor;
 
     @NotEmpty
-=======
->>>>>>> 4410edb66066c2facfc915607953fdc555c66204
     private String status;
 
     @NotEmpty
@@ -47,4 +45,8 @@ public class PepDTO {
     private LocalDateTime createdAt;
 
     private LocalDateTime updateAt;
+
+    @JsonIgnore
+    private List<PepLog> pepLogs;
+
 }

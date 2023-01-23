@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 @Service
 @RequiredArgsConstructor
@@ -29,6 +30,7 @@ public class PepServiceImpl implements PepService {
 
     @Override
     public PepDTO create(PepDTO pepDTO) {
+        this.validateExistPepNumber( pepDTO.getPepNumber());
         Pep pep = new Pep();
 
         BeanUtils.copyProperties(pepDTO,pep);
@@ -93,6 +95,14 @@ public class PepServiceImpl implements PepService {
     }
     private Pep validateExistPep(UUID pepId){
         return this.pepRepository.findById(pepId).orElseThrow(() -> new ResourceNotFoundException("Pep não encontrado."));
+    }
+    private void validateExistPepNumber(String pepNumber){
+        Optional<Pep> pep =  this.pepRepository.findByPepNumber(pepNumber);
+        if (pep.isPresent()){
+            new ResourceNotFoundException("numero do pep não pode existir em dois peps");
+        }
+
+
     }
     private void validateForUpdatePep(PepDTO pepDTO, Pep pep){
 
