@@ -7,7 +7,7 @@ public enum Specialty {
     PEDIATRICS,
     DERMATOLOGY,
     CARDIOLOGY,
-    GYNECOLOGY;
+    GYNECOLOGY
 
 
 }

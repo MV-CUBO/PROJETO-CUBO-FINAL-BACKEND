@@ -1,6 +1,7 @@
 package br.com.mv.APIHealth.rest.controller;
 
 import br.com.mv.APIHealth.rest.dto.PatientDTO;
+import br.com.mv.APIHealth.rest.dto.PepDTO;
 import br.com.mv.APIHealth.rest.dto.UpdatePatientDTO;
 import br.com.mv.APIHealth.service.PatientService;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,12 @@ public class PatientController {
     @ResponseStatus(OK)
     public PatientDTO getById(@PathVariable(name = "id") UUID id) {
         return this.patientService.getPatientById(id);
+    }
+
+    @GetMapping("/pep/{id}")
+    @ResponseStatus(OK)
+    public PepDTO findPepByPatientId(@PathVariable(name = "id") UUID id) {
+        return this.patientService.findPepByPatientId(id);
     }
 
     @GetMapping
