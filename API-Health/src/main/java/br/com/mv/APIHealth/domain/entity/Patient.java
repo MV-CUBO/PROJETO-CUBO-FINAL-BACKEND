@@ -19,9 +19,6 @@ public class Patient extends Person  {
 
     private String observation;
 
-    @Enumerated(EnumType.STRING)
-    private EStatus status;
-
     @OneToOne
     @JoinColumn(name = "pep_id", referencedColumnName = "id")
     private Pep pep;

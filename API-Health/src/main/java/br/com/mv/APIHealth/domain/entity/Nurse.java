@@ -25,9 +25,6 @@ public class Nurse extends Person {
 
     private String coren;
 
-    @Enumerated(EnumType.STRING)
-    private EStatus status; // validar com grupo se todas as entitys tem q ter status setado
-
     public Nurse(NurseDTO nurseDTO) {
 
     }

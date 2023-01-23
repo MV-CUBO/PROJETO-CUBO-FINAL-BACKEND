@@ -21,7 +21,5 @@ public class PatientDTO extends PersonDTO{
 
     private String observation;
 
-    private EStatus status;
-
-    private Pep pep;
+     private Pep pep;
 }

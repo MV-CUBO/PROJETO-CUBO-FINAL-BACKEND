@@ -1,5 +1,6 @@
 package br.com.mv.APIHealth.domain.entity;
 
+import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.enums.Gender;
 import br.com.mv.APIHealth.domain.enums.MaritalStatus;
 import br.com.mv.APIHealth.domain.enums.Specialty;
@@ -51,6 +52,9 @@ public class Person {
     private LocalDateTime createdAt;
 
     private LocalDateTime updateAT;
+
+    @Enumerated(EnumType.STRING)
+    private EStatus status;
 
 
 }
