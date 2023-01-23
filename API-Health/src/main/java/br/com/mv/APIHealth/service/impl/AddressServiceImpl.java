@@ -16,11 +16,11 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Address create(Address address) {
+    public Address create(Address address, String message) {
         try {
            address = this.addressRepository.save(address);
         } catch (Exception ex) {
-            throw new BadRequestException("Provide the patient's address");
+            throw new BadRequestException(message);
         }
         return address;
     }

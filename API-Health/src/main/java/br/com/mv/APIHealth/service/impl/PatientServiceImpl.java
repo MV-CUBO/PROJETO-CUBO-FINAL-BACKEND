@@ -2,11 +2,13 @@ package br.com.mv.APIHealth.service.impl;
 
 import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.entity.Patient;
+import br.com.mv.APIHealth.domain.entity.Pep;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.PatientRepository;
 import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.PatientDTO;
+import br.com.mv.APIHealth.rest.dto.PepDTO;
 import br.com.mv.APIHealth.rest.dto.UpdatePatientDTO;
 import br.com.mv.APIHealth.service.AddressService;
 import br.com.mv.APIHealth.service.PatientService;
@@ -21,9 +23,11 @@ import java.util.UUID;
 @Service
 public class PatientServiceImpl implements PatientService {
 
-    private PatientRepository patientRepository;
+    private final  PatientRepository patientRepository;
 
-    private AddressService addressService;
+    private final AddressService addressService;
+
+    private final String MESSAGE = "Provide the patient's address.";
 
     public PatientServiceImpl(PatientRepository patientRepository, AddressService addressService) {
         this.patientRepository = patientRepository;
@@ -55,6 +59,19 @@ public class PatientServiceImpl implements PatientService {
         BeanUtils.copyProperties(patient, patientDTO);
 
         return patientDTO;
+    }
+
+    @Override
+    public PepDTO findPepByPatientId(UUID id) {
+        this.validatePatientExists(id);
+
+        Pep patientPep = this.patientRepository.findPepById(id).get();
+
+        PepDTO patientPepDTO = new PepDTO();
+
+        BeanUtils.copyProperties(patientPep, patientPepDTO);
+
+        return patientPepDTO;
     }
 
     @Override
@@ -143,11 +160,11 @@ public class PatientServiceImpl implements PatientService {
         if(addressDto != null) {
             if (
                     addressDto.getZipCode() == null ||
-                            addressDto.getStreet() == null ||
-                            addressDto.getNumber() == null ||
-                            addressDto.getDistrict() == null ||
-                            addressDto.getCity() == null ||
-                            addressDto.getState() == null
+                    addressDto.getStreet() == null ||
+                    addressDto.getNumber() == null ||
+                    addressDto.getDistrict() == null ||
+                    addressDto.getCity() == null ||
+                    addressDto.getState() == null
             ) {
                 throw new BadRequestException("All address fields must be filled in!");
             } else {
@@ -164,7 +181,7 @@ public class PatientServiceImpl implements PatientService {
             }
         }
 
-        return this.addressService.create(addressDto);
+        return this.addressService.create(addressDto, MESSAGE);
     }
 
     private void validatePatientExistByCpf(String cpf) {
