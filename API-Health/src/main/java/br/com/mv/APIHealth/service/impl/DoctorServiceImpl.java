@@ -1,5 +1,6 @@
 package br.com.mv.APIHealth.service.impl;
 
+import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.entity.Doctor;
 import br.com.mv.APIHealth.domain.repository.DoctorRepository;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
@@ -10,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,6 +25,10 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public DoctorDTO create(DoctorDTO doctorDTO) {
+        doctorDTO.setCreatedAt(LocalDateTime.now());
+        doctorDTO.setUpdateAT(LocalDateTime.now());
+        Address address = new Address(); //implementação para criar endereço
+
         Doctor doctor = new Doctor();
         BeanUtils.copyProperties(doctorDTO, doctor);
         Doctor newDoctor = doctorRepository.save(doctor);
@@ -48,10 +54,13 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public DoctorDTO update(UUID id, DoctorDTO doctorDTO) {
+
         Doctor doctor = doctorRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User not found.")
         );
 
+        doctorDTO.setUpdateAT(LocalDateTime.now());
+        doctorDTO.setCreatedAt(doctor.getCreatedAt());
         doctorDTO.setId(doctor.getId());
         BeanUtils.copyProperties(doctorDTO, doctor);
         Doctor updatedDoctor = doctorRepository.save(doctor);

@@ -6,6 +6,7 @@ import br.com.mv.APIHealth.rest.dto.DoctorDTO;
 import br.com.mv.APIHealth.service.DoctorService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/Doctor")
+@RequestMapping("/api/doctor")
 public class DoctorController {
 
 
@@ -28,7 +29,7 @@ public class DoctorController {
     @GetMapping("{id}")
     @ResponseStatus(OK)
     public DoctorDTO getDoctorById(@PathVariable(name = "id") UUID id) {
-        return doctorService.getDoctorById(id);
+        return this.doctorService.getDoctorById(id);
     }
 
     //modificar para DTO de informações e tratar os dados por ele
@@ -41,19 +42,19 @@ public class DoctorController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public DoctorDTO saveDoctor(@RequestBody DoctorDTO doctorDTO) {
-        return doctorService.create(doctorDTO);
+    public DoctorDTO saveDoctor(@RequestBody @Valid DoctorDTO doctorDTO) {
+        return this.doctorService.create(doctorDTO);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(OK)
-    public DoctorDTO updateDoctor(@PathVariable(name = "id") UUID id, @RequestBody DoctorDTO doctorDTO) {
-        return doctorService.update(id, doctorDTO);
+    public DoctorDTO updateDoctor(@PathVariable(name = "id") UUID id, @RequestBody @Valid DoctorDTO doctorDTO) {
+        return this.doctorService.update(id, doctorDTO);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(OK)
     public void deleteDoctor(@PathVariable(name = "id") UUID id) {
-        doctorService.delete(id);
+        this.doctorService.delete(id);
     }
 }

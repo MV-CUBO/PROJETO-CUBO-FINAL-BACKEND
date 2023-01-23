@@ -25,9 +25,9 @@ public class Pep{
 
     private String pepNumber;
 
-    private UUID patientId;
+    //private UUID patientId;
 
-    private UUID doctorId;
+    //private UUID doctorId;
 
     private String status;
 
@@ -41,8 +41,14 @@ public class Pep{
 
     private LocalDateTime updateAt;
 
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", referencedColumnName = "id")
+    private Doctor doctor;
 
-    
+
+
+
+
 
 
 }
