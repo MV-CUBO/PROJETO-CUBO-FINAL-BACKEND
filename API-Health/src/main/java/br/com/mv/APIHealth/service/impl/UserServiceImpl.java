@@ -6,16 +6,23 @@ import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.UserDTO;
 import br.com.mv.APIHealth.service.UserService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Locale;
+import java.util.Optional;
 import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final MessageSource messageSource;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, MessageSource messageSource) {
         this.userRepository = userRepository;
+        this.messageSource = messageSource;
     }
 
     @Override
@@ -31,19 +38,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserById(UUID id) {
-        User user =  userRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("User not found.")
-        );
+        Optional<User> userOptional =  userRepository.findById(id);
+        if (!userOptional.isPresent()) {
+            String userNotFoundMessage = messageSource.getMessage("noExist.idUser.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(userNotFoundMessage);
+        }
 
         UserDTO dto = new UserDTO();
-        BeanUtils.copyProperties(user, dto);
+        BeanUtils.copyProperties(userOptional.get(), dto);
         return dto;
     }
 
     @Override
     public UserDTO update(UUID id, UserDTO userDto) {
         User user = userRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("User not found.")
+                () -> new ResourceNotFoundException("{noExist.idUser.field}")
         );
 
         userDto.setId(user.getId());
@@ -62,7 +72,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserByUsername(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new ResourceNotFoundException("User not found.")
+                () -> new ResourceNotFoundException("{noExist.idUser.field}")
         );
         UserDTO userDto = new UserDTO();
         BeanUtils.copyProperties(user, userDto);

@@ -33,7 +33,7 @@ public class DoctorController {
     //modificar para DTO de informações e tratar os dados por ele
     @GetMapping
     @ResponseStatus(OK)
-    public List<Doctor> getAll(){
+    public List<DoctorDTO> getAll(){
         return this.doctorService.getAll();
     }
 

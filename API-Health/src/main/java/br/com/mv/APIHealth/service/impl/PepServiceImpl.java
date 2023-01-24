@@ -4,6 +4,7 @@ package br.com.mv.APIHealth.service.impl;
 import br.com.mv.APIHealth.domain.entity.Doctor;
 import br.com.mv.APIHealth.domain.entity.Patient;
 import br.com.mv.APIHealth.domain.entity.Pep;
+import br.com.mv.APIHealth.domain.enums.EStatePatient;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.DoctorRepository;
 import br.com.mv.APIHealth.domain.repository.PatientRepository;
@@ -31,6 +32,9 @@ public class PepServiceImpl implements PepService {
     private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
 
+    private final String MESSAGECREATED = "pep was created";
+    private final String MESSAGEUPDATED = "pep was created";
+
     @Override
     public PepDTO create(PepDTO pepDTO) {
         this.validateExistPepNumber( pepDTO.getPepNumber());
@@ -53,11 +57,11 @@ public class PepServiceImpl implements PepService {
         pep.setPatient(newPatient);
         pep.setCreatedAt(LocalDateTime.now());
         pep.setUpdateAt(LocalDateTime.now());
-        pep.setStatus(EStatus.ACTIVATE);
+        pep.setStatus(EStatePatient.CONSULTATION);
         Pep newPep = this.pepRepository.save(pep);
         PepLogDTO pepLogDTO = new PepLogDTO();
         pepLogDTO.setPepId(pep.getId());
-        pepLogDTO.setAction("pep was created");
+        pepLogDTO.setAction(MESSAGECREATED);
         pepLogDTO.setCreatedAt(LocalDateTime.now());
         this.pepLogService.create(pepLogDTO);
         BeanUtils.copyProperties(newPep,pepDTO);
@@ -82,7 +86,7 @@ public class PepServiceImpl implements PepService {
         Pep pepUpdated = this.pepRepository.save(pep);
         PepLogDTO pepLogDTO = new PepLogDTO();
         pepLogDTO.setPepId(pep.getId());
-        pepLogDTO.setAction("{pep.update}");
+        pepLogDTO.setAction("MESSAGEUPDATED");
         pepLogDTO.setCreatedAt(LocalDateTime.now());
         this.pepLogService.create(pepLogDTO);
         BeanUtils.copyProperties(pepUpdated,pepDTO);

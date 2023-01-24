@@ -12,9 +12,11 @@ import br.com.mv.APIHealth.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,33 +48,47 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorDTO;
     }
     @Override
+    @Transactional(readOnly = true)
     public DoctorDTO getDoctorById(UUID id) {
         Doctor doctor =  doctorRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Doctor not found.")
+                () -> new ResourceNotFoundException("{noExist.id.field}")
         );
 
-        DoctorDTO dto = new DoctorDTO();
-        BeanUtils.copyProperties(doctor, dto);
-        return dto;
+        DoctorDTO doctorDTO = new DoctorDTO();
+        BeanUtils.copyProperties(doctor, doctorDTO);
+        return doctorDTO;
     }
 
     @Override
-    public List<Doctor> getAll() {
-        return doctorRepository.findAll() ;
+    public List<DoctorDTO> getAll() {
+
+        List<Doctor> doctors = doctorRepository.findAll();
+        List<DoctorDTO> doctorsDTO = new ArrayList<>();
+
+        doctors.forEach(doctor -> {
+            DoctorDTO doctorDTO = new DoctorDTO();
+
+            BeanUtils.copyProperties(doctor, doctorDTO);
+
+            doctorsDTO.add(doctorDTO);
+        });
+
+        return doctorsDTO;
     }
 
     @Override
     public DoctorDTO update(UUID id, DoctorDTO doctorDTO) {
 
         Doctor doctor = doctorRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("User not found.")
+                () -> new ResourceNotFoundException("{noExist.id.field}")
         );
 
         doctorDTO.setUpdateAT(LocalDateTime.now());
         doctorDTO.setCreatedAt(doctor.getCreatedAt());
         doctorDTO.setId(doctorDTO.getId());
+
         BeanUtils.copyProperties(doctor, doctorDTO);
-        Doctor updatedDoctor = doctorRepository.save(doctor);
+        Doctor updatedDoctor = this.doctorRepository.save(doctor);
 
         BeanUtils.copyProperties(updatedDoctor, doctorDTO);
         return doctorDTO;
@@ -86,7 +102,7 @@ public class DoctorServiceImpl implements DoctorService {
                     doctorRepository.delete(doctor);
                     return Void.TYPE;
                 })
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Doctor not found."));
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "{noExist.id.field}"));
     }
 
     private DoctorDTO stepsForCreationDoctor(DoctorDTO doctorDTO) {
@@ -105,19 +121,39 @@ public class DoctorServiceImpl implements DoctorService {
     private void validateDoctorExistByCpf(String cpf) {
         Boolean doctorIsPresent = this.doctorRepository.findByCpf(cpf).isPresent();
 
-        if (doctorIsPresent) throw new BadRequestException("CPF already registered in the database!");
+        if (doctorIsPresent) throw new BadRequestException("{exist.cpf.field}");
     }
 
     private Address createAddressForDoctor(Address addressDto) {
         if (addressDto != null) {
             if (addressDto.getZipCode() == null || addressDto.getStreet() == null || addressDto.getNumber() == null || addressDto.getDistrict() == null || addressDto.getCity() == null || addressDto.getState() == null) {
-                throw new BadRequestException("All address fields must be filled in!");
+                throw new BadRequestException("{required.address.field}");
             } else {
                 addressDto = new Address(null, addressDto.getZipCode(), addressDto.getStreet(), addressDto.getNumber(), addressDto.getDistrict(), addressDto.getCity(), addressDto.getState(), addressDto.getComplements());
             }
         }
 
         return this.addressService.create(addressDto, MESSAGE);
+    }
+
+    private void validateForUpdateDoctor(DoctorDTO doctorDTO, Doctor doctor) {
+        doctor.setName(doctorDTO.getName() != null ? doctorDTO.getName() : doctor.getName());
+
+        doctor.setPhone(doctorDTO.getPhone() != null ? doctorDTO.getPhone() : doctor.getPhone());
+
+        doctor.setStatus(doctorDTO.getStatus() != null ? doctorDTO.getStatus() : doctor.getStatus());
+
+        doctor.setCrm(doctorDTO.getCrm() != null ? doctorDTO.getCrm() : doctor.getCrm());
+
+        doctor.setMaritalStatus(doctorDTO.getMaritalStatus() != null ? doctorDTO.getMaritalStatus() : doctor.getMaritalStatus());
+
+        doctor.setGender(doctorDTO.getGender() != null ? doctorDTO.getGender() : doctor.getGender());
+
+        doctor.setEmail(doctorDTO.getEmail() != null ? doctorDTO.getEmail() : doctor.getEmail());
+
+        doctor.setDateOfBirth(doctorDTO.getDateOfBirth() != null ? doctorDTO.getDateOfBirth() : doctor.getDateOfBirth());
+
+        doctor.setUpdateAT(LocalDateTime.now());
     }
 
 }

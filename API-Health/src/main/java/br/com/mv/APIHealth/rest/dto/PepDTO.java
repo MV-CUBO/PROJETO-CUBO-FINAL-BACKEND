@@ -3,12 +3,11 @@ package br.com.mv.APIHealth.rest.dto;
 import br.com.mv.APIHealth.domain.entity.Doctor;
 import br.com.mv.APIHealth.domain.entity.Patient;
 import br.com.mv.APIHealth.domain.entity.PepLog;
-import br.com.mv.APIHealth.domain.enums.EStatus;
+import br.com.mv.APIHealth.domain.enums.EStatePatient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,7 +21,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class PepDTO {
 
-
     private UUID id;
 
     @NotEmpty(message = "{required.pepNumber.field}")
@@ -35,7 +33,7 @@ public class PepDTO {
     private Doctor doctor;
 
     @Enumerated(EnumType.STRING)
-    private EStatus status;
+    private EStatePatient status;
 
     @NotEmpty(message = "{required.prescription.field}")
     private String prescription;
@@ -45,7 +43,6 @@ public class PepDTO {
 
     @NotEmpty(message = "{required.allergies.field}")
     private String allergies;
-
 
     private LocalDateTime createdAt;
 

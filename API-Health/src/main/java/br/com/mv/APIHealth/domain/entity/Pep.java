@@ -1,6 +1,6 @@
 package br.com.mv.APIHealth.domain.entity;
 
-import br.com.mv.APIHealth.domain.enums.EStatus;
+import br.com.mv.APIHealth.domain.enums.EStatePatient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,7 +34,7 @@ public class Pep{
     //private UUID doctorId;
 
     @Enumerated(EnumType.STRING)
-    private EStatus status;
+    private EStatePatient status;
 
     private String prescription;
 
@@ -52,13 +52,4 @@ public class Pep{
 
     @OneToMany(mappedBy="pep")
     private List<PepLog> pepLogs;
-
-
-
-
-
-
-
-
-
 }

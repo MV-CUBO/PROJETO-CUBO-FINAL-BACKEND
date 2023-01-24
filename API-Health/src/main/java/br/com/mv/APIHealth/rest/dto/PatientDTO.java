@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 @Data
@@ -21,6 +20,6 @@ public class PatientDTO extends PersonDTO {
 
     @NotEmpty(message = "{required.observation.field}")
     private String observation;
-    @Valid
+
     private Pep pep;
 }
