@@ -15,5 +15,5 @@ public class PepPatientDTO extends PersonDTO{
     private String healthInsurenceCard;
 
     private String observation;
-    
+
 }

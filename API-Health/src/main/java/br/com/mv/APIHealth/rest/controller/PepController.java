@@ -1,11 +1,16 @@
 package br.com.mv.APIHealth.rest.controller;
 
 
+import br.com.mv.APIHealth.rest.dto.NurseDTO;
 import br.com.mv.APIHealth.rest.dto.PepDTO;
 import br.com.mv.APIHealth.rest.dto.PepLogDTO;
 import br.com.mv.APIHealth.service.PepLogService;
 import br.com.mv.APIHealth.service.PepService;
+import br.com.mv.APIHealth.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -53,15 +58,31 @@ public class PepController {
 
 
     @PostMapping
-    @ResponseStatus(CREATED)
-    public PepDTO savePep(@RequestBody @Valid PepDTO pepDTO) {
-        return this.pepService.create(pepDTO);
+
+    public ResponseEntity<Response<PepDTO>> savePep(@RequestBody @Valid PepDTO pepDTO, BindingResult result) {
+        Response<PepDTO> response = new Response<>();
+        if (result.hasErrors()) {
+            result.getAllErrors().forEach(err -> response.getErrors().add(err.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(response);
+        }
+        PepDTO newPepDto = this.pepService.create(pepDTO);
+        response.setData(newPepDto);
+        response.getErrors().add("No content.");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("{id}")
-    @ResponseStatus(NO_CONTENT)
-    public PepDTO updatePep(@PathVariable(name = "id") UUID id, @RequestBody @Valid PepDTO pepDTO) {
-        return this.pepService.updateById(id, pepDTO);
+    public ResponseEntity<Response<PepDTO>> updatePep(@PathVariable(name = "id") UUID id, @RequestBody @Valid PepDTO pepDTO, BindingResult result) {
+        Response<PepDTO> response = new Response<>();
+        if (result.hasErrors()) {
+            result.getAllErrors().forEach(err -> response.getErrors().add(err.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(response);
+        }
+        PepDTO updatedDto = pepService.updateById(id, pepDTO);
+        response.setData(updatedDto);
+        response.getErrors().add("No content.");
+        return ResponseEntity.ok().body(response);
     }
 
     @DeleteMapping("{id}")
