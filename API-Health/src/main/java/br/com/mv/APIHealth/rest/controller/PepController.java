@@ -2,6 +2,8 @@ package br.com.mv.APIHealth.rest.controller;
 
 
 
+import br.com.mv.APIHealth.domain.enums.EStatePatient;
+import br.com.mv.APIHealth.rest.dto.GetPepDTO;
 import br.com.mv.APIHealth.rest.dto.PepDTO;
 import br.com.mv.APIHealth.rest.dto.PepLogDTO;
 import br.com.mv.APIHealth.service.PepLogService;
@@ -56,15 +58,26 @@ public class PepController {
         return this.pepLogService.getAll();
     }
 
+    @GetMapping("/status/{status}")
+    @ResponseStatus(OK)
+    public List<PepDTO> getAllByStatus(@PathVariable(name = "status") EStatePatient string){
+        return this.pepService.getAllByStatus(string);
+    }
+    @GetMapping("/status/{status}/count")
+    @ResponseStatus(OK)
+    public long getAllByStatusNum(@PathVariable(name = "status") EStatePatient string){
+        return this.pepService.getNumInStatus(string);
+    }
+
 
     @PostMapping
-    public ResponseEntity<Response<PepDTO>> savePep(@RequestBody @Valid PepDTO pepDTO, BindingResult result) {
-        Response<PepDTO> response = new Response<>();
+    public ResponseEntity<Response<GetPepDTO>> savePep(@RequestBody @Valid PepDTO pepDTO, BindingResult result) {
+        Response<GetPepDTO> response = new Response<>();
         if (result.hasErrors()) {
             result.getAllErrors().forEach(err -> response.getErrors().add(err.getDefaultMessage()));
             return ResponseEntity.badRequest().body(response);
         }
-        PepDTO newPepDto = this.pepService.create(pepDTO);
+        GetPepDTO newPepDto = this.pepService.create(pepDTO);
         response.setData(newPepDto);
         response.getErrors().add("No content.");
 

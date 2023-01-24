@@ -26,10 +26,10 @@ public class PepDTO {
     @NotEmpty(message = "{required.pepNumber.field}")
     private String pepNumber;
 
-    @Valid
+
     private Patient patient;
 
-    @Valid
+
     private Doctor doctor;
 
     @Enumerated(EnumType.STRING)
