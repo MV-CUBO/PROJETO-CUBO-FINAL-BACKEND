@@ -2,21 +2,21 @@ package br.com.mv.APIHealth.service.impl;
 
 import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.entity.Doctor;
-import br.com.mv.APIHealth.domain.entity.Nurse;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.DoctorRepository;
 import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.DoctorDTO;
-import br.com.mv.APIHealth.rest.dto.NurseDTO;
 import br.com.mv.APIHealth.service.AddressService;
 import br.com.mv.APIHealth.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,19 +48,32 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorDTO;
     }
     @Override
+    @Transactional(readOnly = true)
     public DoctorDTO getDoctorById(UUID id) {
         Doctor doctor =  doctorRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Doctor not found.")
         );
 
-        DoctorDTO dto = new DoctorDTO();
-        BeanUtils.copyProperties(doctor, dto);
-        return dto;
+        DoctorDTO doctorDTO = new DoctorDTO();
+        BeanUtils.copyProperties(doctor, doctorDTO);
+        return doctorDTO;
     }
 
     @Override
-    public List<Doctor> getAll() {
-        return doctorRepository.findAll() ;
+    public List<DoctorDTO> getAll() {
+
+        List<Doctor> doctors = doctorRepository.findAll();
+        List<DoctorDTO> doctorsDTO = new ArrayList<>();
+
+        doctors.forEach(doctor -> {
+            DoctorDTO doctorDTO = new DoctorDTO();
+
+            BeanUtils.copyProperties(doctor, doctorDTO);
+
+            doctorsDTO.add(doctorDTO);
+        });
+
+        return doctorsDTO;
     }
 
     @Override
@@ -73,8 +86,9 @@ public class DoctorServiceImpl implements DoctorService {
         doctorDTO.setUpdateAT(LocalDateTime.now());
         doctorDTO.setCreatedAt(doctor.getCreatedAt());
         doctorDTO.setId(doctorDTO.getId());
+
         BeanUtils.copyProperties(doctor, doctorDTO);
-        Doctor updatedDoctor = doctorRepository.save(doctor);
+        Doctor updatedDoctor = this.doctorRepository.save(doctor);
 
         BeanUtils.copyProperties(updatedDoctor, doctorDTO);
         return doctorDTO;
@@ -120,6 +134,26 @@ public class DoctorServiceImpl implements DoctorService {
         }
 
         return this.addressService.create(addressDto, MESSAGE);
+    }
+
+    private void validateForUpdateDoctor(DoctorDTO doctorDTO, Doctor doctor) {
+        doctor.setName(doctorDTO.getName() != null ? doctorDTO.getName() : doctor.getName());
+
+        doctor.setPhone(doctorDTO.getPhone() != null ? doctorDTO.getPhone() : doctor.getPhone());
+
+        doctor.setStatus(doctorDTO.getStatus() != null ? doctorDTO.getStatus() : doctor.getStatus());
+
+        doctor.setCrm(doctorDTO.getCrm() != null ? doctorDTO.getCrm() : doctor.getCrm());
+
+        doctor.setMaritalStatus(doctorDTO.getMaritalStatus() != null ? doctorDTO.getMaritalStatus() : doctor.getMaritalStatus());
+
+        doctor.setGender(doctorDTO.getGender() != null ? doctorDTO.getGender() : doctor.getGender());
+
+        doctor.setEmail(doctorDTO.getEmail() != null ? doctorDTO.getEmail() : doctor.getEmail());
+
+        doctor.setDateOfBirth(doctorDTO.getDateOfBirth() != null ? doctorDTO.getDateOfBirth() : doctor.getDateOfBirth());
+
+        doctor.setUpdateAT(LocalDateTime.now());
     }
 
 }
