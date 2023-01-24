@@ -51,7 +51,7 @@ public class NurseServiceImpl implements NurseService {
     @Override
     @Transactional(readOnly = true)
     public NurseDTO getNurseById(UUID id) {
-        Nurse nurse = nurseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Nurse not found."));
+        Nurse nurse = nurseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("{noexist.id.field}"));
 
         NurseDTO nurseDTO = new NurseDTO();
         BeanUtils.copyProperties(nurse, nurseDTO);
@@ -99,7 +99,7 @@ public class NurseServiceImpl implements NurseService {
         nurseRepository.findById(id).map(nurse -> {
             nurseRepository.delete(nurse);
             return Void.TYPE;
-        }).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Nurse not found."));
+        }).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "{noexist.id.field}"));
     }
 
     private NurseDTO stepsForCreationNurse(NurseDTO nurseDTO) {
@@ -117,7 +117,7 @@ public class NurseServiceImpl implements NurseService {
 
     private Nurse validateNurseExists(UUID id) {
         Nurse nurse = this.nurseRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Patient not found."));
+                () -> new ResourceNotFoundException("{noexist.id.field}"));
 
         return nurse;
     }
@@ -125,7 +125,7 @@ public class NurseServiceImpl implements NurseService {
     private void validateNurseExistByCpf(String cpf) {
         Boolean nurseIsPresent = this.nurseRepository.findByCpf(cpf).isPresent();
 
-        if (nurseIsPresent) throw new BadRequestException("CPF already registered in the database!");
+        if (nurseIsPresent) throw new BadRequestException("{exist.cpf.field}");
     }
 
     private Address createAddressForNurse(Address addressDto) {
@@ -136,7 +136,7 @@ public class NurseServiceImpl implements NurseService {
                     || addressDto.getDistrict() == null
                     || addressDto.getCity() == null
                     || addressDto.getState() == null) {
-                throw new BadRequestException("All address fields must be filled in!");
+                throw new BadRequestException("{required.address.field}");
             } else {
                 addressDto = new Address(null,
                         addressDto.getZipCode(),

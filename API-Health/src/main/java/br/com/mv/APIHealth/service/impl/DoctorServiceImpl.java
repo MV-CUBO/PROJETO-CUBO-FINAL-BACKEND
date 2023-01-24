@@ -48,7 +48,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorDTO getDoctorById(UUID id) {
         Doctor doctor =  doctorRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Doctor not found.")
+                () -> new ResourceNotFoundException("{noExist.id.field}")
         );
 
         DoctorDTO dto = new DoctorDTO();
@@ -65,7 +65,7 @@ public class DoctorServiceImpl implements DoctorService {
     public DoctorDTO update(UUID id, DoctorDTO doctorDTO) {
 
         Doctor doctor = doctorRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("User not found.")
+                () -> new ResourceNotFoundException("{noExist.id.field}")
         );
 
         doctorDTO.setUpdateAT(LocalDateTime.now());
@@ -86,7 +86,7 @@ public class DoctorServiceImpl implements DoctorService {
                     doctorRepository.delete(doctor);
                     return Void.TYPE;
                 })
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Doctor not found."));
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "{noExist.id.field}"));
     }
 
     private DoctorDTO stepsForCreationDoctor(DoctorDTO doctorDTO) {
@@ -105,13 +105,13 @@ public class DoctorServiceImpl implements DoctorService {
     private void validateDoctorExistByCpf(String cpf) {
         Boolean doctorIsPresent = this.doctorRepository.findByCpf(cpf).isPresent();
 
-        if (doctorIsPresent) throw new BadRequestException("CPF already registered in the database!");
+        if (doctorIsPresent) throw new BadRequestException("{exist.cpf.field}");
     }
 
     private Address createAddressForDoctor(Address addressDto) {
         if (addressDto != null) {
             if (addressDto.getZipCode() == null || addressDto.getStreet() == null || addressDto.getNumber() == null || addressDto.getDistrict() == null || addressDto.getCity() == null || addressDto.getState() == null) {
-                throw new BadRequestException("All address fields must be filled in!");
+                throw new BadRequestException("{required.address.field}");
             } else {
                 addressDto = new Address(null, addressDto.getZipCode(), addressDto.getStreet(), addressDto.getNumber(), addressDto.getDistrict(), addressDto.getCity(), addressDto.getState(), addressDto.getComplements());
             }

@@ -33,7 +33,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDTO getById(UUID id) {
         Role role = roleRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Role not found.")
+                () -> new ResourceNotFoundException("noExist.idRole.filed")
         );
 
         RoleDTO roleDto = new RoleDTO();
@@ -44,7 +44,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDTO update(UUID id, RoleDTO roleDto) {
         Role role = roleRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Role not found.")
+                () -> new ResourceNotFoundException("{noExist.idRole.filed}")
         );
 
         roleDto.setId(role.getId());
@@ -62,7 +62,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDTO getByDescription(String description) {
         Role role = roleRepository.getByDescription(description).orElseThrow(
-                () -> new ResourceNotFoundException("Role not found.")
+                () -> new ResourceNotFoundException("{noExist.idRole.filed}")
         );
 
         RoleDTO roleDto = new RoleDTO();
