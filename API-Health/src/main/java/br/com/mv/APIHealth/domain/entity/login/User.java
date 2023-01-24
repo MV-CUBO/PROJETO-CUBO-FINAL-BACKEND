@@ -26,6 +26,7 @@ public class User {
     @Column(name = "id", updatable = false, nullable = false)
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
+
     @Column(nullable = false, unique = true)
     private String username;
 

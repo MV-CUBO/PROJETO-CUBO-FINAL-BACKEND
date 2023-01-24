@@ -79,6 +79,11 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
+    @Override
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
     private void updateNonNullableFields(UserDTO originUserDto, User targetUser) {
         if (originUserDto.getUsername() != null) {
             targetUser.setUsername(originUserDto.getUsername());

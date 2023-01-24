@@ -13,7 +13,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class RoleDTO {
 
-    @JsonIgnore
     private UUID id;
 
     @NotEmpty(message = "{required.description.field}")
