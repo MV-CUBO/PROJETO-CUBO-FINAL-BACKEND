@@ -2,17 +2,18 @@ package br.com.mv.APIHealth.service.impl;
 
 
 import br.com.mv.APIHealth.domain.entity.Doctor;
-import br.com.mv.APIHealth.domain.entity.Nurse;
 import br.com.mv.APIHealth.domain.entity.Patient;
 import br.com.mv.APIHealth.domain.entity.Pep;
 import br.com.mv.APIHealth.domain.enums.EStatePatient;
-import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.DoctorRepository;
 import br.com.mv.APIHealth.domain.repository.PatientRepository;
 import br.com.mv.APIHealth.domain.repository.PepRepository;
 import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
-import br.com.mv.APIHealth.rest.dto.*;
+import br.com.mv.APIHealth.rest.dto.PepDTO;
+import br.com.mv.APIHealth.rest.dto.PepDoctorDTO;
+import br.com.mv.APIHealth.rest.dto.PepLogDTO;
+import br.com.mv.APIHealth.rest.dto.PepPatientDTO;
 import br.com.mv.APIHealth.service.PepService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
