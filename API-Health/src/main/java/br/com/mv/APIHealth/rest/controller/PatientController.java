@@ -4,6 +4,10 @@ import br.com.mv.APIHealth.rest.dto.PatientDTO;
 import br.com.mv.APIHealth.rest.dto.PepDTO;
 import br.com.mv.APIHealth.rest.dto.UpdatePatientDTO;
 import br.com.mv.APIHealth.service.PatientService;
+import br.com.mv.APIHealth.utils.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,9 +29,20 @@ public class PatientController {
     }
 
     @PostMapping
-    @ResponseStatus(CREATED)
-    public PatientDTO create(@RequestBody @Valid PatientDTO patientDTO) {
-        return this.patientService.create(patientDTO);
+    public ResponseEntity<Response<PatientDTO>> create(@RequestBody @Valid PatientDTO patientDTO, BindingResult result) {
+        Response<PatientDTO> response = new Response<>();
+
+        if(result.hasErrors()) {
+            result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        PatientDTO newPatientDto = this.patientService.create(patientDTO);
+        response.setData(newPatientDto);
+
+        response.getErrors().add("No content");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("{id}")
@@ -49,9 +64,23 @@ public class PatientController {
     }
 
     @PutMapping("{id}")
-    @ResponseStatus(NO_CONTENT)
-    public UpdatePatientDTO updateById(@PathVariable(name = "id") UUID id, @RequestBody @Valid UpdatePatientDTO patientDTO) {
-        return this.patientService.updateById(id, patientDTO);
+    public ResponseEntity<Response<UpdatePatientDTO>> updateById(
+                                       @PathVariable(name = "id") UUID id,
+                                       @RequestBody @Valid UpdatePatientDTO patientDTO,
+                                       BindingResult result) {
+
+        Response<UpdatePatientDTO> response = new Response<>();
+
+        if(result.hasErrors()) {
+            result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        UpdatePatientDTO updatePatientDTO = this.patientService.updateById(id, patientDTO);
+        response.setData(updatePatientDTO);
+        response.getErrors().add("No content.");
+
+        return ResponseEntity.ok().body(response);
     }
 
     @DeleteMapping("{id}")
