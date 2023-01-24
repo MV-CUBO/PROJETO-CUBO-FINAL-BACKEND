@@ -1,13 +1,16 @@
 package br.com.mv.APIHealth.service.impl;
 
 
+import br.com.mv.APIHealth.domain.entity.Doctor;
+import br.com.mv.APIHealth.domain.entity.Patient;
 import br.com.mv.APIHealth.domain.entity.Pep;
 import br.com.mv.APIHealth.domain.enums.EStatus;
+import br.com.mv.APIHealth.domain.repository.DoctorRepository;
+import br.com.mv.APIHealth.domain.repository.PatientRepository;
 import br.com.mv.APIHealth.domain.repository.PepRepository;
 import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
-import br.com.mv.APIHealth.rest.dto.PepDTO;
-import br.com.mv.APIHealth.rest.dto.PepLogDTO;
+import br.com.mv.APIHealth.rest.dto.*;
 import br.com.mv.APIHealth.service.PepService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 @Service
 @RequiredArgsConstructor
@@ -24,6 +28,8 @@ public class PepServiceImpl implements PepService {
 
     private final PepRepository pepRepository;
     private final PepLogServiceImpl pepLogService;
+    private final DoctorRepository doctorRepository;
+    private final PatientRepository patientRepository;
 
     @Override
     public PepDTO create(PepDTO pepDTO) {
@@ -31,6 +37,20 @@ public class PepServiceImpl implements PepService {
         Pep pep = new Pep();
 
         BeanUtils.copyProperties(pepDTO,pep);
+        Optional<Doctor>doctor  = this.doctorRepository.findById(pepDTO.getDoctor().getId());
+        Optional<Patient> patient = this.patientRepository.findById(pepDTO.getPatient().getId());
+        if(!doctor.isPresent()) throw new ResourceNotFoundException("{noexist.doctor.field}");
+        if(!patient.isPresent()) throw new ResourceNotFoundException("{noexist.patient.field}");
+        PepDoctorDTO doctorDTO = new PepDoctorDTO();
+        BeanUtils.copyProperties(doctor.get(),doctorDTO);
+        Doctor newDoctor = new Doctor();
+        BeanUtils.copyProperties(doctorDTO,newDoctor);
+        pep.setDoctor(newDoctor);
+        PepPatientDTO patientDTO = new PepPatientDTO();
+        BeanUtils.copyProperties(patient.get(),patientDTO);
+        Patient newPatient = new Patient();
+        BeanUtils.copyProperties(patientDTO,newPatient);
+        pep.setPatient(newPatient);
         pep.setCreatedAt(LocalDateTime.now());
         pep.setUpdateAt(LocalDateTime.now());
         pep.setStatus(EStatus.ACTIVATE);

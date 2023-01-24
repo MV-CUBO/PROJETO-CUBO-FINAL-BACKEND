@@ -1,6 +1,7 @@
 package br.com.mv.APIHealth.rest.dto;
 
 import br.com.mv.APIHealth.domain.entity.Doctor;
+import br.com.mv.APIHealth.domain.entity.Patient;
 import br.com.mv.APIHealth.domain.entity.PepLog;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,9 +29,9 @@ public class PepDTO {
     private String pepNumber;
 
     @Valid
-    private UUID patientId;
+    private Patient patient;
 
-    @JsonIgnore
+    @Valid
     private Doctor doctor;
 
     @Enumerated(EnumType.STRING)
