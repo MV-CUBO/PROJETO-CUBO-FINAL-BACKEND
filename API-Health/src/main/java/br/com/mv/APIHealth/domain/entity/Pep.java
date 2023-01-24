@@ -26,7 +26,7 @@ public class Pep{
     private UUID id;
 
     private String pepNumber;
-
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID patientId;
 
     //private UUID doctorId;

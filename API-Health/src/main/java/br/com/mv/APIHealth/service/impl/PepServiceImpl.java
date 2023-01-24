@@ -4,6 +4,7 @@ package br.com.mv.APIHealth.service.impl;
 import br.com.mv.APIHealth.domain.entity.Pep;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.PepRepository;
+import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.PepDTO;
 import br.com.mv.APIHealth.rest.dto.PepLogDTO;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 @Service
 @RequiredArgsConstructor
@@ -62,7 +62,7 @@ public class PepServiceImpl implements PepService {
         Pep pepUpdated = this.pepRepository.save(pep);
         PepLogDTO pepLogDTO = new PepLogDTO();
         pepLogDTO.setPepId(pep.getId());
-        pepLogDTO.setAction("pep was updated");
+        pepLogDTO.setAction("{pep.update}");
         pepLogDTO.setCreatedAt(LocalDateTime.now());
         this.pepLogService.create(pepLogDTO);
         BeanUtils.copyProperties(pepUpdated,pepDTO);
@@ -92,12 +92,12 @@ public class PepServiceImpl implements PepService {
 
     }
     private Pep validateExistPep(UUID pepId){
-        return this.pepRepository.findById(pepId).orElseThrow(() -> new ResourceNotFoundException("Pep não encontrado."));
+        return this.pepRepository.findById(pepId).orElseThrow(() -> new ResourceNotFoundException("{noexist.pepId.field}"));
     }
     private void validateExistPepNumber(String pepNumber){
-        Optional<Pep> pep =  this.pepRepository.findByPepNumber(pepNumber);
-        if (pep.isPresent()){
-            new ResourceNotFoundException("numero do pep não pode existir em dois peps");
+        Boolean pep =  this.pepRepository.findByPepNumber(pepNumber).isPresent();
+        if (pep){
+            throw new BadRequestException("{exist.pepNumber.field}");
         }
 
 
