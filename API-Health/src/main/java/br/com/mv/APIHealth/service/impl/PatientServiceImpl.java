@@ -4,6 +4,7 @@ import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.entity.Patient;
 import br.com.mv.APIHealth.domain.entity.Pep;
 import br.com.mv.APIHealth.domain.enums.EStatus;
+import br.com.mv.APIHealth.domain.enums.Gender;
 import br.com.mv.APIHealth.domain.repository.PatientRepository;
 import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
@@ -126,6 +127,16 @@ public class PatientServiceImpl implements PatientService {
         });
 
         return patientsDTO;
+    }
+
+    @Override
+    public Long countPatientByStatus(EStatus value) {
+        return patientRepository.countPatientByStatus(value);
+    }
+
+    @Override
+    public Long countPatientByGender(Gender value) {
+        return patientRepository.countPatientByGender(value);
     }
 
     @Override

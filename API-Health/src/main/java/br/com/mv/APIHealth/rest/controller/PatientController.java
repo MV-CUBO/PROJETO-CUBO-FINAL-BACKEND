@@ -1,5 +1,7 @@
 package br.com.mv.APIHealth.rest.controller;
 
+import br.com.mv.APIHealth.domain.enums.EStatus;
+import br.com.mv.APIHealth.domain.enums.Gender;
 import br.com.mv.APIHealth.rest.dto.PatientDTO;
 import br.com.mv.APIHealth.rest.dto.PepDTO;
 import br.com.mv.APIHealth.rest.dto.UpdatePatientDTO;
@@ -55,6 +57,20 @@ public class PatientController {
     @ResponseStatus(OK)
     public PepDTO findPepByPatientId(@PathVariable(name = "id") UUID id) {
         return this.patientService.findPepByPatientId(id);
+    }
+
+    @GetMapping("/count/status")
+    public ResponseEntity<Long> countByStatus(@RequestParam("status") EStatus value) {
+        Long count = patientService.countPatientByStatus(value);
+
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
+
+    @GetMapping("/count/gender")
+    public ResponseEntity<Long> countByGender(@RequestParam("gender") Gender value) {
+        Long count = patientService.countPatientByGender(value);
+
+        return new ResponseEntity<>(count, HttpStatus.OK);
     }
 
     @GetMapping
