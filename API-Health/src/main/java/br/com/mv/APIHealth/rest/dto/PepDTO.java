@@ -2,11 +2,15 @@ package br.com.mv.APIHealth.rest.dto;
 
 import br.com.mv.APIHealth.domain.entity.Doctor;
 import br.com.mv.APIHealth.domain.entity.PepLog;
+import br.com.mv.APIHealth.domain.enums.EStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -20,25 +24,25 @@ public class PepDTO {
 
     private UUID id;
 
-    @NotEmpty
+    @NotEmpty(message = "{required.pepNumber.field}")
     private String pepNumber;
 
-    @NotEmpty
+    @Valid
     private UUID patientId;
 
     @JsonIgnore
     private Doctor doctor;
 
-    @NotEmpty
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private EStatus status;
 
-    @NotEmpty
+    @NotEmpty(message = "{required.prescription.field}")
     private String prescription;
 
-    @NotEmpty
+    @NotEmpty(message = "{required.bloodType.field}")
     private String bloodType;
 
-    @NotEmpty
+    @NotEmpty(message = "{required.allergies.field}")
     private String allergies;
 
 

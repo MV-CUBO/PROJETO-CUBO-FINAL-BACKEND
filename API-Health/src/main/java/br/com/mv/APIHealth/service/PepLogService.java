@@ -1,6 +1,5 @@
 package br.com.mv.APIHealth.service;
 
-import br.com.mv.APIHealth.rest.dto.PepDTO;
 import br.com.mv.APIHealth.rest.dto.PepLogDTO;
 
 import java.util.List;

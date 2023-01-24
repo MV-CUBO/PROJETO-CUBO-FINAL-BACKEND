@@ -1,5 +1,6 @@
 package br.com.mv.APIHealth.domain.entity;
 
+import br.com.mv.APIHealth.domain.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,8 @@ public class Pep{
 
     //private UUID doctorId;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private EStatus status;
 
     private String prescription;
 

@@ -2,17 +2,14 @@ package br.com.mv.APIHealth.service.impl;
 
 
 import br.com.mv.APIHealth.domain.entity.Pep;
-import br.com.mv.APIHealth.domain.entity.PepLog;
-import br.com.mv.APIHealth.domain.repository.PepLogRepository;
+import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.PepRepository;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
-
 import br.com.mv.APIHealth.rest.dto.PepDTO;
 import br.com.mv.APIHealth.rest.dto.PepLogDTO;
 import br.com.mv.APIHealth.service.PepService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -36,6 +33,7 @@ public class PepServiceImpl implements PepService {
         BeanUtils.copyProperties(pepDTO,pep);
         pep.setCreatedAt(LocalDateTime.now());
         pep.setUpdateAt(LocalDateTime.now());
+        pep.setStatus(EStatus.ACTIVATE);
         Pep newPep = this.pepRepository.save(pep);
         PepLogDTO pepLogDTO = new PepLogDTO();
         pepLogDTO.setPepId(pep.getId());

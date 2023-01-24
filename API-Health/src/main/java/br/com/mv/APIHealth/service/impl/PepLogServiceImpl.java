@@ -3,11 +3,8 @@ package br.com.mv.APIHealth.service.impl;
 
 import br.com.mv.APIHealth.domain.entity.PepLog;
 import br.com.mv.APIHealth.domain.repository.PepLogRepository;
-
-
 import br.com.mv.APIHealth.rest.dto.PepLogDTO;
 import br.com.mv.APIHealth.service.PepLogService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
