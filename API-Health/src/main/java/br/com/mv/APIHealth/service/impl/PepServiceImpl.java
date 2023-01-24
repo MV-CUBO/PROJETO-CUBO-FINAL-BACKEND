@@ -26,6 +26,9 @@ public class PepServiceImpl implements PepService {
     private final PepRepository pepRepository;
     private final PepLogServiceImpl pepLogService;
 
+    private final String MESSAGECREATED = "pep was created";
+    private final String MESSAGEUPDATED = "pep was created";
+
     @Override
     public PepDTO create(PepDTO pepDTO) {
         this.validateExistPepNumber( pepDTO.getPepNumber());
@@ -38,7 +41,7 @@ public class PepServiceImpl implements PepService {
         Pep newPep = this.pepRepository.save(pep);
         PepLogDTO pepLogDTO = new PepLogDTO();
         pepLogDTO.setPepId(pep.getId());
-        pepLogDTO.setAction("pep was created");
+        pepLogDTO.setAction(MESSAGECREATED);
         pepLogDTO.setCreatedAt(LocalDateTime.now());
         this.pepLogService.create(pepLogDTO);
         BeanUtils.copyProperties(newPep,pepDTO);
@@ -63,7 +66,7 @@ public class PepServiceImpl implements PepService {
         Pep pepUpdated = this.pepRepository.save(pep);
         PepLogDTO pepLogDTO = new PepLogDTO();
         pepLogDTO.setPepId(pep.getId());
-        pepLogDTO.setAction("{pep.update}");
+        pepLogDTO.setAction("MESSAGEUPDATED");
         pepLogDTO.setCreatedAt(LocalDateTime.now());
         this.pepLogService.create(pepLogDTO);
         BeanUtils.copyProperties(pepUpdated,pepDTO);

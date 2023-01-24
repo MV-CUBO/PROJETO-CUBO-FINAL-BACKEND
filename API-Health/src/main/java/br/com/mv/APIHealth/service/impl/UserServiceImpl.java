@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserById(UUID id) {
         User user =  userRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("User not found.")
+                () -> new ResourceNotFoundException("{noExist.idUser.field}")
         );
 
         UserDTO dto = new UserDTO();
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO update(UUID id, UserDTO userDto) {
         User user = userRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("User not found.")
+                () -> new ResourceNotFoundException("{noExist.idUser.field}")
         );
 
         userDto.setId(user.getId());
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserByUsername(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new ResourceNotFoundException("User not found.")
+                () -> new ResourceNotFoundException("{noExist.idUser.field}")
         );
         UserDTO userDto = new UserDTO();
         BeanUtils.copyProperties(user, userDto);

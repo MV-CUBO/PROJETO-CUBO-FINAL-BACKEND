@@ -1,6 +1,6 @@
 package br.com.mv.APIHealth.service;
 
-import br.com.mv.APIHealth.domain.entity.Doctor;
+
 import br.com.mv.APIHealth.rest.dto.DoctorDTO;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public interface DoctorService {
 
     public DoctorDTO getDoctorById (UUID id);
 
-    public List<Doctor> getAll ();
+    public List<DoctorDTO> getAll ();
 
     public DoctorDTO update (UUID id, DoctorDTO doctorDTO );
 
