@@ -1,8 +1,10 @@
 package br.com.mv.APIHealth.rest.controller;
 
-import br.com.mv.APIHealth.domain.entity.Doctor;
+import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.rest.dto.DoctorDTO;
 import br.com.mv.APIHealth.service.DoctorService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,6 +37,13 @@ public class DoctorController {
     @ResponseStatus(OK)
     public List<DoctorDTO> getAll(){
         return this.doctorService.getAll();
+    }
+
+    @GetMapping("/count/status")
+    public ResponseEntity<Long> countByStatus(@RequestParam("status") EStatus value) {
+        Long count = this.doctorService.countDoctorByStatus(value);
+
+        return new ResponseEntity<>(count, HttpStatus.OK);
     }
 
 

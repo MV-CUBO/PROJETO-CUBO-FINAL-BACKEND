@@ -60,6 +60,11 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
+    public Long countDoctorByStatus(EStatus value) {
+        return this.doctorRepository.countDoctorByStatus(value);
+    }
+
+    @Override
     public List<DoctorDTO> getAll() {
 
         List<Doctor> doctors = doctorRepository.findAll();
