@@ -23,7 +23,6 @@ public class DoctorDTO extends PersonDTO {
     //@Pattern(regexp = "\\d{4,6}") --limitar a quantidade de caracteres
     private String crm;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     private Specialty specialty;
 

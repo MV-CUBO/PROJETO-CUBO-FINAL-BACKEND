@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
@@ -27,17 +28,17 @@ public class PersonDTO {
     @NotEmpty(message = "{required.name.field}")
     private String name;
 
-    @NotEmpty(message = "vazio teste milton")
-    @CPF(message = "nao valido testando milton")
+    @NotEmpty(message = "{required.cpf.field}")
+    @CPF(message = "{required.cpf.invalid.field}")
     private String cpf;
 
-    @Past
+    @Past(message = "{required.date.field}")
     private LocalDate dateOfBirth;
 
-    @NotEmpty
+    @NotEmpty(message = "{required.phone.field}")
     private String phone;
 
-    @NotEmpty
+    @NotEmpty(message = "{required.email.field}")
     private String email;
 
     @Enumerated(EnumType.STRING)
@@ -50,6 +51,7 @@ public class PersonDTO {
 
     private LocalDateTime updateAT;
 
+    @Valid
     private Address address;
 
     @Enumerated(EnumType.STRING)

@@ -1,17 +1,17 @@
 package br.com.mv.APIHealth.rest.dto;
 
 import br.com.mv.APIHealth.domain.entity.Pep;
-import br.com.mv.APIHealth.domain.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PatientDTO extends PersonDTO{
+public class PatientDTO extends PersonDTO {
 
     @NotEmpty(message = "{required.insuranceCompany.field}")
     private String insuranceCompany;
@@ -19,7 +19,8 @@ public class PatientDTO extends PersonDTO{
     @NotEmpty(message = "{required.healthInsurenceCard.field}")
     private String healthInsurenceCard;
 
+    @NotEmpty(message = "{required.observation.field}")
     private String observation;
-
-     private Pep pep;
+    @Valid
+    private Pep pep;
 }
