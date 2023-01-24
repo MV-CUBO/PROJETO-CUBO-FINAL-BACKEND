@@ -1,7 +1,7 @@
 package br.com.mv.APIHealth.rest.controller;
 
 
-import br.com.mv.APIHealth.rest.dto.NurseDTO;
+
 import br.com.mv.APIHealth.rest.dto.PepDTO;
 import br.com.mv.APIHealth.rest.dto.PepLogDTO;
 import br.com.mv.APIHealth.service.PepLogService;
@@ -58,7 +58,6 @@ public class PepController {
 
 
     @PostMapping
-
     public ResponseEntity<Response<PepDTO>> savePep(@RequestBody @Valid PepDTO pepDTO, BindingResult result) {
         Response<PepDTO> response = new Response<>();
         if (result.hasErrors()) {

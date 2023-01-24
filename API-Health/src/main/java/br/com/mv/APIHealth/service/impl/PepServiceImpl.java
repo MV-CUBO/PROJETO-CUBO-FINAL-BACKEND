@@ -33,7 +33,7 @@ public class PepServiceImpl implements PepService {
     private final PatientRepository patientRepository;
 
     private final String MESSAGECREATED = "pep was created";
-    private final String MESSAGEUPDATED = "pep was created";
+    private final String MESSAGEUPDATED = "pep was updated";
 
     @Override
     public PepDTO create(PepDTO pepDTO) {
@@ -86,7 +86,7 @@ public class PepServiceImpl implements PepService {
         Pep pepUpdated = this.pepRepository.save(pep);
         PepLogDTO pepLogDTO = new PepLogDTO();
         pepLogDTO.setPepId(pep.getId());
-        pepLogDTO.setAction("MESSAGEUPDATED");
+        pepLogDTO.setAction(MESSAGEUPDATED);
         pepLogDTO.setCreatedAt(LocalDateTime.now());
         this.pepLogService.create(pepLogDTO);
         BeanUtils.copyProperties(pepUpdated,pepDTO);
