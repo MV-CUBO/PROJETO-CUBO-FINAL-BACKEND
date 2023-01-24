@@ -21,6 +21,7 @@ public class PatientDTO extends PersonDTO {
 
     @NotEmpty(message = "{required.observation.field}")
     private String observation;
+
     @Valid
     private Pep pep;
 }

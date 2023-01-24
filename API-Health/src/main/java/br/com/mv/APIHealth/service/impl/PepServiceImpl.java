@@ -2,6 +2,7 @@ package br.com.mv.APIHealth.service.impl;
 
 
 import br.com.mv.APIHealth.domain.entity.Pep;
+import br.com.mv.APIHealth.domain.enums.EStatePatient;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.PepRepository;
 import br.com.mv.APIHealth.exception.BadRequestException;
@@ -33,7 +34,7 @@ public class PepServiceImpl implements PepService {
         BeanUtils.copyProperties(pepDTO,pep);
         pep.setCreatedAt(LocalDateTime.now());
         pep.setUpdateAt(LocalDateTime.now());
-        pep.setStatus(EStatus.ACTIVATE);
+        pep.setStatus(EStatePatient.CONSULTATION);
         Pep newPep = this.pepRepository.save(pep);
         PepLogDTO pepLogDTO = new PepLogDTO();
         pepLogDTO.setPepId(pep.getId());
