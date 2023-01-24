@@ -3,7 +3,6 @@ package br.com.mv.APIHealth.service.impl;
 
 import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.entity.Nurse;
-import br.com.mv.APIHealth.domain.entity.login.User;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.NurseRepository;
 import br.com.mv.APIHealth.exception.BadRequestException;
