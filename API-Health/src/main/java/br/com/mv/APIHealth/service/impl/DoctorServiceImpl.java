@@ -72,8 +72,8 @@ public class DoctorServiceImpl implements DoctorService {
 
         doctorDTO.setUpdateAT(LocalDateTime.now());
         doctorDTO.setCreatedAt(doctor.getCreatedAt());
-        doctorDTO.setId(doctor.getId());
-        BeanUtils.copyProperties(doctorDTO, doctor);
+        doctorDTO.setId(doctorDTO.getId());
+        BeanUtils.copyProperties(doctor, doctorDTO);
         Doctor updatedDoctor = doctorRepository.save(doctor);
 
         BeanUtils.copyProperties(updatedDoctor, doctorDTO);

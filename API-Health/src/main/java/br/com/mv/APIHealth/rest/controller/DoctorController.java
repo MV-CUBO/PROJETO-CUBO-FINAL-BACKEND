@@ -10,8 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @CrossOrigin("*")
@@ -47,13 +46,13 @@ public class DoctorController {
     }
 
     @PutMapping("{id}")
-    @ResponseStatus(OK)
+    @ResponseStatus(NO_CONTENT)
     public DoctorDTO updateDoctor(@PathVariable(name = "id") UUID id, @RequestBody @Valid DoctorDTO doctorDTO) {
         return this.doctorService.update(id, doctorDTO);
     }
 
     @DeleteMapping("{id}")
-    @ResponseStatus(OK)
+    @ResponseStatus(NO_CONTENT)
     public void deleteDoctor(@PathVariable(name = "id") UUID id) {
         this.doctorService.delete(id);
     }
