@@ -27,6 +27,5 @@ public class DoctorDTO extends PersonDTO {
     @Enumerated(EnumType.STRING)
     private Specialty specialty;
 
-    public void setStatus(EStatus activate) {
-    }
+
 }
