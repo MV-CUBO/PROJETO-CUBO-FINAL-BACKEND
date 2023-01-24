@@ -119,7 +119,7 @@ public class PepServiceImpl implements PepService {
         return this.pepRepository.findById(pepId).orElseThrow(() -> new ResourceNotFoundException("{noexist.pepId.field}"));
     }
     private void validateExistPepNumber(String pepNumber){
-        Boolean pep =  this.pepRepository.findByPepNumber(pepNumber).isPresent();
+        boolean pep =  this.pepRepository.findByPepNumber(pepNumber).isPresent();
         if (pep){
             throw new BadRequestException("{exist.pepNumber.field}");
         }

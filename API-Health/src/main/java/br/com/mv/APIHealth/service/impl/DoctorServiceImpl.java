@@ -119,7 +119,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     private void validateDoctorExistByCpf(String cpf) {
-        Boolean doctorIsPresent = this.doctorRepository.findByCpf(cpf).isPresent();
+        boolean doctorIsPresent = this.doctorRepository.findByCpf(cpf).isPresent();
 
         if (doctorIsPresent) throw new BadRequestException("{exist.cpf.field}");
     }

@@ -2,13 +2,12 @@ package br.com.mv.APIHealth.service.impl;
 
 import br.com.mv.APIHealth.domain.entity.login.User;
 import br.com.mv.APIHealth.domain.repository.UserRepository;
+import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.UserDTO;
 import br.com.mv.APIHealth.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.MessageSource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Locale;
@@ -27,6 +26,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO create(UserDTO userDto) {
+        this.validateUserExists(userDto.getUsername());
+
         User user = new User();
         userDto.setId(null);
         BeanUtils.copyProperties(userDto, user);
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserById(UUID id) {
         Optional<User> userOptional =  userRepository.findById(id);
-        if (!userOptional.isPresent()) {
+        if (userOptional.isEmpty()) {
             String userNotFoundMessage = messageSource.getMessage("noExist.idUser.field",
                     null, Locale.getDefault());
             throw new ResourceNotFoundException(userNotFoundMessage);
@@ -86,5 +87,12 @@ public class UserServiceImpl implements UserService {
         if (originUserDto.getPassword() != null) {
             targetUser.setPassword(originUserDto.getPassword());
         }
+    }
+
+    private void validateUserExists(String username) {
+        boolean userIsPresent = this.userRepository.findByUsername(
+                username).isPresent();
+
+        if (userIsPresent) throw new BadRequestException("{exist.user.field}");
     }
 }
