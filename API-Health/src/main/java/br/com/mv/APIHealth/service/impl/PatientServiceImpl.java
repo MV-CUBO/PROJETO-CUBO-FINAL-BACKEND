@@ -14,24 +14,26 @@ import br.com.mv.APIHealth.rest.dto.UpdatePatientDTO;
 import br.com.mv.APIHealth.service.AddressService;
 import br.com.mv.APIHealth.service.PatientService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class PatientServiceImpl implements PatientService {
 
     private final  PatientRepository patientRepository;
 
+    private final MessageSource messageSource;
+
     private final AddressService addressService;
 
     private final String MESSAGE = "Provide the patient's address.";
 
-    public PatientServiceImpl(PatientRepository patientRepository, AddressService addressService) {
+    public PatientServiceImpl(PatientRepository patientRepository, MessageSource messageSource, AddressService addressService) {
         this.patientRepository = patientRepository;
+        this.messageSource = messageSource;
         this.addressService = addressService;
     }
 
@@ -54,17 +56,29 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDTO getPatientById(UUID id) {
-        Patient patient = this.validatePatientExists(id);
+
+        Optional<Patient> patientOptional =  patientRepository.findById(id);
+        if (patientOptional.isEmpty()) {
+            String patientNotFoundMessage = messageSource.getMessage("noExist.idPatient.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(patientNotFoundMessage);
+        }
 
         PatientDTO patientDTO = new PatientDTO();
-        BeanUtils.copyProperties(patient, patientDTO);
+        BeanUtils.copyProperties(patientOptional, patientDTO);
 
         return patientDTO;
     }
 
     @Override
     public PepDTO findPepByPatientId(UUID id) {
-        this.validatePatientExists(id);
+
+        Optional<Patient> patientOptional =  patientRepository.findById(id);
+        if (patientOptional.isEmpty()) {
+            String patientNotFoundMessage = messageSource.getMessage("noExist.idPatient.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(patientNotFoundMessage);
+        }
 
         Pep patientPep = this.patientRepository.findPepById(id).get();
 
@@ -95,7 +109,14 @@ public class PatientServiceImpl implements PatientService {
     public List<PatientDTO> getAll() {
         List<Patient> patients= this.patientRepository.findAll();
 
-        List<PatientDTO> patientsDTO = new ArrayList();
+        if(patients.isEmpty()
+        ){
+            String patientNotFoundMessage = messageSource.getMessage("noExist.patient.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(patientNotFoundMessage);
+        }
+
+        List<PatientDTO> patientsDTO = new ArrayList<>();
 
         patients.forEach(patient -> {
             PatientDTO patientDTO = new PatientDTO();
@@ -196,7 +217,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     private void validatePatientExistByCpf(String cpf) {
-        Boolean patientIsPresent = this.patientRepository.findByCpf(cpf).isPresent();
+        boolean patientIsPresent = this.patientRepository.findByCpf(cpf).isPresent();
 
         if(patientIsPresent) throw new BadRequestException("{exist.cpf.field}");
     }

@@ -26,8 +26,10 @@ public class Pep{
     private UUID id;
 
     private String pepNumber;
-    @Type(type = "org.hibernate.type.UUIDCharType")
-    private UUID patientId;
+
+    @OneToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
     //private UUID doctorId;
 
