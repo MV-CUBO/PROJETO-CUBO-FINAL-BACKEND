@@ -12,14 +12,13 @@ import br.com.mv.APIHealth.service.AddressService;
 import br.com.mv.APIHealth.service.NurseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -30,6 +29,7 @@ public class NurseServiceImpl implements NurseService {
 
     private final NurseRepository nurseRepository;
     private final AddressService addressService;
+    private final MessageSource messageSource;
     private final String MESSAGE = "Provide the patient's address.";
 
     @Override
@@ -51,16 +51,22 @@ public class NurseServiceImpl implements NurseService {
     @Override
     @Transactional(readOnly = true)
     public NurseDTO getNurseById(UUID id) {
-        Nurse nurse = nurseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("{noexist.id.field}"));
+        Nurse nurseOptional =  this.validateNurseExists(id);
 
         NurseDTO nurseDTO = new NurseDTO();
-        BeanUtils.copyProperties(nurse, nurseDTO);
+        BeanUtils.copyProperties(nurseOptional, nurseDTO);
         return nurseDTO;
     }
 
     @Override
     public List<NurseDTO> getAll() {
         List<Nurse> nurses = nurseRepository.findAll();
+
+        if(nurses.isEmpty()) {
+            String nurseNotFoundMessage = messageSource.getMessage("noExist.nurse.database",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(nurseNotFoundMessage);
+        }
 
         List<NurseDTO> nursesDTO = new ArrayList<>();
 
@@ -116,16 +122,25 @@ public class NurseServiceImpl implements NurseService {
     }
 
     private Nurse validateNurseExists(UUID id) {
-        Nurse nurse = this.nurseRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("{noexist.id.field}"));
+        Optional<Nurse> nurse = this.nurseRepository.findById(id);
 
-        return nurse;
+        if (nurse.isEmpty()) {
+            String patientNotFoundMessage = messageSource.getMessage("noexist.id.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(patientNotFoundMessage);
+        }
+
+        return nurse.get();
     }
 
     private void validateNurseExistByCpf(String cpf) {
-        Boolean nurseIsPresent = this.nurseRepository.findByCpf(cpf).isPresent();
+        boolean nurseIsPresent = this.nurseRepository.findByCpf(cpf).isPresent();
 
-        if (nurseIsPresent) throw new BadRequestException("{exist.cpf.field}");
+        if (nurseIsPresent) {
+            String patientNotFoundMessage = messageSource.getMessage("Exist.cpf.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(patientNotFoundMessage);
+        }
     }
 
     private Address createAddressForNurse(Address addressDto) {
@@ -136,7 +151,9 @@ public class NurseServiceImpl implements NurseService {
                     || addressDto.getDistrict() == null
                     || addressDto.getCity() == null
                     || addressDto.getState() == null) {
-                throw new BadRequestException("{required.address.field}");
+                String addressValidationFields = messageSource.getMessage("required.address.field",
+                        null, Locale.getDefault());
+                throw new BadRequestException(addressValidationFields);
             } else {
                 addressDto = new Address(null,
                         addressDto.getZipCode(),
