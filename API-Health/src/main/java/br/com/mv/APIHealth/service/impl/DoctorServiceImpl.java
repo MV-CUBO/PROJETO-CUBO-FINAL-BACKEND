@@ -11,6 +11,7 @@ import br.com.mv.APIHealth.service.AddressService;
 import br.com.mv.APIHealth.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -29,6 +31,8 @@ public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepository doctorRepository;
 
     private final AddressService addressService;
+
+    private final MessageSource messageSource;
 
     private final String MESSAGE = "Provide the patient's address.";
 
@@ -126,7 +130,11 @@ public class DoctorServiceImpl implements DoctorService {
     private void validateDoctorExistByCpf(String cpf) {
         boolean doctorIsPresent = this.doctorRepository.findByCpf(cpf).isPresent();
 
-        if (doctorIsPresent) throw new BadRequestException("{exist.cpf.field}");
+        if (doctorIsPresent) {
+            String patientNotFoundMessage = messageSource.getMessage("exist.cpf.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(patientNotFoundMessage);
+        }
     }
 
     private Address createAddressForDoctor(Address addressDto) {
