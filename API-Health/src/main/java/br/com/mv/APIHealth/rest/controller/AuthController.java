@@ -25,40 +25,9 @@ import java.util.Collections;
 @RequestMapping("/api/auth")
 public class AuthController {
     private final AuthenticationManager authenticationManager;
-    private final UserService userService;
-    private final RoleService roleService;
-    private final PasswordEncoder passwordEncoder;
 
-    public AuthController(AuthenticationManager authenticationManager, UserService userService,
-                          RoleService roleService, PasswordEncoder passwordEncoder) {
+    public AuthController(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
-        this.userService = userService;
-        this.roleService = roleService;
-        this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<Object> register(@RequestBody @Valid UserDTO userDto,
-                                           BindingResult result) {
-        Response<UserDTO> response = new Response<>();
-        if (result.hasErrors()) {
-            result.getAllErrors().forEach(err -> response.getErrors().add(err.getDefaultMessage()));
-            return ResponseEntity.badRequest().body(response);
-        }
-
-        if (userService.existsByUsername(userDto.getUsername())) {
-            return new ResponseEntity<>("Username is taken.", HttpStatus.BAD_REQUEST);
-        }
-
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-
-        RoleDTO roleDto = roleService.getByDescription("USER");
-        Role role = new Role();
-        BeanUtils.copyProperties(roleDto, role);
-        user.setRoles(Collections.singletonList(role));
-
-        return new ResponseEntity<>("User registered.", HttpStatus.OK);
-    }
 }

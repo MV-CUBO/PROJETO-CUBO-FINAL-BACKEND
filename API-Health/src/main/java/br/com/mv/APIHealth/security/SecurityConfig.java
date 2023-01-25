@@ -29,7 +29,7 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/auth/**", "/api/roles/**", "/h2-console/**").permitAll()
+                .antMatchers("/api/auth/**", "/api/roles/**", "/h2-console/**", "/api/users/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .headers().frameOptions().sameOrigin() // necessary for h2 console
