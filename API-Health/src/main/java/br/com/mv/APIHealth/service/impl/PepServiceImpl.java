@@ -2,22 +2,24 @@ package br.com.mv.APIHealth.service.impl;
 
 
 import br.com.mv.APIHealth.domain.entity.Pep;
+import br.com.mv.APIHealth.domain.entity.PepLog;
 import br.com.mv.APIHealth.domain.enums.EStatePatient;
-import br.com.mv.APIHealth.domain.enums.EStatus;
+
 import br.com.mv.APIHealth.domain.repository.PepRepository;
-import br.com.mv.APIHealth.exception.BadRequestException;
+
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
-import br.com.mv.APIHealth.rest.dto.PepDTO;
-import br.com.mv.APIHealth.rest.dto.PepLogDTO;
+import br.com.mv.APIHealth.rest.dto.*;
 import br.com.mv.APIHealth.service.PepService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+
+import java.util.*;
+
+
 @Service
 @RequiredArgsConstructor
 public class PepServiceImpl implements PepService {
@@ -25,12 +27,14 @@ public class PepServiceImpl implements PepService {
 
     private final PepRepository pepRepository;
     private final PepLogServiceImpl pepLogService;
+    private final MessageSource messageSource;
 
     private final String MESSAGECREATED = "pep was created";
-    private final String MESSAGEUPDATED = "pep was created";
+    private final String MESSAGEUPDATED = "pep was updated";
+    private final String MESSAGEDELETED = "pep was deleted";
 
     @Override
-    public PepDTO create(PepDTO pepDTO) {
+    public GetPepDTO create(PepDTO pepDTO) {
         this.validateExistPepNumber( pepDTO.getPepNumber());
         Pep pep = new Pep();
 
@@ -39,74 +43,112 @@ public class PepServiceImpl implements PepService {
         pep.setUpdateAt(LocalDateTime.now());
         pep.setStatus(EStatePatient.CONSULTATION);
         Pep newPep = this.pepRepository.save(pep);
-        PepLogDTO pepLogDTO = new PepLogDTO();
-        pepLogDTO.setPepId(pep.getId());
-        pepLogDTO.setAction(MESSAGECREATED);
-        pepLogDTO.setCreatedAt(LocalDateTime.now());
-        this.pepLogService.create(pepLogDTO);
+
+        this.createLog(pep.getId(),MESSAGECREATED);
+
         BeanUtils.copyProperties(newPep,pepDTO);
-        return pepDTO;
+
+        return  new GetPepDTO(pepDTO);
     }
 
     @Override
-    public PepDTO getPepById(UUID id) {
+    public GetPepDTO getPepById(UUID id) {
+
         Pep pep = this.validateExistPep(id);
+
         PepDTO pepDTO = new PepDTO();
+
         BeanUtils.copyProperties(pep,pepDTO);
-        return pepDTO;
+
+        return new GetPepDTO(pepDTO);
     }
 
     @Override
-    public PepDTO updateById(UUID id, PepDTO pepDTO) {
+    public GetPepDTO updateById(UUID id, PutPepDTO pepDTO) {
         Pep pep = this.validateExistPep(id);
         this.validateForUpdatePep(pepDTO,pep);
-        BeanUtils.copyProperties(pepDTO,pep);
-        pep.setId(id);
-        pep.setUpdateAt(LocalDateTime.now());
+
         Pep pepUpdated = this.pepRepository.save(pep);
-        PepLogDTO pepLogDTO = new PepLogDTO();
-        pepLogDTO.setPepId(pep.getId());
-        pepLogDTO.setAction("MESSAGEUPDATED");
-        pepLogDTO.setCreatedAt(LocalDateTime.now());
-        this.pepLogService.create(pepLogDTO);
+        this.createLog(pep.getId(),MESSAGEUPDATED);
         BeanUtils.copyProperties(pepUpdated,pepDTO);
-        return pepDTO;
+        return new GetPepDTO(pepDTO);
     }
 
     @Override
-    public List<PepDTO> getAll() {
+    public List<GetPepDTO> getAll() {
         List<Pep> peps= this.pepRepository.findAll();
-        List<PepDTO> pepDTOS = new ArrayList();
-        peps.forEach(pep -> {
-            PepDTO pepDTO = new PepDTO();
-            BeanUtils.copyProperties(pep,pepDTO);
-            pepDTOS.add(pepDTO);
-        });
-        return pepDTOS;
+        if(peps.isEmpty()){
+            String pepNotFoundMessage = messageSource.getMessage("noExist.pep.database",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(pepNotFoundMessage);
+        }
+        return this.list(peps);
     }
 
     @Override
     public void deleteById(UUID id) {
-        this.validateExistPep(id);
-        this.pepRepository.deleteById(id);
+        Pep pep = this.validateExistPep(id);
+        this.pepLogService.deleteAllByPepId(id);
+        this.pepRepository.delete(pep);
     }
 
     @Override
     public void updateDatePep(LocalDateTime date) {
 
     }
-    private Pep validateExistPep(UUID pepId){
-        return this.pepRepository.findById(pepId).orElseThrow(() -> new ResourceNotFoundException("{noexist.pepId.field}"));
+
+    @Override
+    public List<GetPepDTO> getAllByStatus(EStatePatient status) {
+        List<Pep> peps= this.pepRepository.findAllByStatus(status);
+
+
+        return this.list(peps);
     }
+
+    @Override
+    public long getNumInStatus(EStatePatient status){
+        return this.pepRepository.countByStatus(status);
+    }
+
+    private Pep validateExistPep(UUID pepId){
+        Optional<Pep> pepOptional =  pepRepository.findById(pepId);
+        if (pepOptional.isEmpty()) {
+            String pepNotFoundMessage = messageSource.getMessage("noexist.pepId.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(pepNotFoundMessage);
+        }
+        return pepOptional.get();
+        }
     private void validateExistPepNumber(String pepNumber){
-        Boolean pep =  this.pepRepository.findByPepNumber(pepNumber).isPresent();
+        boolean pep =  this.pepRepository.findByPepNumber(pepNumber).isPresent();
         if (pep){
-            throw new BadRequestException("{exist.pepNumber.field}");
+            String pepNotFoundMessage = messageSource.getMessage("noexist.pepId.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(pepNotFoundMessage);
         }
 
 
     }
-    private void validateForUpdatePep(PepDTO pepDTO, Pep pep){
+    private List<GetPepDTO> list(List<Pep> peps){
+        List<GetPepDTO> pepDTOS = new ArrayList<>();
+        peps.forEach(pep -> {
+            PepDTO pepDTO = new PepDTO();
+            BeanUtils.copyProperties(pep,pepDTO);
+            pepDTOS.add(new GetPepDTO(pepDTO));
+        });
+        return pepDTOS;
+    }
+    private void createLog(UUID id, String message){
+        PepLogDTO pepLogDTO = new PepLogDTO();
+        Pep pep = new Pep();
+        pep.setId(id);
+        pepLogDTO.setPep(pep);
+        pepLogDTO.setAction(message);
+        pepLogDTO.setCreatedAt(LocalDateTime.now());
+        this.pepLogService.create(pepLogDTO);
+
+    }
+    private void validateForUpdatePep(PutPepDTO pepDTO, Pep pep){
 
         if(pepDTO.getPepNumber() != null){
             pep.setPepNumber(pepDTO.getPepNumber());
@@ -114,9 +156,7 @@ public class PepServiceImpl implements PepService {
         if(pepDTO.getStatus() != null){
             pep.setStatus(pepDTO.getStatus());
         }
-        if(pepDTO.getCreatedAt() != null){
-            pep.setCreatedAt(pepDTO.getCreatedAt());
-        }
+
         if(pepDTO.getAllergies() != null){
             pep.setAllergies(pepDTO.getAllergies());
         }
@@ -127,8 +167,6 @@ public class PepServiceImpl implements PepService {
         if(pepDTO.getPrescription() != null){
             pep.setPrescription(pepDTO.getPrescription());
         }
-        if(pepDTO.getUpdateAt() != null){
-            pep.setUpdateAt(pepDTO.getUpdateAt());
-        }
+        pep.setUpdateAt(LocalDateTime.now());
     }
 }
