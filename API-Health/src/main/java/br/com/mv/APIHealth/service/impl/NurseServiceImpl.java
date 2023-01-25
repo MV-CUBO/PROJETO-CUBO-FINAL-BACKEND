@@ -51,15 +51,10 @@ public class NurseServiceImpl implements NurseService {
     @Override
     @Transactional(readOnly = true)
     public NurseDTO getNurseById(UUID id) {
-        Optional<Nurse> nurseOptional =  nurseRepository.findById(id);
-        if (nurseOptional.isEmpty()) {
-            String nurseNotFoundMessage = messageSource.getMessage("noexist.id.field",
-                    null, Locale.getDefault());
-            throw new ResourceNotFoundException(nurseNotFoundMessage);
-        }
+        Nurse nurseOptional =  this.validateNurseExists(id);
 
         NurseDTO nurseDTO = new NurseDTO();
-        BeanUtils.copyProperties(nurseOptional.get(), nurseDTO);
+        BeanUtils.copyProperties(nurseOptional, nurseDTO);
         return nurseDTO;
     }
 
@@ -67,8 +62,7 @@ public class NurseServiceImpl implements NurseService {
     public List<NurseDTO> getAll() {
         List<Nurse> nurses = nurseRepository.findAll();
 
-        if(nurses.isEmpty()
-        ){
+        if(nurses.isEmpty()) {
             String nurseNotFoundMessage = messageSource.getMessage("noExist.nurse.database",
                     null, Locale.getDefault());
             throw new ResourceNotFoundException(nurseNotFoundMessage);
@@ -128,10 +122,15 @@ public class NurseServiceImpl implements NurseService {
     }
 
     private Nurse validateNurseExists(UUID id) {
-        Nurse nurse = this.nurseRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("{noexist.id.field}"));
+        Optional<Nurse> nurse = this.nurseRepository.findById(id);
 
-        return nurse;
+        if (nurse.isEmpty()) {
+            String patientNotFoundMessage = messageSource.getMessage("noexist.id.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(patientNotFoundMessage);
+        }
+
+        return nurse.get();
     }
 
     private void validateNurseExistByCpf(String cpf) {
