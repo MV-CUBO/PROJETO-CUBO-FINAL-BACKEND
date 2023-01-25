@@ -14,7 +14,6 @@ public interface DoctorService {
     public DoctorDTO getDoctorById (UUID id);
 
     public Long countDoctorByStatus(EStatus value);
-
     public List<DoctorDTO> getAll ();
 
     public DoctorDTO update (UUID id, DoctorDTO doctorDTO );

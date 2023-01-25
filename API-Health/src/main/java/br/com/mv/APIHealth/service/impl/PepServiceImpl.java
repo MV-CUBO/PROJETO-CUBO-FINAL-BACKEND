@@ -5,23 +5,24 @@ import br.com.mv.APIHealth.domain.entity.Doctor;
 import br.com.mv.APIHealth.domain.entity.Patient;
 import br.com.mv.APIHealth.domain.entity.Pep;
 import br.com.mv.APIHealth.domain.enums.EStatePatient;
-import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.DoctorRepository;
 import br.com.mv.APIHealth.domain.repository.PatientRepository;
 import br.com.mv.APIHealth.domain.repository.PepRepository;
 import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
-import br.com.mv.APIHealth.rest.dto.*;
+import br.com.mv.APIHealth.rest.dto.PepDTO;
+import br.com.mv.APIHealth.rest.dto.PepDoctorDTO;
+import br.com.mv.APIHealth.rest.dto.PepLogDTO;
+import br.com.mv.APIHealth.rest.dto.PepPatientDTO;
 import br.com.mv.APIHealth.service.PepService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+
 @Service
 @RequiredArgsConstructor
 public class PepServiceImpl implements PepService {
@@ -31,6 +32,7 @@ public class PepServiceImpl implements PepService {
     private final PepLogServiceImpl pepLogService;
     private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
+    private final MessageSource messageSource;
 
     private final String MESSAGECREATED = "pep was created";
     private final String MESSAGEUPDATED = "pep was updated";
@@ -70,9 +72,16 @@ public class PepServiceImpl implements PepService {
 
     @Override
     public PepDTO getPepById(UUID id) {
-        Pep pep = this.validateExistPep(id);
+
+        Optional<Pep> pepOptional =  pepRepository.findById(id);
+        if (pepOptional.isEmpty()) {
+            String pepNotFoundMessage = messageSource.getMessage("noexist.pepId.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(pepNotFoundMessage);
+        }
+
         PepDTO pepDTO = new PepDTO();
-        BeanUtils.copyProperties(pep,pepDTO);
+        BeanUtils.copyProperties(pepOptional.get(),pepDTO);
         return pepDTO;
     }
 
@@ -96,6 +105,15 @@ public class PepServiceImpl implements PepService {
     @Override
     public List<PepDTO> getAll() {
         List<Pep> peps= this.pepRepository.findAll();
+
+        if(peps.isEmpty()
+        ){
+            String pepNotFoundMessage = messageSource.getMessage("noExist.pep.database",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(pepNotFoundMessage);
+        }
+
+
         List<PepDTO> pepDTOS = new ArrayList();
         peps.forEach(pep -> {
             PepDTO pepDTO = new PepDTO();

@@ -3,7 +3,6 @@ package br.com.mv.APIHealth.service.impl;
 
 import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.entity.Nurse;
-import br.com.mv.APIHealth.domain.entity.login.User;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.NurseRepository;
 import br.com.mv.APIHealth.exception.BadRequestException;
@@ -52,12 +51,7 @@ public class NurseServiceImpl implements NurseService {
     @Override
     @Transactional(readOnly = true)
     public NurseDTO getNurseById(UUID id) {
-        Optional<Nurse> nurseOptional =  nurseRepository.findById(id);
-        if (nurseOptional.isEmpty()) {
-            String nurseNotFoundMessage = messageSource.getMessage("noexist.id.field",
-                    null, Locale.getDefault());
-            throw new ResourceNotFoundException(nurseNotFoundMessage);
-        }
+        Nurse nurseOptional =  this.validateNurseExists(id);
 
         NurseDTO nurseDTO = new NurseDTO();
         BeanUtils.copyProperties(nurseOptional, nurseDTO);
@@ -68,8 +62,7 @@ public class NurseServiceImpl implements NurseService {
     public List<NurseDTO> getAll() {
         List<Nurse> nurses = nurseRepository.findAll();
 
-        if(nurses.isEmpty()
-        ){
+        if(nurses.isEmpty()) {
             String nurseNotFoundMessage = messageSource.getMessage("noExist.nurse.database",
                     null, Locale.getDefault());
             throw new ResourceNotFoundException(nurseNotFoundMessage);
@@ -129,16 +122,25 @@ public class NurseServiceImpl implements NurseService {
     }
 
     private Nurse validateNurseExists(UUID id) {
-        Nurse nurse = this.nurseRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("{noexist.id.field}"));
+        Optional<Nurse> nurse = this.nurseRepository.findById(id);
 
-        return nurse;
+        if (nurse.isEmpty()) {
+            String patientNotFoundMessage = messageSource.getMessage("noexist.id.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(patientNotFoundMessage);
+        }
+
+        return nurse.get();
     }
 
     private void validateNurseExistByCpf(String cpf) {
         boolean nurseIsPresent = this.nurseRepository.findByCpf(cpf).isPresent();
 
-        if (nurseIsPresent) throw new BadRequestException("{exist.cpf.field}");
+        if (nurseIsPresent) {
+            String patientNotFoundMessage = messageSource.getMessage("Exist.cpf.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(patientNotFoundMessage);
+        }
     }
 
     private Address createAddressForNurse(Address addressDto) {
@@ -149,7 +151,9 @@ public class NurseServiceImpl implements NurseService {
                     || addressDto.getDistrict() == null
                     || addressDto.getCity() == null
                     || addressDto.getState() == null) {
-                throw new BadRequestException("{required.address.field}");
+                String addressValidationFields = messageSource.getMessage("required.address.field",
+                        null, Locale.getDefault());
+                throw new BadRequestException(addressValidationFields);
             } else {
                 addressDto = new Address(null,
                         addressDto.getZipCode(),

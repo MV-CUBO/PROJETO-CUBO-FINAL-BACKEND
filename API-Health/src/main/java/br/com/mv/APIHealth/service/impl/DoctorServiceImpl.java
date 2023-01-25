@@ -2,6 +2,7 @@ package br.com.mv.APIHealth.service.impl;
 
 import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.entity.Doctor;
+import br.com.mv.APIHealth.domain.entity.Nurse;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.DoctorRepository;
 import br.com.mv.APIHealth.exception.BadRequestException;
@@ -18,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +54,11 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     @Transactional(readOnly = true)
     public DoctorDTO getDoctorById(UUID id) {
+<<<<<<< HEAD
         Doctor doctorOptional =  this.validateDoctorExists(id);
+=======
+        Doctor doctor =  this.validateDoctorExists(id);
+>>>>>>> b77b9508a8c6db9c61b148286634f180365b840e
 
         DoctorDTO doctorDTO = new DoctorDTO();
         BeanUtils.copyProperties(doctorOptional, doctorDTO);
@@ -92,8 +99,11 @@ public class DoctorServiceImpl implements DoctorService {
     public DoctorDTO update(UUID id, DoctorDTO doctorDTO) {
 
         Doctor doctor = this.validateDoctorExists(id);
+<<<<<<< HEAD
 
         this.validateForUpdateDoctor(doctorDTO, doctor);
+=======
+>>>>>>> b77b9508a8c6db9c61b148286634f180365b840e
 
         doctorDTO.setId(doctorDTO.getId());
 
@@ -141,7 +151,11 @@ public class DoctorServiceImpl implements DoctorService {
         boolean doctorIsPresent = this.doctorRepository.findByCpf(cpf).isPresent();
 
         if (doctorIsPresent) {
+<<<<<<< HEAD
             String patientNotFoundMessage = messageSource.getMessage("exist.cpf.field",
+=======
+            String patientNotFoundMessage = messageSource.getMessage("Exist.cpf.field",
+>>>>>>> b77b9508a8c6db9c61b148286634f180365b840e
                     null, Locale.getDefault());
             throw new ResourceNotFoundException(patientNotFoundMessage);
         }
@@ -149,7 +163,9 @@ public class DoctorServiceImpl implements DoctorService {
     private Address createAddressForDoctor(Address addressDto) {
         if (addressDto != null) {
             if (addressDto.getZipCode() == null || addressDto.getStreet() == null || addressDto.getNumber() == null || addressDto.getDistrict() == null || addressDto.getCity() == null || addressDto.getState() == null) {
-                throw new BadRequestException("{required.address.field}");
+                String addressValidationFields = messageSource.getMessage("required.address.field",
+                        null, Locale.getDefault());
+                throw new BadRequestException(addressValidationFields);
             } else {
                 addressDto = new Address(null, addressDto.getZipCode(), addressDto.getStreet(), addressDto.getNumber(), addressDto.getDistrict(), addressDto.getCity(), addressDto.getState(), addressDto.getComplements());
             }
