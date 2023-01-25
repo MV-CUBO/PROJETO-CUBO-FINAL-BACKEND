@@ -65,7 +65,7 @@ public class PatientServiceImpl implements PatientService {
         }
 
         PatientDTO patientDTO = new PatientDTO();
-        BeanUtils.copyProperties(patientOptional, patientDTO);
+        BeanUtils.copyProperties(patientOptional.get(), patientDTO);
 
         return patientDTO;
     }

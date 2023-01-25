@@ -59,7 +59,7 @@ public class NurseServiceImpl implements NurseService {
         }
 
         NurseDTO nurseDTO = new NurseDTO();
-        BeanUtils.copyProperties(nurseOptional, nurseDTO);
+        BeanUtils.copyProperties(nurseOptional.get(), nurseDTO);
         return nurseDTO;
     }
 

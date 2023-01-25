@@ -81,7 +81,7 @@ public class PepServiceImpl implements PepService {
         }
 
         PepDTO pepDTO = new PepDTO();
-        BeanUtils.copyProperties(pepOptional,pepDTO);
+        BeanUtils.copyProperties(pepOptional.get(),pepDTO);
         return pepDTO;
     }
 
