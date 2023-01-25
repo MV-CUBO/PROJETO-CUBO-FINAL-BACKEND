@@ -1,6 +1,7 @@
 package br.com.mv.APIHealth.service;
 
 
+import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.rest.dto.DoctorDTO;
 
 import java.util.List;
@@ -11,6 +12,8 @@ public interface DoctorService {
     public DoctorDTO create (DoctorDTO doctorDTO);
 
     public DoctorDTO getDoctorById (UUID id);
+
+    public Long countDoctorByStatus(EStatus value);
 
     public List<DoctorDTO> getAll ();
 
