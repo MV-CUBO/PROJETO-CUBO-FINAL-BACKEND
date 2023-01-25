@@ -140,7 +140,9 @@ public class DoctorServiceImpl implements DoctorService {
     private Address createAddressForDoctor(Address addressDto) {
         if (addressDto != null) {
             if (addressDto.getZipCode() == null || addressDto.getStreet() == null || addressDto.getNumber() == null || addressDto.getDistrict() == null || addressDto.getCity() == null || addressDto.getState() == null) {
-                throw new BadRequestException("{required.address.field}");
+                String addressValidationFields = messageSource.getMessage("required.address.field",
+                        null, Locale.getDefault());
+                throw new BadRequestException(addressValidationFields);
             } else {
                 addressDto = new Address(null, addressDto.getZipCode(), addressDto.getStreet(), addressDto.getNumber(), addressDto.getDistrict(), addressDto.getCity(), addressDto.getState(), addressDto.getComplements());
             }
