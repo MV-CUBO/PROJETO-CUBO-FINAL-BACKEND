@@ -137,7 +137,7 @@ public class NurseServiceImpl implements NurseService {
         boolean nurseIsPresent = this.nurseRepository.findByCpf(cpf).isPresent();
 
         if (nurseIsPresent) {
-            String patientNotFoundMessage = messageSource.getMessage("exist.cpf.field",
+            String patientNotFoundMessage = messageSource.getMessage("Exist.cpf.field",
                     null, Locale.getDefault());
             throw new ResourceNotFoundException(patientNotFoundMessage);
         }
