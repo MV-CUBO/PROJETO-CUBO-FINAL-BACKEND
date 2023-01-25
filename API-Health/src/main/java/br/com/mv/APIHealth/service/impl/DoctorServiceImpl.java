@@ -2,6 +2,7 @@ package br.com.mv.APIHealth.service.impl;
 
 import br.com.mv.APIHealth.domain.entity.Address;
 import br.com.mv.APIHealth.domain.entity.Doctor;
+import br.com.mv.APIHealth.domain.entity.Nurse;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.repository.DoctorRepository;
 import br.com.mv.APIHealth.exception.BadRequestException;
@@ -17,10 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -54,9 +52,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     @Transactional(readOnly = true)
     public DoctorDTO getDoctorById(UUID id) {
-        Doctor doctor =  doctorRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("{noExist.id.field}")
-        );
+        Doctor doctor =  this.validateDoctorExists(id);
 
         DoctorDTO doctorDTO = new DoctorDTO();
         BeanUtils.copyProperties(doctor, doctorDTO);
@@ -88,9 +84,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorDTO update(UUID id, DoctorDTO doctorDTO) {
 
-        Doctor doctor = doctorRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("{noExist.id.field}")
-        );
+        Doctor doctor = this.validateDoctorExists(id);
 
         doctorDTO.setUpdateAT(LocalDateTime.now());
         doctorDTO.setCreatedAt(doctor.getCreatedAt());
@@ -105,13 +99,21 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void delete(UUID id) {
-        doctorRepository.findById(id)
-                .map(doctor ->
-                {
-                    doctorRepository.delete(doctor);
-                    return Void.TYPE;
-                })
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "{noExist.id.field}"));
+        this.validateDoctorExists(id);
+
+        this.doctorRepository.deleteById(id);
+    }
+
+    private Doctor validateDoctorExists(UUID id) {
+        Optional<Doctor> doctor = this.doctorRepository.findById(id);
+
+        if (doctor.isEmpty()) {
+            String patientNotFoundMessage = messageSource.getMessage("noExist.id.fields",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(patientNotFoundMessage);
+        }
+
+        return doctor.get();
     }
 
     private DoctorDTO stepsForCreationDoctor(DoctorDTO doctorDTO) {
