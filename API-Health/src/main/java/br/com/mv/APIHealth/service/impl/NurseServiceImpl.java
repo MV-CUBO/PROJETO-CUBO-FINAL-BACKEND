@@ -137,7 +137,11 @@ public class NurseServiceImpl implements NurseService {
     private void validateNurseExistByCpf(String cpf) {
         boolean nurseIsPresent = this.nurseRepository.findByCpf(cpf).isPresent();
 
-        if (nurseIsPresent) throw new BadRequestException("{exist.cpf.field}");
+        if (nurseIsPresent) {
+            String patientNotFoundMessage = messageSource.getMessage("exist.cpf.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(patientNotFoundMessage);
+        }
     }
 
     private Address createAddressForNurse(Address addressDto) {
