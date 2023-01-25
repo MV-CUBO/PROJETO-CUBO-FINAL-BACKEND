@@ -19,16 +19,16 @@ import java.util.UUID;
 public class GetPepDTO {
     private UUID id;
 
-    @NotEmpty(message = "{required.pepNumber.field}")
+
     private String pepNumber;
 
 
-    private UUID patient;
+    private UUID patientId;
 
 
-    private UUID doctor;
+    private UUID doctorId;
 
-    @Enumerated(EnumType.STRING)
+
     private EStatePatient status;
 
 
@@ -47,8 +47,8 @@ public class GetPepDTO {
     public GetPepDTO(UUID id, String pepNumber, Patient patient, Doctor doctor, EStatePatient status, String prescription, String bloodType, String allergies, LocalDateTime createdAt, LocalDateTime updateAt) {
         this.id = id;
         this.pepNumber = pepNumber;
-        this.patient = patient.getId();
-        this.doctor = doctor.getId();
+        this.patientId = patient.getId();
+        this.doctorId = doctor.getId();
         this.status = status;
         this.prescription = prescription;
         this.bloodType = bloodType;
@@ -59,8 +59,20 @@ public class GetPepDTO {
     public GetPepDTO(PepDTO pepDTO) {
         this.id = pepDTO.getId();
         this.pepNumber = pepDTO.getPepNumber();
-        this.patient = pepDTO.getPatient().getId();
-        this.doctor = pepDTO.getDoctor().getId();
+        this.patientId = pepDTO.getPatient().getId();
+        this.doctorId = pepDTO.getDoctor().getId();
+        this.status = pepDTO.getStatus();
+        this.prescription = pepDTO.getPrescription();
+        this.bloodType = pepDTO.getBloodType();
+        this.allergies = pepDTO.getAllergies();
+        this.createdAt = pepDTO.getCreatedAt();
+        this.updateAt =  pepDTO.getUpdateAt();
+    }
+    public GetPepDTO(PutPepDTO pepDTO) {
+        this.id = pepDTO.getId();
+        this.pepNumber = pepDTO.getPepNumber();
+        this.patientId = pepDTO.getPatient().getId();
+        this.doctorId = pepDTO.getDoctor().getId();
         this.status = pepDTO.getStatus();
         this.prescription = pepDTO.getPrescription();
         this.bloodType = pepDTO.getBloodType();

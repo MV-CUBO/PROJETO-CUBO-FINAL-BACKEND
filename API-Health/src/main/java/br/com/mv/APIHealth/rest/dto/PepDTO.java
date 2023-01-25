@@ -51,4 +51,26 @@ public class PepDTO {
     @JsonIgnore
     private List<PepLog> pepLogs;
 
+    public PepDTO(UUID id, String pepNumber, Patient patient, Doctor doctor, EStatePatient status, String prescription, String bloodType, String allergies, LocalDateTime createdAt, LocalDateTime updateAt) {
+        this.id = id;
+        this.pepNumber = pepNumber;
+        this.patient = patient;
+        this.doctor = doctor;
+        this.status = status;
+        this.prescription = prescription;
+        this.bloodType = bloodType;
+        this.allergies = allergies;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
+    }
+    public PepDTO(GetPepDTO pepDTO){
+        this.id = pepDTO.getId();
+        this.pepNumber = pepDTO.getPepNumber();
+        this.patient.setId(pepDTO.getPatientId());
+        this.doctor.setId(pepDTO.getDoctorId());
+        this.status = pepDTO.getStatus();
+        this.prescription = pepDTO.getPrescription();
+        this.bloodType = pepDTO.getBloodType();
+        this.allergies = pepDTO.getAllergies();
+    }
 }
