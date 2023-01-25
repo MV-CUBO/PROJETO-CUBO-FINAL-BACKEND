@@ -54,14 +54,12 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     @Transactional(readOnly = true)
     public DoctorDTO getDoctorById(UUID id) {
-<<<<<<< HEAD
-        Doctor doctorOptional =  this.validateDoctorExists(id);
-=======
-        Doctor doctor =  this.validateDoctorExists(id);
->>>>>>> b77b9508a8c6db9c61b148286634f180365b840e
+
+        Doctor doctor = this.validateDoctorExists(id);
+
 
         DoctorDTO doctorDTO = new DoctorDTO();
-        BeanUtils.copyProperties(doctorOptional, doctorDTO);
+        BeanUtils.copyProperties(doctor, doctorDTO);
         return doctorDTO;
     }
 
@@ -75,10 +73,8 @@ public class DoctorServiceImpl implements DoctorService {
 
         List<Doctor> doctors = doctorRepository.findAll();
 
-        if(doctors.isEmpty()
-        ){
-            String doctorNotFoundMessage = messageSource.getMessage("noExist.doctor.database",
-                    null, Locale.getDefault());
+        if (doctors.isEmpty()) {
+            String doctorNotFoundMessage = messageSource.getMessage("noExist.doctor.database", null, Locale.getDefault());
             throw new ResourceNotFoundException(doctorNotFoundMessage);
         }
 
@@ -99,11 +95,9 @@ public class DoctorServiceImpl implements DoctorService {
     public DoctorDTO update(UUID id, DoctorDTO doctorDTO) {
 
         Doctor doctor = this.validateDoctorExists(id);
-<<<<<<< HEAD
 
         this.validateForUpdateDoctor(doctorDTO, doctor);
-=======
->>>>>>> b77b9508a8c6db9c61b148286634f180365b840e
+
 
         doctorDTO.setId(doctorDTO.getId());
 
@@ -126,8 +120,7 @@ public class DoctorServiceImpl implements DoctorService {
         Optional<Doctor> doctor = this.doctorRepository.findById(id);
 
         if (doctor.isEmpty()) {
-            String patientNotFoundMessage = messageSource.getMessage("noExist.id.fields",
-                    null, Locale.getDefault());
+            String patientNotFoundMessage = messageSource.getMessage("noExist.id.fields", null, Locale.getDefault());
             throw new ResourceNotFoundException(patientNotFoundMessage);
         }
 
@@ -151,20 +144,18 @@ public class DoctorServiceImpl implements DoctorService {
         boolean doctorIsPresent = this.doctorRepository.findByCpf(cpf).isPresent();
 
         if (doctorIsPresent) {
-<<<<<<< HEAD
-            String patientNotFoundMessage = messageSource.getMessage("exist.cpf.field",
-=======
+
             String patientNotFoundMessage = messageSource.getMessage("Exist.cpf.field",
->>>>>>> b77b9508a8c6db9c61b148286634f180365b840e
+
                     null, Locale.getDefault());
             throw new ResourceNotFoundException(patientNotFoundMessage);
         }
     }
+
     private Address createAddressForDoctor(Address addressDto) {
         if (addressDto != null) {
             if (addressDto.getZipCode() == null || addressDto.getStreet() == null || addressDto.getNumber() == null || addressDto.getDistrict() == null || addressDto.getCity() == null || addressDto.getState() == null) {
-                String addressValidationFields = messageSource.getMessage("required.address.field",
-                        null, Locale.getDefault());
+                String addressValidationFields = messageSource.getMessage("required.address.field", null, Locale.getDefault());
                 throw new BadRequestException(addressValidationFields);
             } else {
                 addressDto = new Address(null, addressDto.getZipCode(), addressDto.getStreet(), addressDto.getNumber(), addressDto.getDistrict(), addressDto.getCity(), addressDto.getState(), addressDto.getComplements());

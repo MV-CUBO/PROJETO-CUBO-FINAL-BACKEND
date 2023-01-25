@@ -1,5 +1,6 @@
 package br.com.mv.APIHealth.domain.repository;
 
+
 import br.com.mv.APIHealth.domain.entity.Doctor;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
