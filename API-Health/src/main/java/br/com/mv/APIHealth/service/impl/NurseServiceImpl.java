@@ -152,7 +152,9 @@ public class NurseServiceImpl implements NurseService {
                     || addressDto.getDistrict() == null
                     || addressDto.getCity() == null
                     || addressDto.getState() == null) {
-                throw new BadRequestException("{required.address.field}");
+                String addressValidationFields = messageSource.getMessage("required.address.field",
+                        null, Locale.getDefault());
+                throw new BadRequestException(addressValidationFields);
             } else {
                 addressDto = new Address(null,
                         addressDto.getZipCode(),
