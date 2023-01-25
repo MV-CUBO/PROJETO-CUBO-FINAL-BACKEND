@@ -133,7 +133,7 @@ public class DoctorServiceImpl implements DoctorService {
         boolean doctorIsPresent = this.doctorRepository.findByCpf(cpf).isPresent();
 
         if (doctorIsPresent) {
-            String patientNotFoundMessage = messageSource.getMessage("exist.cpf.field",
+            String patientNotFoundMessage = messageSource.getMessage("Exist.cpf.field",
                     null, Locale.getDefault());
             throw new ResourceNotFoundException(patientNotFoundMessage);
         }
