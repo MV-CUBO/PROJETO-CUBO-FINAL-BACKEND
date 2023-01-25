@@ -2,8 +2,10 @@ package br.com.mv.APIHealth.rest.controller;
 
 import br.com.mv.APIHealth.domain.entity.login.Role;
 import br.com.mv.APIHealth.domain.entity.login.User;
+import br.com.mv.APIHealth.rest.dto.AuthResponseDTO;
 import br.com.mv.APIHealth.rest.dto.RoleDTO;
 import br.com.mv.APIHealth.rest.dto.UserDTO;
+import br.com.mv.APIHealth.security.JWTGenerator;
 import br.com.mv.APIHealth.service.RoleService;
 import br.com.mv.APIHealth.service.UserService;
 import br.com.mv.APIHealth.utils.Response;
@@ -25,18 +27,22 @@ import java.util.Collections;
 @RequestMapping("/api/auth")
 public class AuthController {
     private final AuthenticationManager authenticationManager;
+    private final JWTGenerator jwtGenerator;
 
-    public AuthController(AuthenticationManager authenticationManager) {
+    public AuthController(AuthenticationManager authenticationManager, JWTGenerator jwtGenerator) {
         this.authenticationManager = authenticationManager;
+        this.jwtGenerator = jwtGenerator;
     }
 
     @PostMapping("/login")
-    @ResponseStatus(HttpStatus.OK)
-    public String login(@RequestBody @Valid UserDTO userDto) {
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody UserDTO userDto){
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword())
-        );
+                new UsernamePasswordAuthenticationToken(
+                        userDto.getUsername(),
+                        userDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return "User signed success!";
+        String token = jwtGenerator.generateToken(authentication);
+        AuthResponseDTO authResponseDTO = new AuthResponseDTO(token);
+        return new ResponseEntity<>(authResponseDTO, HttpStatus.OK);
     }
 }
