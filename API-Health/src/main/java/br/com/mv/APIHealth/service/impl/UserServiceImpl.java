@@ -46,7 +46,6 @@ public class UserServiceImpl implements UserService {
     public UserDTO create(UserDTO userDto) {
         this.validateUserExists(userDto.getUsername());
 
-        User user = new User();
         userDto.setId(null);
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
