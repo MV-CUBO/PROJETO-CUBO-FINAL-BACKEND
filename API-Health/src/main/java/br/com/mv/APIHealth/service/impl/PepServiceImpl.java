@@ -2,21 +2,21 @@ package br.com.mv.APIHealth.service.impl;
 
 
 import br.com.mv.APIHealth.domain.entity.Pep;
-import br.com.mv.APIHealth.domain.entity.PepLog;
 import br.com.mv.APIHealth.domain.enums.EStatePatient;
-
 import br.com.mv.APIHealth.domain.repository.PepRepository;
-
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
-import br.com.mv.APIHealth.rest.dto.*;
+import br.com.mv.APIHealth.rest.dto.GetPepDTO;
+import br.com.mv.APIHealth.rest.dto.PepDTO;
+import br.com.mv.APIHealth.rest.dto.PepLogDTO;
+import br.com.mv.APIHealth.rest.dto.PutPepDTO;
 import br.com.mv.APIHealth.service.PepService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
-
 import java.util.*;
 
 
@@ -37,6 +37,7 @@ public class PepServiceImpl implements PepService {
     public GetPepDTO create(PepDTO pepDTO) {
         this.validateExistPepNumber( pepDTO.getPepNumber());
         Pep pep = new Pep();
+        pepDTO.setPepNumber( (int) Math.floor(Math.random()*(999999999 +1)+0));
 
         BeanUtils.copyProperties(pepDTO,pep);
         pep.setCreatedAt(LocalDateTime.now());
@@ -119,7 +120,7 @@ public class PepServiceImpl implements PepService {
         }
         return pepOptional.get();
         }
-    private void validateExistPepNumber(String pepNumber){
+    private void validateExistPepNumber(Integer pepNumber){
         boolean pep =  this.pepRepository.findByPepNumber(pepNumber).isPresent();
         if (pep){
             String pepNotFoundMessage = messageSource.getMessage("noexist.pepId.field",
@@ -150,9 +151,7 @@ public class PepServiceImpl implements PepService {
     }
     private void validateForUpdatePep(PutPepDTO pepDTO, Pep pep){
 
-        if(pepDTO.getPepNumber() != null){
-            pep.setPepNumber(pepDTO.getPepNumber());
-        }
+
         if(pepDTO.getStatus() != null){
             pep.setStatus(pepDTO.getStatus());
         }

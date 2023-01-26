@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotEmpty;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -20,7 +21,7 @@ public class GetPepDTO {
     private UUID id;
 
 
-    private String pepNumber;
+    private Integer pepNumber;
 
 
     private UUID patientId;
@@ -44,7 +45,7 @@ public class GetPepDTO {
 
     private LocalDateTime updateAt;
 
-    public GetPepDTO(UUID id, String pepNumber, Patient patient, Doctor doctor, EStatePatient status, String prescription, String bloodType, String allergies, LocalDateTime createdAt, LocalDateTime updateAt) {
+    public GetPepDTO(UUID id, Integer pepNumber, Patient patient, Doctor doctor, EStatePatient status, String prescription, String bloodType, String allergies, LocalDateTime createdAt, LocalDateTime updateAt) {
         this.id = id;
         this.pepNumber = pepNumber;
         this.patientId = patient.getId();
