@@ -4,9 +4,11 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class JWTGenerator {
@@ -16,6 +18,12 @@ public class JWTGenerator {
         String role = authentication.getAuthorities().iterator().next().getAuthority();
         Date currentDate = new Date();
         Date expireDate = new Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
+
+//        Object principal = (UUID) authentication.getPrincipal();
+//        if (principal instanceof UserDetails) {
+//            UserDetails userDetails = (UserDetails) principal;
+//            UUID userId = userDetails.getId();
+//        }
 
         String token = Jwts.builder()
                 .setSubject(username)
