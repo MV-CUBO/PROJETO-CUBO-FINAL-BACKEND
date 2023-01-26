@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,8 +22,8 @@ public class PepDTO {
 
     private UUID id;
 
-    @NotEmpty(message = "{required.pepNumber.field}")
-    private String pepNumber;
+
+    private Integer pepNumber;
 
 
     private Patient patient;
@@ -51,7 +50,7 @@ public class PepDTO {
     @JsonIgnore
     private List<PepLog> pepLogs;
 
-    public PepDTO(UUID id, String pepNumber, Patient patient, Doctor doctor, EStatePatient status, String prescription, String bloodType, String allergies, LocalDateTime createdAt, LocalDateTime updateAt) {
+    public PepDTO(UUID id, Integer pepNumber, Patient patient, Doctor doctor, EStatePatient status, String prescription, String bloodType, String allergies, LocalDateTime createdAt, LocalDateTime updateAt) {
         this.id = id;
         this.pepNumber = pepNumber;
         this.patient = patient;

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 ;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ import java.util.UUID;
 public class PutPepDTO {
     private UUID id;
 
-    private String pepNumber;
+    private Integer pepNumber;
 
     private Patient patient;
 
