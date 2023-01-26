@@ -57,14 +57,10 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public PatientDTO getPatientById(UUID id) {
 
-        Optional<Patient> patientOptional =  patientRepository.findById(id);
-        if (patientOptional.isEmpty()) {
-            String patientNotFoundMessage = messageSource.getMessage("noExist.idPatient.field",
-                    null, Locale.getDefault());
-            throw new ResourceNotFoundException(patientNotFoundMessage);
-        }
+        Patient patientOptional =  this.validatePatientExists(id);
 
         PatientDTO patientDTO = new PatientDTO();
+
         BeanUtils.copyProperties(patientOptional, patientDTO);
 
         return patientDTO;
@@ -73,12 +69,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public PepDTO findPepByPatientId(UUID id) {
 
-        Optional<Patient> patientOptional =  patientRepository.findById(id);
-        if (patientOptional.isEmpty()) {
-            String patientNotFoundMessage = messageSource.getMessage("noExist.idPatient.field",
-                    null, Locale.getDefault());
-            throw new ResourceNotFoundException(patientNotFoundMessage);
-        }
+        this.validatePatientExists(id);
 
         Pep patientPep = this.patientRepository.findPepById(id).get();
 
@@ -109,8 +100,7 @@ public class PatientServiceImpl implements PatientService {
     public List<PatientDTO> getAll() {
         List<Patient> patients= this.patientRepository.findAll();
 
-        if(patients.isEmpty()
-        ){
+        if(patients.isEmpty()){
             String patientNotFoundMessage = messageSource.getMessage("noExist.patient.field",
                     null, Locale.getDefault());
             throw new ResourceNotFoundException(patientNotFoundMessage);
@@ -160,10 +150,15 @@ public class PatientServiceImpl implements PatientService {
     }
 
     private Patient validatePatientExists (UUID id) {
-        Patient patient = this.patientRepository
-                    .findById(id).orElseThrow(() -> new ResourceNotFoundException("{noExist.idPatient.field}"));
+        Optional<Patient> patientOptional =  patientRepository.findById(id);
 
-        return patient;
+        if (patientOptional.isEmpty()) {
+            String patientNotFoundMessage = messageSource.getMessage("noExist.idPatient.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(patientNotFoundMessage);
+        }
+
+        return patientOptional.get();
     }
 
     private void validateForUpdatePatient(UpdatePatientDTO patientDTO, Patient patient) {
@@ -198,7 +193,9 @@ public class PatientServiceImpl implements PatientService {
                     addressDto.getCity() == null ||
                     addressDto.getState() == null
             ) {
-                throw new BadRequestException("{required.address.field}");
+                String addressValidationFields = messageSource.getMessage("required.address.field",
+                        null, Locale.getDefault());
+                throw new BadRequestException(addressValidationFields);
             } else {
                 addressDto =  new Address(
                         null,
@@ -219,6 +216,10 @@ public class PatientServiceImpl implements PatientService {
     private void validatePatientExistByCpf(String cpf) {
         boolean patientIsPresent = this.patientRepository.findByCpf(cpf).isPresent();
 
-        if(patientIsPresent) throw new BadRequestException("{exist.cpf.field}");
+        if (patientIsPresent) {
+            String patientNotFoundMessage = messageSource.getMessage("Exist.cpf.field",
+                    null, Locale.getDefault());
+            throw new ResourceNotFoundException(patientNotFoundMessage);
+        }
     }
 }

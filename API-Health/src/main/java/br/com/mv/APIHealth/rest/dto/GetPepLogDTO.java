@@ -11,10 +11,16 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PepLogDTO {
-    private Pep pep;
+public class GetPepLogDTO {
+    private UUID pepId;
 
     private String action;
 
     private LocalDateTime createdAt;
+
+    public GetPepLogDTO(PepLogDTO pepLogDTO) {
+        this.pepId = pepLogDTO.getPep().getId();
+        this.action = pepLogDTO.getAction();
+        this.createdAt = pepLogDTO.getCreatedAt();
+    }
 }

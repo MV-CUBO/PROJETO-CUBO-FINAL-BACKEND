@@ -8,8 +8,10 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Entity
@@ -17,7 +19,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pep{
+public class Pep {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -25,7 +27,9 @@ public class Pep{
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 
-    private String pepNumber;
+
+    @Column(unique = true)
+    private Integer pepNumber;
 
     @OneToOne
     @JoinColumn(name = "patient_id")
@@ -50,6 +54,9 @@ public class Pep{
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     private Doctor doctor;
 
-    @OneToMany(mappedBy="pep")
+    @OneToMany(mappedBy = "pep")
     private List<PepLog> pepLogs;
+
+
+
 }

@@ -2,9 +2,7 @@ package br.com.mv.APIHealth.rest.dto;
 
 import br.com.mv.APIHealth.domain.entity.Doctor;
 import br.com.mv.APIHealth.domain.entity.Patient;
-import br.com.mv.APIHealth.domain.entity.PepLog;
 import br.com.mv.APIHealth.domain.enums.EStatePatient;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,49 +10,46 @@ import lombok.NoArgsConstructor;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotEmpty;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PepDTO {
-
+public class GetPepDTO {
     private UUID id;
 
 
     private Integer pepNumber;
 
 
-    private Patient patient;
+    private UUID patientId;
 
 
-    private Doctor doctor;
+    private UUID doctorId;
 
-    @Enumerated(EnumType.STRING)
+
     private EStatePatient status;
 
-    @NotEmpty(message = "{required.prescription.field}")
+
     private String prescription;
 
-    @NotEmpty(message = "{required.bloodType.field}")
+
     private String bloodType;
 
-    @NotEmpty(message = "{required.allergies.field}")
+
     private String allergies;
 
     private LocalDateTime createdAt;
 
     private LocalDateTime updateAt;
 
-    @JsonIgnore
-    private List<PepLog> pepLogs;
-
-    public PepDTO(UUID id, Integer pepNumber, Patient patient, Doctor doctor, EStatePatient status, String prescription, String bloodType, String allergies, LocalDateTime createdAt, LocalDateTime updateAt) {
+    public GetPepDTO(UUID id, Integer pepNumber, Patient patient, Doctor doctor, EStatePatient status, String prescription, String bloodType, String allergies, LocalDateTime createdAt, LocalDateTime updateAt) {
         this.id = id;
         this.pepNumber = pepNumber;
-        this.patient = patient;
-        this.doctor = doctor;
+        this.patientId = patient.getId();
+        this.doctorId = doctor.getId();
         this.status = status;
         this.prescription = prescription;
         this.bloodType = bloodType;
@@ -62,14 +57,28 @@ public class PepDTO {
         this.createdAt = createdAt;
         this.updateAt = updateAt;
     }
-    public PepDTO(GetPepDTO pepDTO){
+    public GetPepDTO(PepDTO pepDTO) {
         this.id = pepDTO.getId();
         this.pepNumber = pepDTO.getPepNumber();
-        this.patient.setId(pepDTO.getPatientId());
-        this.doctor.setId(pepDTO.getDoctorId());
+        this.patientId = pepDTO.getPatient().getId();
+        this.doctorId = pepDTO.getDoctor().getId();
         this.status = pepDTO.getStatus();
         this.prescription = pepDTO.getPrescription();
         this.bloodType = pepDTO.getBloodType();
         this.allergies = pepDTO.getAllergies();
+        this.createdAt = pepDTO.getCreatedAt();
+        this.updateAt =  pepDTO.getUpdateAt();
+    }
+    public GetPepDTO(PutPepDTO pepDTO) {
+        this.id = pepDTO.getId();
+        this.pepNumber = pepDTO.getPepNumber();
+        this.patientId = pepDTO.getPatient().getId();
+        this.doctorId = pepDTO.getDoctor().getId();
+        this.status = pepDTO.getStatus();
+        this.prescription = pepDTO.getPrescription();
+        this.bloodType = pepDTO.getBloodType();
+        this.allergies = pepDTO.getAllergies();
+        this.createdAt = pepDTO.getCreatedAt();
+        this.updateAt =  pepDTO.getUpdateAt();
     }
 }
