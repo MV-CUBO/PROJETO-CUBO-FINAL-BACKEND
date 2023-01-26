@@ -52,7 +52,8 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
 
-        RoleDTO roleDto = roleService.getByDescription("USER");
+
+        RoleDTO roleDto = roleService.getByDescription(userDto.getRole());
         Role role = new Role();
         BeanUtils.copyProperties(roleDto, role);
         role = entityManager.merge(role); // attach the detached role to the current persistence context.

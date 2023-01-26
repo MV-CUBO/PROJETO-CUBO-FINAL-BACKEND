@@ -1,5 +1,6 @@
 package br.com.mv.APIHealth.rest.dto;
 
+import br.com.mv.APIHealth.domain.entity.login.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,4 +26,6 @@ public class UserDTO {
 
     //@NotEmpty(message = "{required.username.field}")
     private String password;
+
+    private String role;
 }

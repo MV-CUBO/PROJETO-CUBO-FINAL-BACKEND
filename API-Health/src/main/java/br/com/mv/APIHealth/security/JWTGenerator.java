@@ -19,12 +19,6 @@ public class JWTGenerator {
         Date currentDate = new Date();
         Date expireDate = new Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
 
-//        Object principal = (UUID) authentication.getPrincipal();
-//        if (principal instanceof UserDetails) {
-//            UserDetails userDetails = (UserDetails) principal;
-//            UUID userId = userDetails.getId();
-//        }
-
         String token = Jwts.builder()
                 .setSubject(username)
                 .claim("username", username)
