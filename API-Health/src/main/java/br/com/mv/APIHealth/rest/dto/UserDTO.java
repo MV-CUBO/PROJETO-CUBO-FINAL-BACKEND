@@ -27,5 +27,5 @@ public class UserDTO {
     //@NotEmpty(message = "{required.username.field}")
     private String password;
 
-    private String role;
+    private List<String> role;
 }

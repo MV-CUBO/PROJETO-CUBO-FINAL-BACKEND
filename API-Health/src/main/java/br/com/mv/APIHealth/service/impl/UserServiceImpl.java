@@ -18,10 +18,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -53,11 +52,17 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(userDto, user);
 
 
-        RoleDTO roleDto = roleService.getByDescription(userDto.getRole());
-        Role role = new Role();
-        BeanUtils.copyProperties(roleDto, role);
-        role = entityManager.merge(role); // attach the detached role to the current persistence context.
-        user.setRoles(Collections.singletonList(role));
+        List<Role> roles = new ArrayList<>();
+
+        for (String roleDescription : userDto.getRole()) {
+            RoleDTO roleDto = roleService.getByDescription(roleDescription);
+            Role role = new Role();
+            BeanUtils.copyProperties(roleDto, role);
+            role = entityManager.merge(role);
+            roles.add(role);
+        }
+
+        user.setRole(roles);
 
         User newUser = userRepository.save(user);
         BeanUtils.copyProperties(newUser, userDto);
@@ -111,6 +116,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
+    }
+
+    @Override
+    public UserDTO findByEmail(String email) {
+        User user = this.userRepository.findByUsername(email).orElseThrow(() -> new BadRequestException("error"));
+        UserDTO userdto = new UserDTO();
+
+        BeanUtils.copyProperties(user, userdto);
+
+        List<String> arrayRoles = user.getRole().stream().map(role -> role.getDescription())
+                .collect(Collectors.toList());
+
+        userdto.setRole(arrayRoles);
+        return userdto;
     }
 
     private void updateNonNullableFields(UserDTO originUserDto, User targetUser) {

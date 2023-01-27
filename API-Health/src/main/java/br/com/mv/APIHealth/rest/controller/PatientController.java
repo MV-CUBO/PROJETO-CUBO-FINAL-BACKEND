@@ -20,7 +20,6 @@ import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/api/patients")
 public class PatientController {
 

@@ -1,52 +1,56 @@
 package br.com.mv.APIHealth.rest.controller;
 
-import br.com.mv.APIHealth.domain.entity.login.Role;
-import br.com.mv.APIHealth.domain.entity.login.User;
-import br.com.mv.APIHealth.rest.dto.AuthResponseDTO;
-import br.com.mv.APIHealth.rest.dto.RoleDTO;
+
+import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.rest.dto.UserDTO;
-import br.com.mv.APIHealth.security.JWTGenerator;
-import br.com.mv.APIHealth.service.RoleService;
+import br.com.mv.APIHealth.security.DTO.JwtRequestDTO;
+import br.com.mv.APIHealth.security.DTO.JwtResponseDTO;
+import br.com.mv.APIHealth.security.libs.JwtTokenUtil;
+import br.com.mv.APIHealth.security.libs.JwtUserDetailsService;
 import br.com.mv.APIHealth.service.UserService;
-import br.com.mv.APIHealth.utils.Response;
-import org.springframework.beans.BeanUtils;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.Collections;
-import java.util.UUID;
-
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/auth/login")
 public class AuthController {
-    private final AuthenticationManager authenticationManager;
-    private final JWTGenerator jwtGenerator;
 
-    public AuthController(AuthenticationManager authenticationManager, JWTGenerator jwtGenerator) {
-        this.authenticationManager = authenticationManager;
-        this.jwtGenerator = jwtGenerator;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    private JwtUserDetailsService userDetailsService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserService userService;
+
+    private void authenticate(String email, String password) throws BadRequestException {
+        UserDTO user = this.userService.findByEmail(email);
+
+        if (user == null) throw new BadRequestException("E-mail não cadastrado");
+        if (!passwordEncoder.matches(password, user.getPassword())) throw new BadRequestException("Senha inválida");
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody UserDTO userDto){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        userDto.getUsername(),
-                        userDto.getPassword()
-                ));
+    @PostMapping
+    public ResponseEntity<JwtResponseDTO> createAuthenticationToken(@RequestBody JwtRequestDTO response) {
+        this.authenticate(response.getEmail(), response.getPassword());
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtGenerator.generateToken(authentication);
-        AuthResponseDTO authResponseDTO = new AuthResponseDTO(token);
-        return new ResponseEntity<>(authResponseDTO, HttpStatus.OK);
+        UserDTO user = this.userService.findByEmail(response.getEmail());
+
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(response.getEmail());
+        final String token = jwtTokenUtil.generateToken(userDetails);
+
+        JwtResponseDTO jwtResponse = new JwtResponseDTO(token);
+
+        return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
     }
 }
