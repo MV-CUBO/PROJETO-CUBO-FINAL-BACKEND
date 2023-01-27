@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/users")
 public class UserController {
 
