@@ -102,10 +102,10 @@ public class NurseServiceImpl implements NurseService {
 
     @Override
     public void delete(UUID id) {
-        nurseRepository.findById(id).map(nurse -> {
-            nurseRepository.delete(nurse);
-            return Void.TYPE;
-        }).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "{noexist.id.field}"));
+        Nurse nurse = this.validateNurseExists(id);
+
+        this.addressService.deleteById(nurse.getAddress().getId());
+        this.nurseRepository.deleteById(id);
     }
 
     private NurseDTO stepsForCreationNurse(NurseDTO nurseDTO) {

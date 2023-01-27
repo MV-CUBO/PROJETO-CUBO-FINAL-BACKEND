@@ -6,6 +6,8 @@ import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.service.AddressService;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class AddressServiceImpl implements AddressService {
 
@@ -23,5 +25,10 @@ public class AddressServiceImpl implements AddressService {
             throw new BadRequestException(message);
         }
         return address;
+    }
+
+    @Override
+    public void deleteById(UUID id) {
+        this.addressRepository.deleteById(id);
     }
 }
