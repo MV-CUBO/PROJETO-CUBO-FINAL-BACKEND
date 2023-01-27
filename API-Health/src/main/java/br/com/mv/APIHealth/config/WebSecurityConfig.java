@@ -39,8 +39,32 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
+
+                //configs routes patients authorization
                 .authorizeRequests()
-                .antMatchers("/api/patients/**").hasAnyRole("PATIENT")
+                .antMatchers(HttpMethod.GET,"/api/patients/**").hasAnyRole("PATIENT", "DOCTOR", "NURSE", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/patients/**").hasAnyRole("DOCTOR", "NURSE", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/patients/**").hasAnyRole("DOCTOR", "NURSE", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/patients/**").hasAnyRole("DOCTOR", "NURSE", "ADMIN")
+
+                //configs routes doctor authorization
+                .antMatchers(HttpMethod.GET,"/api/doctor/**").hasAnyRole("DOCTOR", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/doctor/**").hasAnyRole("DOCTOR", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/doctor/**").hasAnyRole("DOCTOR", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/doctor/**").hasAnyRole("DOCTOR", "ADMIN")
+
+                //configs routes nurse authorization
+                .antMatchers(HttpMethod.GET,"/api/nurse/**").hasAnyRole("DOCTOR","NURSE", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/doctor/**").hasAnyRole("DOCTOR", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/doctor/**").hasAnyRole("DOCTOR", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/doctor/**").hasAnyRole("DOCTOR", "ADMIN")
+
+                //configs routes pep authorization
+                .antMatchers(HttpMethod.GET,"/api/pep/**").hasAnyRole("DOCTOR", "PATIENT", "NURSE", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/pep/**").hasAnyRole("DOCTOR", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/pep/**").hasAnyRole("DOCTOR", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/pep/**").hasAnyRole("DOCTOR", "ADMIN")
+
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/roles/**", "/api/users/**").permitAll()
                 .anyRequest().authenticated()

@@ -23,6 +23,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDTO create(RoleDTO roleDto) {
+        roleDto.setDescription("ROLE_" + roleDto.getDescription());
+
         Role role = new Role();
         roleDto.setId(null);
         BeanUtils.copyProperties(roleDto, role);
