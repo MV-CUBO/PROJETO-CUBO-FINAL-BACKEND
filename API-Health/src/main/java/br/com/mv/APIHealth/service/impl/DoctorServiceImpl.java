@@ -111,8 +111,9 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void delete(UUID id) {
-        this.validateDoctorExists(id);
+        Doctor doctor = this.validateDoctorExists(id);
 
+        this.addressService.deleteById(doctor.getAddress().getId());
         this.doctorRepository.deleteById(id);
     }
 

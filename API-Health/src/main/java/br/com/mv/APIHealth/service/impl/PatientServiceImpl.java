@@ -13,6 +13,7 @@ import br.com.mv.APIHealth.rest.dto.PepDTO;
 import br.com.mv.APIHealth.rest.dto.UpdatePatientDTO;
 import br.com.mv.APIHealth.service.AddressService;
 import br.com.mv.APIHealth.service.PatientService;
+import br.com.mv.APIHealth.service.PepService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import java.util.*;
 public class PatientServiceImpl implements PatientService {
 
     private final  PatientRepository patientRepository;
+
 
     private final MessageSource messageSource;
 
@@ -131,8 +133,9 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void deleteById(UUID id) {
-        this.validatePatientExists(id);
+        Patient patient = this.validatePatientExists(id);
 
+        this.addressService.deleteById(patient.getAddress().getId());
         this.patientRepository.deleteById(id);
     }
 

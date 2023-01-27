@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -31,7 +33,8 @@ public class Pep {
     @Column(unique = true)
     private Integer pepNumber;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
