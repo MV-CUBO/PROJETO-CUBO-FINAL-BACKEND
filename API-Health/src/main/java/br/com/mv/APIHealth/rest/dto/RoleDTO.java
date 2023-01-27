@@ -1,6 +1,5 @@
 package br.com.mv.APIHealth.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class RoleDTO {
 
-    @JsonIgnore
     private UUID id;
 
     @NotEmpty(message = "{required.description.field}")

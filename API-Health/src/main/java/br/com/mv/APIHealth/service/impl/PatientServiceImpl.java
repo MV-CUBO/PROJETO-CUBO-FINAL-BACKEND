@@ -25,6 +25,7 @@ public class PatientServiceImpl implements PatientService {
 
     private final  PatientRepository patientRepository;
 
+
     private final MessageSource messageSource;
 
     private final AddressService addressService;
@@ -131,8 +132,9 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void deleteById(UUID id) {
-        this.validatePatientExists(id);
+        Patient patient = this.validatePatientExists(id);
 
+        this.addressService.deleteById(patient.getAddress().getId());
         this.patientRepository.deleteById(id);
     }
 

@@ -8,6 +8,8 @@ import br.com.mv.APIHealth.service.RoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -21,6 +23,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDTO create(RoleDTO roleDto) {
+        roleDto.setDescription("ROLE_" + roleDto.getDescription());
+
         Role role = new Role();
         roleDto.setId(null);
         BeanUtils.copyProperties(roleDto, role);
@@ -68,5 +72,19 @@ public class RoleServiceImpl implements RoleService {
         RoleDTO roleDto = new RoleDTO();
         BeanUtils.copyProperties(role, roleDto);
         return roleDto;
+    }
+
+    @Override
+    public List<RoleDTO> getAllRoles() {
+        List<Role> roles = roleRepository.findAll();
+
+        List<RoleDTO> rolesDto = new ArrayList<>();
+        roles.forEach(role -> {
+            RoleDTO roleDto = new RoleDTO();
+            BeanUtils.copyProperties(role, roleDto);
+            rolesDto.add(roleDto);
+        });
+
+        return rolesDto;
     }
 }

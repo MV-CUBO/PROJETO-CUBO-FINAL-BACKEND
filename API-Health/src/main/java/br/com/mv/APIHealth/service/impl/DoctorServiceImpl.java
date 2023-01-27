@@ -16,11 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-
 import java.time.LocalDateTime;
 import java.util.*;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -111,10 +108,18 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void delete(UUID id) {
+
         doctorRepository.findById(id).map(doctor -> {
             doctorRepository.delete(doctor);
             return Void.TYPE;
         }).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "{noExist.id.fields}"));   }
+
+        Doctor doctor = this.validateDoctorExists(id);
+
+        this.addressService.deleteById(doctor.getAddress().getId());
+        this.doctorRepository.deleteById(id);
+    }
+
 
     private Doctor validateDoctorExists(UUID id) {
         Optional<Doctor> doctor = this.doctorRepository.findById(id);

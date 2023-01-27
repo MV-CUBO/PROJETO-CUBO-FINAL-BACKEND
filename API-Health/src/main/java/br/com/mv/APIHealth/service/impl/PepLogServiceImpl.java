@@ -1,7 +1,6 @@
 package br.com.mv.APIHealth.service.impl;
 
 
-import br.com.mv.APIHealth.domain.entity.Pep;
 import br.com.mv.APIHealth.domain.entity.PepLog;
 import br.com.mv.APIHealth.domain.repository.PepLogRepository;
 import br.com.mv.APIHealth.domain.repository.PepRepository;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service

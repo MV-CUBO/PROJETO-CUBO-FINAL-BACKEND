@@ -3,7 +3,6 @@ package br.com.mv.APIHealth.rest.controller;
 import br.com.mv.APIHealth.rest.dto.UserDTO;
 import br.com.mv.APIHealth.service.UserService;
 import br.com.mv.APIHealth.utils.Response;
-import org.aspectj.bridge.Message;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +13,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/users")
 public class UserController {
 

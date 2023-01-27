@@ -1,6 +1,5 @@
 package br.com.mv.APIHealth.service;
 
-import br.com.mv.APIHealth.domain.entity.PepLog;
 import br.com.mv.APIHealth.rest.dto.GetPepLogDTO;
 import br.com.mv.APIHealth.rest.dto.PepLogDTO;
 

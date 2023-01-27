@@ -18,10 +18,10 @@ public interface PatientRepository extends JpaRepository<Patient, UUID> {
 
     @Query("SELECT pep FROM Patient p WHERE p.id = :id")
     public Optional<Pep> findPepById(@Param("id") UUID id);
-    // @Query(value = "SELECT COUNT(p) FROM Patient p WHERE p.status" + " = 'ACTIVATE'")
+
     @Query("SELECT COUNT(p) FROM Patient p WHERE p.status = ?1")
     public Long countPatientByStatus(EStatus value);
 
-    @Query("SELECT COUNT(p) FROM Patient p WHERE p.gender = ?1")
+    @Query("SELECT COUNT(p) FROM Patient p WHERE p.gender = ?1 AND p.status = 'ACTIVATE'")
     public Long countPatientByGender(Gender value);
 }

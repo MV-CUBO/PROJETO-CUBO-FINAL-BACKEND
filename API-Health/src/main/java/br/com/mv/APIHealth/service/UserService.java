@@ -11,4 +11,7 @@ public interface UserService {
     public void delete(UUID id);
 
     public UserDTO getUserByUsername(String username);
+    public boolean existsByUsername(String username);
+
+    public UserDTO findByEmail(String email);
 }
