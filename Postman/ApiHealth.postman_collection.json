@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "3ab81823-a0e8-4245-a4e4-c1e3774432df",
+		"name": "ApiHealth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20611170"
+	},
+	"item": [
+		{
+			"name": "Positive test",
+			"item": [
+				{
+					"name": "Nurses",
+					"item": [
+						{
+							"name": "Find by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{acessoUrl}}/api/nurse/{{_id}}",
+									"host": [
+										"{{acessoUrl}}"
+									],
+									"path": [
+										"api",
+										"nurse",
+										"{{_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find All",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{acessoUrl}}/api/nurse",
+									"host": [
+										"{{acessoUrl}}"
+									],
+									"path": [
+										"api",
+										"nurse"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Nurse",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody)\r",
+											"\r",
+											"pm.environment.set('_id', jsonData.id)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Testando1\",\r\n    \"cpf\": \"36618616034\",\r\n    \"dateOfBirth\": \"1993-11-11\",\r\n    \"phone\": \"(81)912349999\",\r\n    \"email\": \"email@email.com\",\r\n    \"gender\": \"MALE\",\r\n    \"maritalStatus\": \"SINGLE\",\r\n    \"address\":null,\r\n    \"coren\": \"CRM-123\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{acessoUrl}}/api/nurse",
+									"host": [
+										"{{acessoUrl}}"
+									],
+									"path": [
+										"api",
+										"nurse"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edite Nurse",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Atualizildo\",\r\n    \"cpf\": \"36618616034\",\r\n    \"dateOfBirth\": \"1993-11-11\",\r\n    \"phone\": \"(81)912349999\",\r\n    \"email\": \"email@email.com\",\r\n    \"gender\": \"MALE\",\r\n    \"maritalStatus\": \"SINGLE\",\r\n    \"address\":null,\r\n    \"coren\": \"CRM-123\"\r\n    \r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{acessoUrl}}/api/nurse/{{_id}}",
+									"host": [
+										"{{acessoUrl}}"
+									],
+									"path": [
+										"api",
+										"nurse",
+										"{{_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Nurse",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{acessoUrl}}/api/nurse/{{_id}}",
+									"host": [
+										"{{acessoUrl}}"
+									],
+									"path": [
+										"api",
+										"nurse",
+										"{{_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"item": []
+				}
+			]
+		},
+		{
+			"name": "Negative test",
+			"item": []
+		}
+	]
+}
