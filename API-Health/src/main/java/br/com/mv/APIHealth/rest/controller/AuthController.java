@@ -1,6 +1,5 @@
 package br.com.mv.APIHealth.rest.controller;
 
-
 import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.rest.dto.UserDTO;
 import br.com.mv.APIHealth.security.DTO.JwtRequestDTO;

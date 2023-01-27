@@ -1,6 +1,5 @@
 package br.com.mv.APIHealth.domain.entity;
 
-import br.com.mv.APIHealth.domain.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

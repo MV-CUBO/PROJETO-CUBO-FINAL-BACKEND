@@ -1,7 +1,5 @@
 package br.com.mv.APIHealth.rest.controller;
 
-
-
 import br.com.mv.APIHealth.domain.enums.EStatePatient;
 import br.com.mv.APIHealth.rest.dto.*;
 import br.com.mv.APIHealth.service.PepLogService;
