@@ -1,6 +1,5 @@
 package br.com.mv.APIHealth.rest.controller;
 
-
 import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.rest.dto.UserDTO;
 import br.com.mv.APIHealth.security.DTO.JwtRequestDTO;
@@ -18,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/auth/login")
 public class AuthController {
 

@@ -1,15 +1,9 @@
 package br.com.mv.APIHealth.rest.dto;
 
-import br.com.mv.APIHealth.domain.entity.login.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

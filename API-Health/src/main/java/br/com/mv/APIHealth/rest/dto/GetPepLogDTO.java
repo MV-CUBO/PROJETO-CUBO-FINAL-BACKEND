@@ -1,6 +1,5 @@
 package br.com.mv.APIHealth.rest.dto;
 
-import br.com.mv.APIHealth.domain.entity.Pep;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

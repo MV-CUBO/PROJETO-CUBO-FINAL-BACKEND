@@ -1,8 +1,6 @@
 package br.com.mv.APIHealth.rest.controller;
 
-import br.com.mv.APIHealth.domain.entity.login.Role;
 import br.com.mv.APIHealth.rest.dto.RoleDTO;
-import br.com.mv.APIHealth.rest.dto.UserDTO;
 import br.com.mv.APIHealth.service.RoleService;
 import br.com.mv.APIHealth.utils.Response;
 import org.springframework.http.HttpStatus;
@@ -15,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/roles")
 public class RoleController {
 

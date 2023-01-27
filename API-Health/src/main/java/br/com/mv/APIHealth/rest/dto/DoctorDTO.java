@@ -1,7 +1,5 @@
 package br.com.mv.APIHealth.rest.dto;
 
-import br.com.mv.APIHealth.domain.entity.Address;
-import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.domain.enums.Specialty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,9 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
