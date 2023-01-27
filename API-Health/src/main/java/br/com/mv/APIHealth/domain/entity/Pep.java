@@ -31,7 +31,7 @@ public class Pep {
     @Column(unique = true)
     private Integer pepNumber;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "patient_id")
     private Patient patient;

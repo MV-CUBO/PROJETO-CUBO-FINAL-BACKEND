@@ -40,6 +40,7 @@ public class WebSecurityConfig {
 
         http.csrf().disable()
 
+
                 //configs routes patients authorization
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/api/patients/**").hasAnyRole("PATIENT", "DOCTOR", "NURSE", "ADMIN")
@@ -65,7 +66,7 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.POST, "/api/pep/**").hasAnyRole("DOCTOR", "ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/pep/**").hasAnyRole("DOCTOR", "ADMIN")
 
-                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .antMatchers("/api/roles/**", "/api/users/**").permitAll()
                 .anyRequest().authenticated()
                 .and().cors()

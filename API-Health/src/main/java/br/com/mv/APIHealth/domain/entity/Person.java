@@ -32,7 +32,7 @@ public class Person {
 
     private String cpf;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
 

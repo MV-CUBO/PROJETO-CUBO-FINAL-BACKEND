@@ -20,8 +20,7 @@ public class Patient extends Person  {
 
     private String observation;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToOne
     @JoinColumn(name = "pep_id", referencedColumnName = "id")
     private Pep pep;
 }
