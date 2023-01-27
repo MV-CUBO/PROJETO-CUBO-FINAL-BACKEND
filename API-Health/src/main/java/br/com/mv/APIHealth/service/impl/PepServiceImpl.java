@@ -42,6 +42,7 @@ public class PepServiceImpl implements PepService {
         pep.setCreatedAt(LocalDateTime.now());
         pep.setUpdateAt(LocalDateTime.now());
         pep.setStatus(EStatePatient.CONSULTATION);
+
         Pep newPep = this.pepRepository.save(pep);
 
         this.createLog(pep.getId(),MESSAGECREATED);
