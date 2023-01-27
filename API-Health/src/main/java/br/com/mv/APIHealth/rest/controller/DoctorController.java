@@ -1,6 +1,5 @@
 package br.com.mv.APIHealth.rest.controller;
 
-import br.com.mv.APIHealth.domain.entity.Doctor;
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.rest.dto.DoctorDTO;
 import br.com.mv.APIHealth.service.DoctorService;
@@ -55,7 +54,6 @@ public class DoctorController {
             result.getAllErrors().forEach(err -> response.getErrors().add(err.getDefaultMessage()));
             return ResponseEntity.badRequest().body(response);
         }
-
 
         DoctorDTO newDoctorDto = doctorService.create(doctorDTO);
         response.setData(newDoctorDto);
