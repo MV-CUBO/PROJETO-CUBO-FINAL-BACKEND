@@ -25,9 +25,7 @@ public class PepDTO {
 
     private Integer pepNumber;
 
-
     private Patient patient;
-
 
     private Doctor doctor;
 

@@ -65,6 +65,11 @@ public class PepController {
         return this.pepService.getNumInStatus(string);
     }
 
+    @GetMapping("/{id}/patient")
+    @ResponseStatus(OK)
+    public GetPepDTO getPepByPatientId(@PathVariable(name = "id") UUID patientId){
+        return this.pepService.findPepByPatientId(patientId);
+    }
 
     @PostMapping
     public ResponseEntity<Response<GetPepDTO>> savePep(@RequestBody @Valid PepDTO pepDTO, BindingResult result) {
