@@ -16,7 +16,5 @@ public interface PepRepository extends JpaRepository<Pep, UUID> {
     List<Pep> findAllByStatus(EStatePatient status);
 
     long countByStatus(EStatePatient Status);
-
-
-
+    Optional<Pep> findPepByPatientId(UUID patient);
 }

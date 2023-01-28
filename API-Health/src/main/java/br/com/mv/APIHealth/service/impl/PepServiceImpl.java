@@ -94,6 +94,22 @@ public class PepServiceImpl implements PepService {
     }
 
     @Override
+    public GetPepDTO findPepByPatientId(UUID patientId) {
+        Pep pep = this.pepRepository.findPepByPatientId(patientId).get();
+
+        this.validateExistPep(pep.getId());
+
+        GetPepDTO pepDto = new GetPepDTO();
+
+        BeanUtils.copyProperties(pep, pepDto);
+
+        pepDto.setPatientId(pep.getPatient().getId());
+        pepDto.setDoctorId(pep.getDoctor().getId());
+
+        return pepDto;
+    }
+
+    @Override
     public void updateDatePep(LocalDateTime date) {
 
     }
