@@ -1,6 +1,7 @@
 package br.com.mv.APIHealth.rest.controller;
 
 import br.com.mv.APIHealth.rest.dto.NurseDTO;
+import br.com.mv.APIHealth.rest.dto.UpdateNurseDTO;
 import br.com.mv.APIHealth.service.NurseService;
 import br.com.mv.APIHealth.utils.Response;
 import org.springframework.http.HttpStatus;
@@ -56,15 +57,16 @@ public class NurseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Response<NurseDTO>> updateUser(@PathVariable(name = "id") UUID id,
-                                                         @RequestBody @Valid NurseDTO nurseDTO,
-                                                         BindingResult result) {
-        Response<NurseDTO> response = new Response<>();
+    public ResponseEntity<Response<UpdateNurseDTO>> updateUser(@PathVariable(name = "id") UUID id,
+                                                               @RequestBody @Valid UpdateNurseDTO nurseDTO,
+                                                               BindingResult result) {
+        Response<UpdateNurseDTO> response = new Response<>();
         if (result.hasErrors()) {
             result.getAllErrors().forEach(err -> response.getErrors().add(err.getDefaultMessage()));
             return ResponseEntity.badRequest().body(response);
         }
-        NurseDTO updatedDto = nurseService.update(id, nurseDTO);
+
+        UpdateNurseDTO updatedDto = nurseService.update(id, nurseDTO);
         response.setData(updatedDto);
         response.getErrors().add("No content.");
 

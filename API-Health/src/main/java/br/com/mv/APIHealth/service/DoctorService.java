@@ -3,6 +3,7 @@ package br.com.mv.APIHealth.service;
 
 import br.com.mv.APIHealth.domain.enums.EStatus;
 import br.com.mv.APIHealth.rest.dto.DoctorDTO;
+import br.com.mv.APIHealth.rest.dto.UpdateDoctorDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +17,7 @@ public interface DoctorService {
     public Long countDoctorByStatus(EStatus value);
     public List<DoctorDTO> getAll ();
 
-    public DoctorDTO update (UUID id, DoctorDTO doctorDTO );
+    public UpdateDoctorDTO update (UUID id, UpdateDoctorDTO doctorDTO );
 
     public void delete (UUID id);
 
