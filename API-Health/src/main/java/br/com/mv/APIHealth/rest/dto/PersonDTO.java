@@ -58,5 +58,4 @@ public class PersonDTO {
     @Enumerated(EnumType.STRING)
     private EStatus status;
 
-
 }

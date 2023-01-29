@@ -7,6 +7,7 @@ import br.com.mv.APIHealth.domain.repository.DoctorRepository;
 import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.DoctorDTO;
+import br.com.mv.APIHealth.rest.dto.UpdateDoctorDTO;
 import br.com.mv.APIHealth.service.AddressService;
 import br.com.mv.APIHealth.service.DoctorService;
 import lombok.RequiredArgsConstructor;
@@ -88,21 +89,21 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public DoctorDTO update(UUID id, DoctorDTO doctorDTO) {
+    public UpdateDoctorDTO update(UUID id, UpdateDoctorDTO updateDto) {
 
         Doctor doctor = this.validateDoctorExists(id);
 
-        this.validateForUpdateDoctor(doctorDTO, doctor);
+        this.validateForUpdateDoctor(updateDto, doctor);
 
 
-        doctorDTO.setId(doctorDTO.getId());
+        updateDto.setId(updateDto.getId());
 
-        BeanUtils.copyProperties(doctor, doctorDTO);
+        BeanUtils.copyProperties(doctor, updateDto);
 
         Doctor doctorUpdated = this.doctorRepository.save(doctor);
 
-        BeanUtils.copyProperties(doctorUpdated, doctorDTO);
-        return doctorDTO;
+        BeanUtils.copyProperties(doctorUpdated, updateDto);
+        return updateDto;
     }
 
     @Override
@@ -162,7 +163,7 @@ public class DoctorServiceImpl implements DoctorService {
         return this.addressService.create(addressDto, MESSAGE);
     }
 
-    private void validateForUpdateDoctor(DoctorDTO doctorDTO, Doctor doctor) {
+    private void validateForUpdateDoctor(UpdateDoctorDTO doctorDTO, Doctor doctor) {
         doctor.setName(doctorDTO.getName() != null ? doctorDTO.getName() : doctor.getName());
 
         doctor.setPhone(doctorDTO.getPhone() != null ? doctorDTO.getPhone() : doctor.getPhone());
@@ -179,7 +180,29 @@ public class DoctorServiceImpl implements DoctorService {
 
         doctor.setDateOfBirth(doctorDTO.getDateOfBirth() != null ? doctorDTO.getDateOfBirth() : doctor.getDateOfBirth());
 
+        if (doctorDTO.getAddress() != null && doctor.getAddress() != null) {
+            this.forUpdateAddressDoctor(doctorDTO.getAddress(), doctor.getAddress());
+        }
+
         doctor.setUpdateAT(LocalDateTime.now());
     }
 
+    private void forUpdateAddressDoctor(Address addressDto, Address addressEntity) {
+
+        addressEntity.setZipCode(addressDto.getZipCode() != null ? addressDto.getZipCode() : addressEntity.getZipCode());
+
+        addressEntity.setCity(addressDto.getCity() != null ? addressDto.getCity() : addressEntity.getCity());
+
+        addressEntity.setNumber(addressDto.getNumber() != null ? addressDto.getNumber() : addressEntity.getNumber());
+
+        addressEntity.setComplements(addressDto.getComplements()!= null ? addressDto.getComplements() : addressEntity.getComplements());
+
+        addressEntity.setStreet(addressDto.getStreet() != null ? addressDto.getStreet() : addressEntity.getStreet());
+
+        addressEntity.setState(addressDto.getState() != null ? addressDto.getState() : addressEntity.getState());
+
+        addressEntity.setDistrict(addressDto.getDistrict() != null ? addressDto.getDistrict() : addressEntity.getDistrict());
+
+        this.addressService.updateAddressById(addressEntity);
+    }
 }

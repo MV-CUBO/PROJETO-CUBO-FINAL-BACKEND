@@ -11,31 +11,24 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class UpdatePatientDTO {
+@NoArgsConstructor
+public class UpdateNurseDTO {
     private UUID id;
-
-    private String insuranceCompany;
-
-    private String healthInsurenceCard;
-
-    private String observation;
-
-    private EStatus status;
 
     private String name;
 
-    @CPF
+    @CPF(message = "{required.cpf.invalid.field}")
     private String cpf;
 
-    @Past
+    @Past(message = "{required.date.field}")
     private LocalDate dateOfBirth;
 
     private String phone;
@@ -45,12 +38,16 @@ public class UpdatePatientDTO {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    private String coren;
+
+    private Address address;
+
+    private EStatus status;
+
     @Enumerated(EnumType.STRING)
     private MaritalStatus maritalStatus;
 
     private LocalDateTime createdAt;
 
     private LocalDateTime updateAT;
-
-    private Address address;
 }
