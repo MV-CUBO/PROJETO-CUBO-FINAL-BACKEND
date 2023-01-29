@@ -7,6 +7,7 @@ import br.com.mv.APIHealth.rest.dto.PepDTO;
 import br.com.mv.APIHealth.rest.dto.UpdatePatientDTO;
 import br.com.mv.APIHealth.service.PatientService;
 import br.com.mv.APIHealth.utils.Response;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -31,6 +32,7 @@ public class PatientController {
     }
 
     @PostMapping
+    @Operation(tags = "Patient", summary = "Get all PEP logs by PEP ID")
     public ResponseEntity<Response<PatientDTO>> create(@RequestBody @Valid PatientDTO patientDTO, BindingResult result) {
         Response<PatientDTO> response = new Response<>();
 
@@ -49,17 +51,20 @@ public class PatientController {
 
     @GetMapping("{id}")
     @ResponseStatus(OK)
+    @Operation(tags = "Patient", summary = "Get a patient by ID")
     public PatientDTO getById(@PathVariable(name = "id") UUID id) {
         return this.patientService.getPatientById(id);
     }
 
     @GetMapping("/pep/{id}")
     @ResponseStatus(OK)
+    @Operation(tags = "Patient", summary = "find the patient's PEP")
     public PepDTO findPepByPatientId(@PathVariable(name = "id") UUID id) {
         return this.patientService.findPepByPatientId(id);
     }
 
     @GetMapping("/count/status")
+    @Operation(tags = "Patient", summary = "Get the number of patients by their status")
     public ResponseEntity<Long> countByStatus(@RequestParam("status") EStatus value) {
         Long count = patientService.countPatientByStatus(value);
 
@@ -67,6 +72,7 @@ public class PatientController {
     }
 
     @GetMapping("/count/gender")
+    @Operation(tags = "Patient", summary = "Get the number of patients by their gender")
     public ResponseEntity<Long> countByGender(@RequestParam("gender") Gender value) {
         Long count = patientService.countPatientByGender(value);
 
@@ -75,11 +81,13 @@ public class PatientController {
 
     @GetMapping
     @ResponseStatus(OK)
+    @Operation(tags = "Patient", summary = "Get all patients")
     public List<PatientDTO> getAll(){
         return this.patientService.getAll();
     }
 
     @PutMapping("{id}")
+    @Operation(tags = "Patient", summary = "Update an existing patient by ID")
     public ResponseEntity<Response<UpdatePatientDTO>> updateById(
                                        @PathVariable(name = "id") UUID id,
                                        @RequestBody @Valid UpdatePatientDTO patientDTO,
@@ -101,6 +109,7 @@ public class PatientController {
 
     @DeleteMapping("{id}")
     @ResponseStatus(NO_CONTENT)
+    @Operation(tags = "Patient", summary = "Delete a patient by ID")
     public void deleteById(@PathVariable(name = "id") UUID id) {
         this.patientService.deleteById(id);
     }

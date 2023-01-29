@@ -4,6 +4,7 @@ import br.com.mv.APIHealth.rest.dto.NurseDTO;
 import br.com.mv.APIHealth.rest.dto.UpdateNurseDTO;
 import br.com.mv.APIHealth.service.NurseService;
 import br.com.mv.APIHealth.utils.Response;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,7 @@ public class NurseController {
 
     @GetMapping("{id}")
     @ResponseStatus(OK)
+    @Operation(tags = "Nurse", summary = "Get a nurse by ID")
     public NurseDTO getNurseById(@PathVariable(name = "id") UUID id) {
         return this.nurseService.getNurseById(id);
     }
@@ -36,11 +38,13 @@ public class NurseController {
 
     @GetMapping
     @ResponseStatus(OK)
+    @Operation(tags = "Nurse", summary = "Get all nurses")
     public List<NurseDTO> getAll() {
         return this.nurseService.getAll();
     }
 
     @PostMapping
+    @Operation(tags = "Nurse", summary = "Create a new nurse")
     public ResponseEntity<Response<NurseDTO>> saveNurse(@RequestBody @Valid NurseDTO nurseDTO,
                                                         BindingResult result) {
         Response<NurseDTO> response = new Response<>();
@@ -57,6 +61,7 @@ public class NurseController {
     }
 
     @PutMapping("/{id}")
+    @Operation(tags = "Nurse", summary = "Update an existing nurse")
     public ResponseEntity<Response<UpdateNurseDTO>> updateUser(@PathVariable(name = "id") UUID id,
                                                                @RequestBody @Valid UpdateNurseDTO nurseDTO,
                                                                BindingResult result) {
@@ -75,6 +80,7 @@ public class NurseController {
 
     @DeleteMapping("{id}")
     @ResponseStatus(NO_CONTENT)
+    @Operation(tags = "Nurse", summary = "Delete a nurse")
     public void deleteNurse(@PathVariable(name = "id") UUID id) {
         this.nurseService.delete(id);
     }
