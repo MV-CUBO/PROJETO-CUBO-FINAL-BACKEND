@@ -8,6 +8,7 @@ import br.com.mv.APIHealth.security.libs.JwtTokenUtil;
 import br.com.mv.APIHealth.security.libs.JwtUserDetailsService;
 import br.com.mv.APIHealth.service.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,7 @@ public class AuthController {
     }
 
     @PostMapping
+    @Operation(tags = "Auth", summary = "Generate an user token to be authenticated")
     public ResponseEntity<JwtResponseDTO> createAuthenticationToken(@RequestBody JwtRequestDTO response) {
         this.authenticate(response.getEmail(), response.getPassword());
 
