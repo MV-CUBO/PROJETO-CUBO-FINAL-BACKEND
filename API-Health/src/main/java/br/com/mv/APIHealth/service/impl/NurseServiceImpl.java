@@ -190,13 +190,13 @@ public class NurseServiceImpl implements NurseService {
         nurse.setDateOfBirth(nurseDTO.getDateOfBirth() != null ? nurseDTO.getDateOfBirth() : nurse.getDateOfBirth());
 
         if (nurseDTO.getAddress() != null && nurse.getAddress() != null) {
-            this.forUpdateAddressDoctor(nurseDTO.getAddress(), nurse.getAddress());
+            this.forUpdateAddressNurse(nurseDTO.getAddress(), nurse.getAddress());
         }
 
         nurse.setUpdateAT(LocalDateTime.now());
     }
 
-    private void forUpdateAddressDoctor(Address addressDto, Address addressEntity) {
+    private void forUpdateAddressNurse(Address addressDto, Address addressEntity) {
 
         addressEntity.setZipCode(addressDto.getZipCode() != null ? addressDto.getZipCode() : addressEntity.getZipCode());
 
@@ -211,6 +211,7 @@ public class NurseServiceImpl implements NurseService {
         addressEntity.setState(addressDto.getState() != null ? addressDto.getState() : addressEntity.getState());
 
         addressEntity.setDistrict(addressDto.getDistrict() != null ? addressDto.getDistrict() : addressEntity.getDistrict());
+
 
         this.addressService.updateAddressById(addressEntity);
     }
