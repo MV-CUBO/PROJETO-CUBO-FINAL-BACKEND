@@ -22,7 +22,6 @@ public class PepDTO {
 
     private UUID id;
 
-
     private Integer pepNumber;
 
     private Patient patient;
