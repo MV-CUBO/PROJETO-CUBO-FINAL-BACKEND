@@ -6,11 +6,15 @@ import br.com.mv.APIHealth.domain.repository.UserRepository;
 import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.RoleDTO;
+import br.com.mv.APIHealth.rest.dto.UpdateUserDTO;
 import br.com.mv.APIHealth.rest.dto.UserDTO;
 import br.com.mv.APIHealth.service.RoleService;
 import br.com.mv.APIHealth.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +53,6 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
 
-
         List<Role> roles = new ArrayList<>();
 
         for (String roleDescription : userDto.getRole()) {
@@ -83,22 +86,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDTO update(UUID id, UserDTO userDto) {
+    public UpdateUserDTO update(UUID id, UpdateUserDTO updateUserDTO) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("{noExist.idUser.field}")
         );
 
-        userDto.setId(user.getId());
-        this.updateNonNullableFields(userDto, user);
+        updateUserDTO.setId(user.getId());
+        this.updateNonNullableFields(updateUserDTO, user);
         User updatedUser = userRepository.save(user);
 
-        BeanUtils.copyProperties(updatedUser, userDto);
-        return userDto;
+        BeanUtils.copyProperties(updatedUser, updateUserDTO);
+        return updateUserDTO;
     }
 
     @Override
     public void delete(UUID id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<UserDTO> getAllUsers(Pageable pageable) {
+       List<UserDTO> userDtos = userRepository.findAll(pageable).stream()
+                .map(user -> {
+                    UserDTO dto = new UserDTO();
+                    BeanUtils.copyProperties(user, dto);
+                    return dto;
+                }).collect(Collectors.toList());
+       return new PageImpl<>(userDtos, pageable, userDtos.size());
     }
 
     @Override
@@ -119,18 +133,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO findByEmail(String email) {
         User user = this.userRepository.findByUsername(email).orElseThrow(() -> new BadRequestException("error"));
-        UserDTO userdto = new UserDTO();
+        UserDTO userDto = new UserDTO();
 
-        BeanUtils.copyProperties(user, userdto);
+        BeanUtils.copyProperties(user, userDto);
 
         List<String> arrayRoles = user.getRole().stream().map(role -> role.getDescription())
                 .collect(Collectors.toList());
 
-        userdto.setRole(arrayRoles);
-        return userdto;
+        userDto.setRole(arrayRoles);
+        return userDto;
     }
 
-    private void updateNonNullableFields(UserDTO originUserDto, User targetUser) {
+    private void updateNonNullableFields(UpdateUserDTO originUserDto, User targetUser) {
         if (originUserDto.getUsername() != null) {
             targetUser.setUsername(originUserDto.getUsername());
         }
