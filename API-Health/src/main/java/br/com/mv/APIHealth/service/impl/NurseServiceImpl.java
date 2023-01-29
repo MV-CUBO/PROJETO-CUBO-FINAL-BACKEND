@@ -8,6 +8,7 @@ import br.com.mv.APIHealth.domain.repository.NurseRepository;
 import br.com.mv.APIHealth.exception.BadRequestException;
 import br.com.mv.APIHealth.exception.ResourceNotFoundException;
 import br.com.mv.APIHealth.rest.dto.NurseDTO;
+import br.com.mv.APIHealth.rest.dto.UpdateNurseDTO;
 import br.com.mv.APIHealth.service.AddressService;
 import br.com.mv.APIHealth.service.NurseService;
 import lombok.RequiredArgsConstructor;
@@ -83,7 +84,7 @@ public class NurseServiceImpl implements NurseService {
     }
 
     @Override
-    public NurseDTO update(UUID id, NurseDTO nurseDTO) {
+    public UpdateNurseDTO update(UUID id, UpdateNurseDTO nurseDTO) {
 
         Nurse nurse = this.validateNurseExists(id);
 
@@ -169,7 +170,7 @@ public class NurseServiceImpl implements NurseService {
         return this.addressService.create(addressDto, MESSAGE);
     }
 
-    private void validateForUpdateNurse(NurseDTO nurseDTO, Nurse nurse) {
+    private void validateForUpdateNurse(UpdateNurseDTO nurseDTO, Nurse nurse) {
         nurse.setName(nurseDTO.getName() != null ? nurseDTO.getName() : nurse.getName());
 
         nurse.setPhone(nurseDTO.getPhone() != null ? nurseDTO.getPhone() : nurse.getPhone());

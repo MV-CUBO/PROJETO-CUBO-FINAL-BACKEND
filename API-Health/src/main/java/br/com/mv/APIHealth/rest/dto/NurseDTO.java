@@ -13,6 +13,4 @@ public class NurseDTO extends PersonDTO {
 
     @NotEmpty(message = "{required.coren.field}")
     private String coren;
-
-
 }

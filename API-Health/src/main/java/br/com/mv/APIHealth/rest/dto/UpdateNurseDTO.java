@@ -11,8 +11,6 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
@@ -20,15 +18,13 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class PersonDTO {
+@NoArgsConstructor
+public class UpdateNurseDTO {
     private UUID id;
 
-    @NotEmpty(message = "{required.name.field}")
     private String name;
 
-    @NotEmpty(message = "{required.cpf.field}")
     @CPF(message = "{required.cpf.invalid.field}")
     private String cpf;
 
@@ -36,14 +32,18 @@ public class PersonDTO {
     @NotNull(message = "{required.dateEmpyt.field}")
     private LocalDate dateOfBirth;
 
-    @NotEmpty(message = "{required.phone.field}")
     private String phone;
 
-    @NotEmpty(message = "{required.email.field}")
     private String email;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    private String coren;
+
+    private Address address;
+
+    private EStatus status;
 
     @Enumerated(EnumType.STRING)
     private MaritalStatus maritalStatus;
@@ -51,11 +51,4 @@ public class PersonDTO {
     private LocalDateTime createdAt;
 
     private LocalDateTime updateAT;
-
-    @Valid
-    private Address address;
-
-    @Enumerated(EnumType.STRING)
-    private EStatus status;
-
 }
