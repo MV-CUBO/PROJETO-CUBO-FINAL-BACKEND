@@ -174,6 +174,8 @@ public class PatientServiceImpl implements PatientService {
 
         patient.setMaritalStatus(patientDTO.getMaritalStatus() != null ? patientDTO.getMaritalStatus() : patient.getMaritalStatus());
 
+        patient.setHealthInsurenceCard(patientDTO.getHealthInsurenceCard() != null ? patientDTO.getHealthInsurenceCard() : patient.getHealthInsurenceCard());
+
         patient.setGender(patientDTO.getGender() != null ? patientDTO.getGender() : patient.getGender());
 
         patient.setEmail(patientDTO.getEmail() != null ? patientDTO.getEmail() : patient.getEmail());
@@ -181,6 +183,10 @@ public class PatientServiceImpl implements PatientService {
         patient.setInsuranceCompany(patientDTO.getInsuranceCompany() != null ? patientDTO.getInsuranceCompany() : patient.getInsuranceCompany());
 
         patient.setDateOfBirth(patientDTO.getDateOfBirth() != null ? patientDTO.getDateOfBirth() : patient.getDateOfBirth());
+
+        if (patientDTO.getAddress() != null && patient.getAddress() != null) {
+            this.forUpdateAddressPatient(patientDTO.getAddress(), patient.getAddress());
+        }
 
         patient.setUpdateAT(LocalDateTime.now());
     }
@@ -223,5 +229,24 @@ public class PatientServiceImpl implements PatientService {
                     null, Locale.getDefault());
             throw new ResourceNotFoundException(patientNotFoundMessage);
         }
+    }
+
+    private void forUpdateAddressPatient(Address addressDto, Address addressEntity) {
+
+        addressEntity.setZipCode(addressDto.getZipCode() != null ? addressDto.getZipCode() : addressEntity.getZipCode());
+
+        addressEntity.setCity(addressDto.getCity() != null ? addressDto.getCity() : addressEntity.getCity());
+
+        addressEntity.setNumber(addressDto.getNumber() != null ? addressDto.getNumber() : addressEntity.getNumber());
+
+        addressEntity.setComplements(addressDto.getComplements()!= null ? addressDto.getComplements() : addressEntity.getComplements());
+
+        addressEntity.setStreet(addressDto.getStreet() != null ? addressDto.getStreet() : addressEntity.getStreet());
+
+        addressEntity.setState(addressDto.getState() != null ? addressDto.getState() : addressEntity.getState());
+
+        addressEntity.setDistrict(addressDto.getDistrict() != null ? addressDto.getDistrict() : addressEntity.getDistrict());
+
+        this.addressService.updateAddressById(addressEntity);
     }
 }

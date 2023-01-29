@@ -179,7 +179,29 @@ public class DoctorServiceImpl implements DoctorService {
 
         doctor.setDateOfBirth(doctorDTO.getDateOfBirth() != null ? doctorDTO.getDateOfBirth() : doctor.getDateOfBirth());
 
+        if (doctorDTO.getAddress() != null && doctor.getAddress() != null) {
+            this.forUpdateAddressDoctor(doctorDTO.getAddress(), doctor.getAddress());
+        }
+
         doctor.setUpdateAT(LocalDateTime.now());
     }
 
+    private void forUpdateAddressDoctor(Address addressDto, Address addressEntity) {
+
+        addressEntity.setZipCode(addressDto.getZipCode() != null ? addressDto.getZipCode() : addressEntity.getZipCode());
+
+        addressEntity.setCity(addressDto.getCity() != null ? addressDto.getCity() : addressEntity.getCity());
+
+        addressEntity.setNumber(addressDto.getNumber() != null ? addressDto.getNumber() : addressEntity.getNumber());
+
+        addressEntity.setComplements(addressDto.getComplements()!= null ? addressDto.getComplements() : addressEntity.getComplements());
+
+        addressEntity.setStreet(addressDto.getStreet() != null ? addressDto.getStreet() : addressEntity.getStreet());
+
+        addressEntity.setState(addressDto.getState() != null ? addressDto.getState() : addressEntity.getState());
+
+        addressEntity.setDistrict(addressDto.getDistrict() != null ? addressDto.getDistrict() : addressEntity.getDistrict());
+
+        this.addressService.updateAddressById(addressEntity);
+    }
 }

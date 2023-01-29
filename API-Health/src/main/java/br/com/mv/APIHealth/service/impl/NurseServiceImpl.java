@@ -188,7 +188,29 @@ public class NurseServiceImpl implements NurseService {
 
         nurse.setDateOfBirth(nurseDTO.getDateOfBirth() != null ? nurseDTO.getDateOfBirth() : nurse.getDateOfBirth());
 
+        if (nurseDTO.getAddress() != null && nurse.getAddress() != null) {
+            this.forUpdateAddressDoctor(nurseDTO.getAddress(), nurse.getAddress());
+        }
+
         nurse.setUpdateAT(LocalDateTime.now());
     }
 
+    private void forUpdateAddressDoctor(Address addressDto, Address addressEntity) {
+
+        addressEntity.setZipCode(addressDto.getZipCode() != null ? addressDto.getZipCode() : addressEntity.getZipCode());
+
+        addressEntity.setCity(addressDto.getCity() != null ? addressDto.getCity() : addressEntity.getCity());
+
+        addressEntity.setNumber(addressDto.getNumber() != null ? addressDto.getNumber() : addressEntity.getNumber());
+
+        addressEntity.setComplements(addressDto.getComplements()!= null ? addressDto.getComplements() : addressEntity.getComplements());
+
+        addressEntity.setStreet(addressDto.getStreet() != null ? addressDto.getStreet() : addressEntity.getStreet());
+
+        addressEntity.setState(addressDto.getState() != null ? addressDto.getState() : addressEntity.getState());
+
+        addressEntity.setDistrict(addressDto.getDistrict() != null ? addressDto.getDistrict() : addressEntity.getDistrict());
+
+        this.addressService.updateAddressById(addressEntity);
+    }
 }
