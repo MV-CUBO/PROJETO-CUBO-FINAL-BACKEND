@@ -4,6 +4,7 @@ import br.com.mv.APIHealth.rest.dto.UpdateUserDTO;
 import br.com.mv.APIHealth.rest.dto.UserDTO;
 import br.com.mv.APIHealth.service.UserService;
 import br.com.mv.APIHealth.utils.Response;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,18 +33,21 @@ public class UserController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(tags = "User", summary = "Get user by ID")
     public UserDTO getUserById(@PathVariable(name = "id") UUID id) {
         return userService.getUserById(id);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @Operation(tags = "User", summary = "Get all users")
     public Page<UserDTO> getAllUsers(@PageableDefault(page = 0, size = 5, sort = "id",
             direction = Sort.Direction.ASC) Pageable pageable) {
         return userService.getAllUsers(pageable);
     }
 
     @PostMapping
+    @Operation(tags = "User", summary = "Create a new user")
     public ResponseEntity<Response<UserDTO>> saveUser(@RequestBody @Valid UserDTO userDto,
                                                       BindingResult result) {
         Response<UserDTO> response = new Response<>();
@@ -60,6 +64,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
+    @Operation(tags = "User", summary = "Update an existing user")
     public ResponseEntity<Response<UpdateUserDTO>>updateUser(@PathVariable(name = "id") UUID id,
                                                         @RequestBody UpdateUserDTO updateUserDTO,
                                                         BindingResult result) {
@@ -77,6 +82,7 @@ public class UserController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
+    @Operation(tags = "User", summary = "Delete an user")
     public void deleteUser(@PathVariable(name = "id") UUID id) {
         userService.delete(id);
     }
