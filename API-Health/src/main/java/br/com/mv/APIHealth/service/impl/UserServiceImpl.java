@@ -145,12 +145,12 @@ public class UserServiceImpl implements UserService {
     }
 
     private void updateNonNullableFields(UpdateUserDTO originUserDto, User targetUser) {
-        if (originUserDto.getUsername() != null) {
-            targetUser.setUsername(originUserDto.getUsername());
-        }
-        if (originUserDto.getPassword() != null) {
-            targetUser.setPassword(originUserDto.getPassword());
-        }
+       targetUser.setUsername(
+               Objects.nonNull(originUserDto.getUsername()) ? originUserDto.getUsername() : targetUser.getUsername()
+       );
+        targetUser.setPassword(
+                Objects.nonNull(originUserDto.getPassword()) ? originUserDto.getPassword() : targetUser.getPassword()
+        );
     }
 
     private void validateUserExists(String username) {
