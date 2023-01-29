@@ -29,7 +29,6 @@ public class UpdateNurseDTO {
     private String cpf;
 
     @Past(message = "{required.date.field}")
-    @NotNull(message = "{required.dateEmpyt.field}")
     private LocalDate dateOfBirth;
 
     private String phone;
